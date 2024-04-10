@@ -1,0 +1,11 @@
+#pragma once
+
+#define DEFAULT_SCREEN_WIDTH	800
+#define DEFAULT_SCREEN_HEIGHT	600
+
+#define MAX_KEYBOARD_KEYS		350
+#define MAX_MOUSE_BUTTONS		6
+
+#define PLAYER_SIZE				25.0f
+#define PLAYER_SPEED			5
+#define PLAYER_SPEED_BOOST		2

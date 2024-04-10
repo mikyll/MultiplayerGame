@@ -1,0 +1,6 @@
+﻿  main.c
+D:\Michele Righi\Programmi\GitHub\MultiplayerTest\MultiplayerExample\src\main.c(7,8): warning C4013: 'time' undefined; assuming extern returning int
+D:\Michele Righi\Programmi\GitHub\MultiplayerTest\MultiplayerExample\src\main.c(10,9): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'void (__cdecl *)(void)'
+D:\Michele Righi\Programmi\GitHub\MultiplayerTest\MultiplayerExample\src\main.c(14,1): warning C4026: function declared with formal parameter list
+D:\Michele Righi\Programmi\GitHub\MultiplayerTest\MultiplayerExample\src\main.c(17,2): warning C4013: 'initGame' undefined; assuming extern returning int
+  MultiplayerExample.vcxproj -> D:\Michele Righi\Programmi\GitHub\MultiplayerTest\MultiplayerExample\x64\Debug\MultiplayerExample.exe

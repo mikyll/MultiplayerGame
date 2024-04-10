@@ -1,0 +1,292 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\main.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\main.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\game.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\game.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\defs.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\defs.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\player.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\player.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\input.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\input.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\structs.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\structs.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\player.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\player.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\init.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\init.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\main.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\main.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\draw.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\draw.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\draw.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\draw.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\init.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\init.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\common.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\common.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\net.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\net.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\net.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\net.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 15,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "defs.h",
+              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\defs.h",
+              "RelativeDocumentMoniker": "src\\defs.h",
+              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\defs.h",
+              "RelativeToolTip": "src\\defs.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAdAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-04-10T01:24:18.361Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "input.c",
+              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\input.c",
+              "RelativeDocumentMoniker": "src\\input.c",
+              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\input.c",
+              "RelativeToolTip": "src\\input.c",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAArAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2024-04-10T14:36:51.913Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "init.c",
+              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\init.c",
+              "RelativeDocumentMoniker": "src\\init.c",
+              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\init.c",
+              "RelativeToolTip": "src\\init.c",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAAAIAAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2024-04-10T14:33:08.851Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "init.h",
+              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\init.h",
+              "RelativeDocumentMoniker": "src\\init.h",
+              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\init.h",
+              "RelativeToolTip": "src\\init.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-04-10T14:33:07.588Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "net.c",
+              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\net.c",
+              "RelativeDocumentMoniker": "src\\net.c",
+              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\net.c",
+              "RelativeToolTip": "src\\net.c",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAbAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2024-04-10T14:18:53.888Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "net.h",
+              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\net.h",
+              "RelativeDocumentMoniker": "src\\net.h",
+              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\net.h",
+              "RelativeToolTip": "src\\net.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-04-10T14:18:53.113Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "structs.h",
+              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\structs.h",
+              "RelativeDocumentMoniker": "src\\structs.h",
+              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\structs.h",
+              "RelativeToolTip": "src\\structs.h",
+              "ViewState": "AQIAAA8AAAAAAAAAAAAAACEAAAARAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-04-10T12:19:46.166Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "common.h",
+              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\common.h",
+              "RelativeDocumentMoniker": "src\\common.h",
+              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\common.h",
+              "RelativeToolTip": "src\\common.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-04-10T12:17:56.31Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "game.h",
+              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\game.h",
+              "RelativeDocumentMoniker": "src\\game.h",
+              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\game.h",
+              "RelativeToolTip": "src\\game.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-04-10T11:43:30.971Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "game.c",
+              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\game.c",
+              "RelativeDocumentMoniker": "src\\game.c",
+              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\game.c",
+              "RelativeToolTip": "src\\game.c",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAABEAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2024-04-10T11:43:25.01Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "player.h",
+              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\player.h",
+              "RelativeDocumentMoniker": "src\\player.h",
+              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\player.h",
+              "RelativeToolTip": "src\\player.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-04-10T10:48:17.629Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "player.c",
+              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\player.c",
+              "RelativeDocumentMoniker": "src\\player.c",
+              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\player.c",
+              "RelativeToolTip": "src\\player.c",
+              "ViewState": "AQIAACoAAAAAAAAAAAAAAD0AAAARAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2024-04-10T10:48:22.106Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "draw.h",
+              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\draw.h",
+              "RelativeDocumentMoniker": "src\\draw.h",
+              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\draw.h",
+              "RelativeToolTip": "src\\draw.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAOAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-04-10T01:30:06.036Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "draw.c",
+              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\draw.c",
+              "RelativeDocumentMoniker": "src\\draw.c",
+              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\draw.c",
+              "RelativeToolTip": "src\\draw.c",
+              "ViewState": "AQIAAFkAAAAAAAAAAAAcwHQAAABGAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2024-04-10T01:30:24.508Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "main.h",
+              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\main.h",
+              "RelativeDocumentMoniker": "src\\main.h",
+              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\main.h",
+              "RelativeToolTip": "src\\main.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-04-10T01:24:29.113Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "main.c",
+              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\main.c",
+              "RelativeDocumentMoniker": "src\\main.c",
+              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerTest\\MultiplayerExample\\src\\main.c",
+              "RelativeToolTip": "src\\main.c",
+              "ViewState": "AQIAABUAAAAAAAAAAAAAAB0AAAAWAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2024-04-10T00:42:53.202Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
