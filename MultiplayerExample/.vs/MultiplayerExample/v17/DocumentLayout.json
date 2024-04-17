@@ -3,40 +3,44 @@
   "WorkspaceRootPath": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\game.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\game.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\networking\\client.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\networking\\client.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\networking\\client.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\networking\\client.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\networking\\net.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\networking\\net.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\networking\\net.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\networking\\net.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\main.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\main.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\networking\\server.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\networking\\server.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\networking\\server.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\networking\\server.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\ui\\ui.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\ui\\ui.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\player.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\player.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\client.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\client.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\server.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\server.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\net.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\net.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\net.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\net.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\menu.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\menu.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\client.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\client.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\server.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\server.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\game.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\game.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\defs.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -47,8 +51,8 @@
       "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\structs.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\main.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\main.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\main.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\main.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -59,43 +63,12 @@
       "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\player.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\text.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\text.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\menu.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\menu.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\ui.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\ui.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\main.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\main.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\init.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\init.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\init.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\init.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\ui.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\ui.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\common.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\common.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\draw.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\draw.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\ucrt\\stdio.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\menu.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3BCE75FC-31EF-4FB3-A70A-57AFE568622C}|MultiplayerExample.vcxproj|solutionrelative:src\\menu.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -104,81 +77,124 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 199,
-          "SelectedChildIndex": 11,
+          "DockedWidth": 204,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "stdio.h",
-              "DocumentMoniker": "C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\ucrt\\stdio.h",
-              "ToolTip": "C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\ucrt\\stdio.h",
-              "ViewState": "AQIAAK8DAAAAAAAAAAArwL8DAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-04-16T14:10:43.612Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "text.c",
-              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\text.c",
-              "RelativeDocumentMoniker": "src\\text.c",
-              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\text.c",
-              "RelativeToolTip": "src\\text.c",
-              "ViewState": "AQIAAE4AAAAAAAAAAAAAAGEAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2024-04-16T13:50:00.741Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 7,
-              "Title": "client.h",
-              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\client.h",
-              "RelativeDocumentMoniker": "src\\client.h",
-              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\client.h",
-              "RelativeToolTip": "src\\client.h",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAlAAAA",
+              "Title": "ui.h",
+              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\ui\\ui.h",
+              "RelativeDocumentMoniker": "src\\ui\\ui.h",
+              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\ui\\ui.h",
+              "RelativeToolTip": "src\\ui\\ui.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-04-15T00:58:10.116Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "client.c",
-              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\client.c",
-              "RelativeDocumentMoniker": "src\\client.c",
-              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\client.c",
-              "RelativeToolTip": "src\\client.c",
-              "ViewState": "AQIAAFIAAAAAAAAAAAAAAFoAAAAKAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2024-04-15T00:58:17.589Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "server.h",
-              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\server.h",
-              "RelativeDocumentMoniker": "src\\server.h",
-              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\server.h",
-              "RelativeToolTip": "src\\server.h",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAArAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-04-14T21:29:14.849Z",
+              "WhenOpened": "2024-04-17T17:39:43.657Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "server.c",
-              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\server.c",
-              "RelativeDocumentMoniker": "src\\server.c",
-              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\server.c",
-              "RelativeToolTip": "src\\server.c",
-              "ViewState": "AQIAALQAAAAAAAAAAAAAADoAAAAAAAAA",
+              "Title": "net.h",
+              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\networking\\net.h",
+              "RelativeDocumentMoniker": "src\\networking\\net.h",
+              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\networking\\net.h",
+              "RelativeToolTip": "src\\networking\\net.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-04-17T17:39:26.991Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "net.c",
+              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\networking\\net.c",
+              "RelativeDocumentMoniker": "src\\networking\\net.c",
+              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\networking\\net.c",
+              "RelativeToolTip": "src\\networking\\net.c",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAAkAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2024-04-14T21:28:59.654Z",
+              "WhenOpened": "2024-04-17T22:47:57.061Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "server.h",
+              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\networking\\server.h",
+              "RelativeDocumentMoniker": "src\\networking\\server.h",
+              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\networking\\server.h",
+              "RelativeToolTip": "src\\networking\\server.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-04-17T17:39:40.444Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "server.c",
+              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\networking\\server.c",
+              "RelativeDocumentMoniker": "src\\networking\\server.c",
+              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\networking\\server.c",
+              "RelativeToolTip": "src\\networking\\server.c",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAADgAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2024-04-17T18:42:04.211Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "client.h",
+              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\networking\\client.h",
+              "RelativeDocumentMoniker": "src\\networking\\client.h",
+              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\networking\\client.h",
+              "RelativeToolTip": "src\\networking\\client.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-04-17T17:39:12.271Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "client.c",
+              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\networking\\client.c",
+              "RelativeDocumentMoniker": "src\\networking\\client.c",
+              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\networking\\client.c",
+              "RelativeToolTip": "src\\networking\\client.c",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAACUAAAAfAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2024-04-17T22:49:51.537Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "player.h",
+              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\player.h",
+              "RelativeDocumentMoniker": "src\\player.h",
+              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\player.h",
+              "RelativeToolTip": "src\\player.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-04-17T16:30:38.002Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "player.c",
+              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\player.c",
+              "RelativeDocumentMoniker": "src\\player.c",
+              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\player.c",
+              "RelativeToolTip": "src\\player.c",
+              "ViewState": "AQIAAA0BAAAAAAAAAAAAACcBAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2024-04-17T16:30:22.097Z",
               "EditorCaption": ""
             },
             {
@@ -189,227 +205,106 @@
               "RelativeDocumentMoniker": "src\\menu.h",
               "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\menu.h",
               "RelativeToolTip": "src\\menu.h",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABgAAAAPAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-04-14T11:08:03.05Z"
+              "WhenOpened": "2024-04-17T13:33:40.942Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 16,
               "Title": "menu.c",
               "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\menu.c",
               "RelativeDocumentMoniker": "src\\menu.c",
               "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\menu.c",
               "RelativeToolTip": "src\\menu.c",
-              "ViewState": "AQIAADkAAAAAAAAAAAAAAE0AAAAAAAAA",
+              "ViewState": "AQIAACAAAAAAAAAAAAAAADIAAAAiAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2024-04-14T11:08:14.225Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "net.h",
-              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\net.h",
-              "RelativeDocumentMoniker": "src\\net.h",
-              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\net.h",
-              "RelativeToolTip": "src\\net.h",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAaAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-04-10T14:18:53.113Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "net.c",
-              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\net.c",
-              "RelativeDocumentMoniker": "src\\net.c",
-              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\net.c",
-              "RelativeToolTip": "src\\net.c",
-              "ViewState": "AQIAACMAAAAAAAAAAAAAACwAAAAhAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2024-04-10T14:18:53.888Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "game.h",
-              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\game.h",
-              "RelativeDocumentMoniker": "src\\game.h",
-              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\game.h",
-              "RelativeToolTip": "src\\game.h",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABUAAAAaAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-04-10T11:43:30.971Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "game.c",
-              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\game.c",
-              "RelativeDocumentMoniker": "src\\game.c",
-              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\game.c",
-              "RelativeToolTip": "src\\game.c",
-              "ViewState": "AQIAAEgAAAAAAAAAAAAAAFEAAABJAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2024-04-10T11:43:25.01Z",
-              "EditorCaption": ""
-            }
-          ]
-        },
-        {
-          "DockedWidth": 201,
-          "SelectedChildIndex": 11,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "init.h",
-              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\init.h",
-              "RelativeDocumentMoniker": "src\\init.h",
-              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\init.h",
-              "RelativeToolTip": "src\\init.h",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAPAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-04-15T22:45:39.012Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "init.c",
-              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\init.c",
-              "RelativeDocumentMoniker": "src\\init.c",
-              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\init.c",
-              "RelativeToolTip": "src\\init.c",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB4AAAAPAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2024-04-15T22:45:31.155Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "ui.c",
-              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\ui.c",
-              "RelativeDocumentMoniker": "src\\ui.c",
-              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\ui.c",
-              "RelativeToolTip": "src\\ui.c",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2024-04-15T21:53:51.949Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "ui.h",
-              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\ui.h",
-              "RelativeDocumentMoniker": "src\\ui.h",
-              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\ui.h",
-              "RelativeToolTip": "src\\ui.h",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAATAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-04-15T21:53:35.689Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "draw.c",
-              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\draw.c",
-              "RelativeDocumentMoniker": "src\\draw.c",
-              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\draw.c",
-              "RelativeToolTip": "src\\draw.c",
-              "ViewState": "AQIAAF8AAAAAAAAAAAAAAGYAAAAMAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2024-04-14T13:41:11.445Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "common.h",
-              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\common.h",
-              "RelativeDocumentMoniker": "src\\common.h",
-              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\common.h",
-              "RelativeToolTip": "src\\common.h",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAATAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-04-10T12:17:56.31Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "main.h",
-              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\main.h",
-              "RelativeDocumentMoniker": "src\\main.h",
-              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\main.h",
-              "RelativeToolTip": "src\\main.h",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAaAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-04-10T01:24:29.113Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "main.c",
-              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\main.c",
-              "RelativeDocumentMoniker": "src\\main.c",
-              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\main.c",
-              "RelativeToolTip": "src\\main.c",
-              "ViewState": "AQIAADcAAAAAAAAAAAAAADUAAAACAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2024-04-10T00:42:53.202Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "defs.h",
-              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\defs.h",
-              "RelativeDocumentMoniker": "src\\defs.h",
-              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\defs.h",
-              "RelativeToolTip": "src\\defs.h",
-              "ViewState": "AQIAABEAAAAAAAAAAAArwCsAAAABAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-04-10T01:24:18.361Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "structs.h",
-              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\structs.h",
-              "RelativeDocumentMoniker": "src\\structs.h",
-              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\structs.h",
-              "RelativeToolTip": "src\\structs.h",
-              "ViewState": "AQIAADkAAAAAAAAAAAAAAFgAAAAMAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-04-10T12:19:46.166Z",
+              "WhenOpened": "2024-04-17T11:32:13.229Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 13,
-              "Title": "player.h",
-              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\player.h",
-              "RelativeDocumentMoniker": "src\\player.h",
-              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\player.h",
-              "RelativeToolTip": "src\\player.h",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAARAAAA",
+              "Title": "game.h",
+              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\game.h",
+              "RelativeDocumentMoniker": "src\\game.h",
+              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\game.h",
+              "RelativeToolTip": "src\\game.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAVAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-04-10T10:48:17.629Z"
+              "WhenOpened": "2024-04-17T13:35:15.237Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "player.c",
-              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\player.c",
-              "RelativeDocumentMoniker": "src\\player.c",
-              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\player.c",
-              "RelativeToolTip": "src\\player.c",
-              "ViewState": "AQIAAHAAAAAAAAAAAADwv3QAAAARAAAA",
+              "DocumentIndex": 9,
+              "Title": "game.c",
+              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\game.c",
+              "RelativeDocumentMoniker": "src\\game.c",
+              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\game.c",
+              "RelativeToolTip": "src\\game.c",
+              "ViewState": "AQIAAEMAAAAAAAAAAAAAAFUAAAAHAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2024-04-10T10:48:22.106Z",
+              "WhenOpened": "2024-04-17T13:35:14.144Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 194,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "defs.h",
+              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\defs.h",
+              "RelativeDocumentMoniker": "src\\defs.h",
+              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\defs.h",
+              "RelativeToolTip": "src\\defs.h",
+              "ViewState": "AQIAAAcAAAAAAAAAAAAAAAcAAAAgAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-04-17T11:54:19.619Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "structs.h",
+              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\structs.h",
+              "RelativeDocumentMoniker": "src\\structs.h",
+              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\structs.h",
+              "RelativeToolTip": "src\\structs.h",
+              "ViewState": "AQIAAAcAAAAAAAAAAAAAACEAAAAEAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-04-17T16:29:47.345Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "main.h",
+              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\main.h",
+              "RelativeDocumentMoniker": "src\\main.h",
+              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\main.h",
+              "RelativeToolTip": "src\\main.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAAbAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-04-17T11:40:43.466Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "main.c",
+              "DocumentMoniker": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\main.c",
+              "RelativeDocumentMoniker": "src\\main.c",
+              "ToolTip": "D:\\Michele Righi\\Programmi\\GitHub\\MultiplayerGame\\MultiplayerExample\\src\\main.c",
+              "RelativeToolTip": "src\\main.c",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAAABcAAAAPAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2024-04-17T11:40:37.856Z",
               "EditorCaption": ""
             }
           ]

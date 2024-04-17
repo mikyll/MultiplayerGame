@@ -48,42 +48,51 @@ static int isMouseOverButton(Mouse mouse, Button button)
 		mouse.y <= button.y + button.h;
 }
 
-static void logic()
+static void logic(float deltaTime)
 {
 	buttonServer.c.a = !isMouseOverButton(app.mouse, buttonServer) * 55.0f + 200;
 	buttonServer.c.b = !isMouseOverButton(app.mouse, buttonServer) * 30.0f + 225;
 	buttonClient.c.a = !isMouseOverButton(app.mouse, buttonClient) * 55.0f + 200;
 	buttonClient.c.b = !isMouseOverButton(app.mouse, buttonClient) * 30.0f + 225;
-	
+
 	if (app.mouse.button[SDL_BUTTON_LEFT])
 	{
 		app.mouse.button[SDL_BUTTON_LEFT] = 0;
 
-		initGame();
-
-		// Server
-		if (isMouseOverButton(app.mouse, buttonServer))
+		if (isMouseOverButton(app.mouse, buttonServer) ||
+			isMouseOverButton(app.mouse, buttonClient))
 		{
-			printf("Server\n");
-			setHostType(NET_HOST_SERVER);
-		}
-		// Client
-		if (isMouseOverButton(app.mouse, buttonClient))
-		{
-			printf("Client\n");
-			setHostType(NET_HOST_CLIENT);
-		}
+			initGame();
 
-		// Create the host
-		if (createHost() != 0)
-		{
-			disposeHost();
-			return;
-		}
+			// Server
+			if (isMouseOverButton(app.mouse, buttonServer))
+			{
+				printf("Server\n");
+				setHostType(NET_HOST_SERVER);
+			}
+			// Client
+			if (isMouseOverButton(app.mouse, buttonClient))
+			{
+				printf("Client\n");
+				setHostType(NET_HOST_CLIENT);
 
-		// Show game view
-		showGame();
+				// TODO
+				//setAddress("localhost");
+			}
+
+			// Create the host
+			if (createHost() != 0)
+			{
+				disposeHost();
+				return;
+			}
+
+			// Show game view
+			showGame();
+		}
 	}
+
+	doTextInput();
 }
 
 void draw()
@@ -95,4 +104,6 @@ void draw()
 	drawText(DEFAULT_WINDOW_WIDTH / 2, verticalOffsetServer, 255, 255, 255, TEXT_CENTER, "Server");
 	float verticalOffsetClient = buttonClient.y + buttonClient.h / 2 + (-GLYPH_HEIGHT / 2);
 	drawText(DEFAULT_WINDOW_WIDTH / 2, verticalOffsetClient, 255, 255, 255, TEXT_CENTER, "Client");
+
+	drawTextInput();
 }

@@ -6,7 +6,7 @@ typedef struct Entity Entity;
 typedef struct Texture Texture;
 
 typedef struct {
-	void (*logic)(void);
+	void (*logic)(float deltaTime);
 	void (*draw)(void);
 } Delegate;
 
@@ -27,9 +27,11 @@ typedef struct {
 	SDL_Renderer* renderer;
 	SDL_Window* window;
 	Delegate delegate;
-	int keyboard[MAX_KEYBOARD_KEYS];
+	int keyboard[SDL_NUM_SCANCODES];
 	Mouse mouse;
 	Texture textureHead, * textureTail;
+	float deltaTime;
+	int fps;
 } App;
 
 struct Entity {

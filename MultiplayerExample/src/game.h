@@ -13,7 +13,7 @@ extern void drawTextScaled(int x, int y, float size, int r, int g, int b, int al
 extern int spawnPlayerAt(float x, float y);
 extern Entity* getPlayerByID(int id);
 extern void setLocalPlayer(Entity* player);
-extern void doPlayers();
+extern void doPlayers(float deltaTime);
 extern void drawPlayers();
 
 // Networking

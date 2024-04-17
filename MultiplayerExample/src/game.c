@@ -42,7 +42,7 @@ void showGame()
 	app.delegate.draw = draw;
 }
 
-static void logic()
+static void logic(float deltaTime)
 {
 	// Receive network input
 	// TODO
@@ -59,7 +59,7 @@ static void logic()
 		showMenu();
 	}
 
-	doPlayers();
+	doPlayers(deltaTime);
 
 
 	// Send network update
@@ -80,7 +80,7 @@ static void draw()
 
 	char buffer[64];
 	sprintf_s(buffer, sizeof(buffer), "Players count: %d", game.playersCount);
-	drawTextScaled(DEFAULT_WINDOW_WIDTH - 5, 5, 0.5, 0, 0, 0, TEXT_RIGHT, buffer);
+	drawTextScaled(DEFAULT_WINDOW_WIDTH - 5, 50, 0.5, 0, 0, 0, TEXT_RIGHT, buffer);
 
 	
 	i = 0;
@@ -89,7 +89,7 @@ static void draw()
 		char buffer[64];
 		float size = 0.5f;
 		sprintf_s(buffer, sizeof(buffer), "P%d (%3.f,%3.f)", player->id, player->x, player->y);
-		drawTextScaled(DEFAULT_WINDOW_WIDTH - 5, 30 + i * GLYPH_HEIGHT * size + 5, size, player->color.r, player->color.g, player->color.b, TEXT_RIGHT, buffer);
+		drawTextScaled(DEFAULT_WINDOW_WIDTH - 5, 70 + i * GLYPH_HEIGHT * size + 5, size, player->color.r, player->color.g, player->color.b, TEXT_RIGHT, buffer);
 		i++;
 	}
 }

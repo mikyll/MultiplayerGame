@@ -193,7 +193,7 @@ static void setPlayerToLast(Entity* player)
 	}
 }
 
-void doPlayers()
+void doPlayers(float deltaTime)
 {
 	setPlayerToLast(localPlayer);
 
@@ -208,13 +208,13 @@ void doPlayers()
 		if (player->id == localPlayer->id)
 		{
 			if (app.keyboard[SDL_SCANCODE_W])
-				player->dy = -PLAYER_SPEED;
+				player->dy = -PLAYER_SPEED * deltaTime;
 			if (app.keyboard[SDL_SCANCODE_S])
-				player->dy = PLAYER_SPEED;
+				player->dy = PLAYER_SPEED * deltaTime;
 			if (app.keyboard[SDL_SCANCODE_A])
-				player->dx = -PLAYER_SPEED;
+				player->dx = -PLAYER_SPEED * deltaTime;
 			if (app.keyboard[SDL_SCANCODE_D])
-				player->dx = PLAYER_SPEED;
+				player->dx = PLAYER_SPEED * deltaTime;
 
 			if (app.keyboard[SDL_SCANCODE_Q])
 			{
@@ -290,7 +290,7 @@ void drawPlayers()
 
 		char buffer[4];
 		sprintf_s(buffer, sizeof(buffer), "P%d", player->id);
-		drawTextScaled(player->x + (player->w / 2), player->y - 30, 0.75f, 0, 0, 0, TEXT_CENTER, buffer);
+		drawTextScaled(player->x + (player->w / 2), player->y + 32, 0.6f, 0, 0, 0, TEXT_CENTER, buffer);
 
 	}
 }

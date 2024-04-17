@@ -7,7 +7,7 @@ static void doMouseButtonDown(SDL_MouseButtonEvent* event);
 
 static void doKeyUp(SDL_KeyboardEvent *event)
 {
-	if (event->repeat == 0 && event->keysym.scancode < MAX_KEYBOARD_KEYS)
+	if (event->repeat == 0 && event->keysym.scancode < SDL_NUM_SCANCODES)
 	{
 		app.keyboard[event->keysym.scancode] = 0;
 	}
@@ -15,7 +15,7 @@ static void doKeyUp(SDL_KeyboardEvent *event)
 
 static void doKeyDown(SDL_KeyboardEvent *event)
 {
-	if (event->repeat == 0 && event->keysym.scancode < MAX_KEYBOARD_KEYS)
+	if (event->repeat == 0 && event->keysym.scancode < SDL_NUM_SCANCODES)
 	{
 		app.keyboard[event->keysym.scancode] = 1;
 	}

@@ -18,7 +18,8 @@ extern void setHostType(int type);
 extern int createHost();
 extern void disposeHost();
 
-void initMenu();
-void showMenu();
+// UI
+extern void doTextInput();
+extern void drawTextInput();
 
 extern App app;

@@ -1,5 +1,71 @@
-﻿  game.c
-D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\game.c(41,21): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'void (__cdecl *)(void)'
+﻿  draw.c
+  game.c
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\draw.c(153,18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\draw.c(154,18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\game.c(41,21): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'void (__cdecl *)(float)'
 D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\game.c(42,20): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'void (__cdecl *)(void)'
 D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\game.c(92,73): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
+  init.c
+  input.c
+  menu.c
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\menu.c(19,40): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\menu.c(20,41): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\menu.c(21,40): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\menu.c(22,41): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\menu.c(27,40): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\menu.c(28,41): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\menu.c(29,40): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\menu.c(30,41): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\menu.c(39,21): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'void (__cdecl *)(float)'
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\menu.c(40,20): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'void (__cdecl *)(void)'
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\menu.c(53,73): warning C4244: '=': conversion from 'float' to 'Uint8', possible loss of data
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\menu.c(54,73): warning C4244: '=': conversion from 'float' to 'Uint8', possible loss of data
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\menu.c(55,73): warning C4244: '=': conversion from 'float' to 'Uint8', possible loss of data
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\menu.c(56,73): warning C4244: '=': conversion from 'float' to 'Uint8', possible loss of data
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\menu.c(104,37): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\menu.c(106,37): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\menu.c(103,67): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\menu.c(105,67): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  client.c
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\networking\client.c(76,22): warning C4013: 'spawnPlayer' undefined; assuming extern returning int
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\networking\client.c(116,17): warning C4101: 'packet': unreferenced local variable
+  net.c
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\networking\net.c(16,28): warning C4098: 'initEnet': 'void' function returning a value
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\networking\net.c(34,19): warning C4113: 'int (__cdecl *)()' differs in parameter lists from 'int (__cdecl *)(void)'
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\networking\net.c(35,20): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'void (__cdecl *)(void)'
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\networking\net.c(36,20): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'void (__cdecl *)(void)'
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\networking\net.c(37,17): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'void (__cdecl *)(void)'
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\networking\net.c(44,19): warning C4113: 'int (__cdecl *)()' differs in parameter lists from 'int (__cdecl *)(void)'
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\networking\net.c(45,20): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'void (__cdecl *)(void)'
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\networking\net.c(46,20): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'void (__cdecl *)(void)'
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\networking\net.c(47,17): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'void (__cdecl *)(void)'
+  server.c
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\networking\server.c(86,16): warning C4047: '=': 'void *' differs in levels of indirection from 'int'
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\networking\server.c(124,38): warning C4311: 'type cast': pointer truncation from 'void *' to 'int'
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\networking\server.c(142,51): warning C4311: 'type cast': pointer truncation from 'void *' to 'int'
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\networking\server.c(188,64): warning C4311: 'type cast': pointer truncation from 'void *' to 'int'
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\networking\server.c(153,17): warning C4101: 'packet': unreferenced local variable
+  player.c
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\player.c(17,3): warning C4033: 'spawnPlayer' must return a value
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\player.c(47,3): warning C4033: 'spawnPlayerAt' must return a value
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\player.c(293,28): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\player.c(293,57): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
+  text.c
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\text.c(23,8): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\text.c(73,11): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  ui.c
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\ui\ui.c(63,2): warning C4013: 'drawText' undefined; assuming extern returning int
+  Generating Code...
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\player.c(71,1): warning C4715: 'spawnPlayerAt': not all control paths return a value
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\player.c(38,1): warning C4715: 'spawnPlayer': not all control paths return a value
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\networking\net.c(67,1): warning C4715: 'hostTypeToString': not all control paths return a value
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\networking\net.c(78,1): warning C4172: returning address of local variable or temporary: buffer
+  main.c
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\main.c(11,8): warning C4013: 'time' undefined; assuming extern returning int
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\main.c(17,9): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'void (__cdecl *)(void)'
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\main.c(64,38): warning C4244: 'initializing': conversion from 'float' to 'Uint32', possible loss of data
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\main.c(82,1): warning C4026: function declared with formal parameter list
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\main.c(93,23): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\main.c(106,17): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
+D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\src\main.c(123,22): warning C4244: 'function': conversion from 'float' to 'Uint32', possible loss of data
   MultiplayerExample.vcxproj -> D:\Michele Righi\Programmi\GitHub\MultiplayerGame\MultiplayerExample\x64\Debug\MultiplayerExample.exe

@@ -21,17 +21,16 @@ enum
 };
 
 // Input
-#define MAX_KEYBOARD_KEYS		350
 #define MAX_MOUSE_BUTTONS		6
 
 // Player
 #define PLAYER_SIZE				25.0f
-#define PLAYER_SPEED			5
-#define PLAYER_SPEED_BOOST		2
+#define PLAYER_SPEED			200.0f
+#define PLAYER_SPEED_BOOST		2.0f
 
 // Net
 #define MAX_PLAYERS				4
-#define HOSTNAME				"localhost"
+#define HOSTNAME				"192.168.1.46"
 #define PORT					8987
 enum
 {
