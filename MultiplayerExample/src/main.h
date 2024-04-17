@@ -2,9 +2,15 @@
 
 #include "common.h"
 
+#include "enet/enet.h"
+
 // Init
 extern void initSDL();
-extern void cleanup();
+extern void cleanupSDL();
+
+// Networking
+extern void initEnet();
+extern void cleanupEnet();
 
 // Input
 extern void doInput();
@@ -15,8 +21,14 @@ extern void presentScene();
 extern void blitRect(int x, int y, int w, int h, SDL_Color c);
 extern void blitRectBorder(int x, int y, int w, int h, SDL_Color c);
 
+// Text
+extern void initFonts();
+
+// Menu
+extern void showMenu();
+
 // Game
-extern void resetGame();
+extern void showGame();
 extern Game game;
 
 App app;

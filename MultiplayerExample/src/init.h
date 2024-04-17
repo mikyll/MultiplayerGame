@@ -3,6 +3,6 @@
 #include "common.h"
 
 void initSDL();
-void cleanup();
+void cleanupSDL();
 
 extern App app;

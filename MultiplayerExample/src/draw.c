@@ -11,7 +11,7 @@ void presentScene()
 	SDL_RenderPresent(app.renderer);
 }
 
-/*static SDL_Texture* getTexture(char* name)
+static SDL_Texture* getTexture(char* name)
 {
 	Texture* t;
 	
@@ -58,7 +58,7 @@ SDL_Texture* loadTexture(char* filename)
 	}
 
 	return texture;
-}*/
+}
 
 void blit(SDL_Texture* texture, int x, int y, int center)
 {
@@ -112,8 +112,10 @@ void blitRect(int x, int y, int w, int h, SDL_Color c)
 	SDL_Color prev;
 
 	SDL_GetRenderDrawColor(app.renderer, &prev.r, &prev.g, &prev.b, &prev.a);
+	SDL_SetRenderDrawBlendMode(app.renderer, SDL_BLENDMODE_BLEND);
 	SDL_SetRenderDrawColor(app.renderer, c.r, c.g, c.b, c.a);
 	SDL_RenderFillRect(app.renderer, &rectToDraw);
+	SDL_SetRenderDrawBlendMode(app.renderer, SDL_BLENDMODE_NONE);
 	SDL_SetRenderDrawColor(app.renderer, prev.r, prev.g, prev.b, prev.a);
 }
 
@@ -123,8 +125,10 @@ void blitRectBorder(int x, int y, int w, int h, SDL_Color c)
 	SDL_Color prev;
 
 	SDL_GetRenderDrawColor(app.renderer, &prev.r, &prev.g, &prev.b, &prev.a);
+	SDL_SetRenderDrawBlendMode(app.renderer, SDL_BLENDMODE_BLEND);
 	SDL_SetRenderDrawColor(app.renderer, c.r, c.g, c.b, c.a);
 	SDL_RenderDrawRect(app.renderer, &rectToDraw);
+	SDL_SetRenderDrawBlendMode(app.renderer, SDL_BLENDMODE_NONE);
 	SDL_SetRenderDrawColor(app.renderer, prev.r, prev.g, prev.b, prev.a);
 }
 
@@ -136,6 +140,18 @@ void blitRectTexture(SDL_Texture* texture, SDL_Rect* src, int x, int y)
 	dest.y = y;
 	dest.w = src->w;
 	dest.h = src->h;
+
+	SDL_RenderCopy(app.renderer, texture, src, &dest);
+}
+
+void blitRectScaledTexture(SDL_Texture* texture, SDL_Rect* src, int x, int y, float size)
+{
+	SDL_Rect dest;
+
+	dest.x = x;
+	dest.y = y;
+	dest.w = src->w * size;
+	dest.h = src->h * size;
 
 	SDL_RenderCopy(app.renderer, texture, src, &dest);
 }

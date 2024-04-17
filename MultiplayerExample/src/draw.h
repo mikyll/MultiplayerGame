@@ -2,7 +2,7 @@
 
 #include "common.h"
 
-//#include "SDL2/SDL_image.h"
+#include "SDL2/SDL_image.h"
 
 void prepareScene();
 void presentScene();

@@ -1,0 +1,11 @@
+#pragma once
+
+#include "common.h"
+
+#include "enet/enet.h"
+
+// Player
+extern Entity* getLocalPlayer();
+extern void setLocalPlayer(Entity* player);
+extern int spawnPlayerAt(float x, float y);
+extern Entity* getPlayerByID(int id);

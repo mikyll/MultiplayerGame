@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\networking">
+      <UniqueIdentifier>{7b7badd6-5157-4860-bad3-bb8a13fbe205}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.c">
@@ -30,10 +33,25 @@
     <ClCompile Include="src\player.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\net.c">
+    <ClCompile Include="src\game.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\game.c">
+    <ClCompile Include="src\menu.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\text.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\client.c">
+      <Filter>Source Files\networking</Filter>
+    </ClCompile>
+    <ClCompile Include="src\server.c">
+      <Filter>Source Files\networking</Filter>
+    </ClCompile>
+    <ClCompile Include="src\net.c">
+      <Filter>Source Files\networking</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -62,10 +80,25 @@
     <ClInclude Include="src\player.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\net.h">
+    <ClInclude Include="src\game.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\game.h">
+    <ClInclude Include="src\menu.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\text.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\client.h">
+      <Filter>Source Files\networking</Filter>
+    </ClInclude>
+    <ClInclude Include="src\server.h">
+      <Filter>Source Files\networking</Filter>
+    </ClInclude>
+    <ClInclude Include="src\net.h">
+      <Filter>Source Files\networking</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -18,8 +18,8 @@ void initSDL()
 		"Multiplayer Example",
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
-		DEFAULT_SCREEN_WIDTH,
-		DEFAULT_SCREEN_HEIGHT,
+		DEFAULT_WINDOW_WIDTH,
+		DEFAULT_WINDOW_HEIGHT,
 		windowFlags
 	);
 
@@ -28,7 +28,7 @@ void initSDL()
 	app.renderer = SDL_CreateRenderer(app.window, -1, rendererFlags);
 }
 
-void cleanup()
+void cleanupSDL()
 {
 	SDL_DestroyRenderer(app.renderer);
 
