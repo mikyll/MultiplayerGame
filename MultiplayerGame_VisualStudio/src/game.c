@@ -56,6 +56,8 @@ static void logic(float deltaTime)
 
 		disposeHost();
 
+		setHostType(NET_HOST_NONE);
+
 		showMenu();
 	}
 

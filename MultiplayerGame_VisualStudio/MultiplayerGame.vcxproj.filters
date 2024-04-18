@@ -16,6 +16,9 @@
     <Filter Include="Source Files\networking">
       <UniqueIdentifier>{7b7badd6-5157-4860-bad3-bb8a13fbe205}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\ui">
+      <UniqueIdentifier>{7e6dcc7e-2ab5-4e27-8c20-620d9cc4c0ea}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.c">
@@ -42,17 +45,17 @@
     <ClCompile Include="src\text.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\client.c">
+    <ClCompile Include="src\ui\ui.c">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\networking\client.c">
       <Filter>Source Files\networking</Filter>
     </ClCompile>
-    <ClCompile Include="src\server.c">
+    <ClCompile Include="src\networking\server.c">
       <Filter>Source Files\networking</Filter>
     </ClCompile>
-    <ClCompile Include="src\net.c">
+    <ClCompile Include="src\networking\net.c">
       <Filter>Source Files\networking</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ui.c">
-      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -89,17 +92,17 @@
     <ClInclude Include="src\text.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\client.h">
+    <ClInclude Include="src\networking\client.h">
       <Filter>Source Files\networking</Filter>
     </ClInclude>
-    <ClInclude Include="src\server.h">
+    <ClInclude Include="src\networking\net.h">
       <Filter>Source Files\networking</Filter>
     </ClInclude>
-    <ClInclude Include="src\net.h">
+    <ClInclude Include="src\networking\server.h">
       <Filter>Source Files\networking</Filter>
     </ClInclude>
-    <ClInclude Include="src\ui.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="src\ui\ui.h">
+      <Filter>Source Files\ui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -17,6 +17,7 @@ extern void doPlayers(float deltaTime);
 extern void drawPlayers();
 
 // Networking
+extern void setHostType(int type);
 extern int getHostType();
 extern char* hostTypeToString(int type);
 extern void disposeHost();

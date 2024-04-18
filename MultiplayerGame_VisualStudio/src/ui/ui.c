@@ -63,12 +63,19 @@ void drawTextInput()
 	drawText(DEFAULT_WINDOW_WIDTH / 2 - GLYPH_WIDTH * 12, GLYPH_HEIGHT, 0, 0, 0, TEXT_LEFT, "IP ADDRESS: ");
 	if (cursor == 0)
 	{
-		drawText(DEFAULT_WINDOW_WIDTH / 2, GLYPH_HEIGHT, 0, 0, 0, TEXT_LEFT, "localhost");
+		drawText(DEFAULT_WINDOW_WIDTH / 2, GLYPH_HEIGHT, 100, 100, 100, TEXT_LEFT, "localhost");
 	}
 	else
 	{
 		drawText(DEFAULT_WINDOW_WIDTH / 2, GLYPH_HEIGHT, 0, 0, 0, TEXT_LEFT, ipAddress);
 	}
+}
+
+void drawFPS(int fps)
+{
+	char buffer[10];
+	sprintf_s(buffer, sizeof(buffer), "%5d FPS", fps);
+	drawTextScaled(DEFAULT_WINDOW_WIDTH - 5, 5, 0.75f, 0, 0, 0, TEXT_RIGHT, buffer);
 }
 
 void logic()

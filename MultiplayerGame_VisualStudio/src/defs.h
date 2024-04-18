@@ -7,9 +7,12 @@
 // App
 #define DEFAULT_WINDOW_WIDTH	800
 #define DEFAULT_WINDOW_HEIGHT	600
+#define CAP_FPS					60
+
+// Draw
 #define MAX_NAME_LENGTH			32
 
-// Fonts
+// Text
 #define MAX_LINE_LENGTH			1024
 #define GLYPH_WIDTH				18
 #define GLYPH_HEIGHT			29

@@ -46,6 +46,16 @@ void setHostType(int type)
         netReceive = clientBefore;
         netSend = clientAfter;
     }
+
+    // Reset callbacks
+    if (type == NET_HOST_NONE)
+    {
+        hostType = NET_HOST_NONE;
+        netCreate = NULL;
+        netDispose = NULL;
+        netReceive = NULL;
+        netSend = NULL;
+    }
 }
 
 int getHostType()
