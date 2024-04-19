@@ -15,12 +15,15 @@ A super simple multiplayer game made in C, with [SDL2](https://github.com/libsdl
 
 ## Demo
 
-TODO
+https://github.com/mikyll/MultiplayerGame/assets/56556806/f9213bac-d907-4bee-a7e5-a9922a075f32
 
 ## Features/Roadmap
 
 - [x] deltaTime game loop with the possibility to cap to a specific framerate;
 - [x] multiplayer based on a server/client model and UDP reliable packets;
+- [ ] server->client disconnection;
+- [ ] non-blocking wait for client connections;
+- [ ] improve UI elements and refactor the related code;
 
 ## Project Setup
 
