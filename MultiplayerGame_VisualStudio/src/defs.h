@@ -7,8 +7,10 @@
 #define STRNCPY(dest, src, n) secure_strncpy(dest, n, src, _TRUNCATE)
 
 // App
-#define DEFAULT_WINDOW_WIDTH		800
-#define DEFAULT_WINDOW_HEIGHT		600
+#define APP_TITLE					"Multiplayer Game"
+#define APP_VERSION					"v0.1-beta"
+#define DEFAULT_WINDOW_WIDTH		640
+#define DEFAULT_WINDOW_HEIGHT		480
 #define CAP_FPS						60
 
 // Draw

@@ -15,7 +15,7 @@ void initSDL()
 	}
 
 	app.window = SDL_CreateWindow(
-		"Multiplayer Example",
+		APP_TITLE,
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
 		DEFAULT_WINDOW_WIDTH,

@@ -67,6 +67,10 @@ typedef struct {
 } PlayerJoined;
 
 typedef struct {
+	Entity oldPlayer;
+} PlayerLeft;
+
+typedef struct {
 	int type;
 	Entity players[MAX_PLAYERS];
 	int numPlayers;
@@ -80,6 +84,7 @@ typedef enum {
 	CONNECT_OK,
 	CONNECT_DENIED,
 	PLAYER_JOINED,
+	PLAYER_LEFT,
 	GAME_STATE,
 	PLAYER_STATE,
 } NetMessageType;
@@ -90,6 +95,7 @@ typedef struct {
 		ConnectOK connectOK;
 		ConnectDenied connectDenied;
 		PlayerJoined playerJoined;
+		PlayerLeft playerLeft;
 		GameState gameState;
 		PlayerState playerState;
 	} data;

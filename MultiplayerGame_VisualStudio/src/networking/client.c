@@ -142,6 +142,20 @@ static void handleMessage(ENetPacket* packet)
 
             break;
         }
+        case PLAYER_LEFT:
+        {
+            PlayerLeft playerLeft= receivedNetMessage.data.playerLeft;
+
+            if (getPlayerByID(playerLeft.oldPlayer.id) != NULL)
+            {
+                destroyPlayerByID(playerLeft.oldPlayer.id);
+            }
+
+            // Test
+            printf("PLAYER_LEFT: %d\n", playerLeft.oldPlayer.id);
+
+            break;
+        }
         case GAME_STATE:
         {
             GameState gameState = receivedNetMessage.data.gameState;

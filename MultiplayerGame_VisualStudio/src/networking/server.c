@@ -91,6 +91,8 @@ static void handleConnection(ENetPeer* peer)
         packet = enet_packet_create(&message, sizeof(NetMessage), ENET_PACKET_FLAG_RELIABLE);
         enet_peer_send(peer, 0, packet);
 
+        enet_peer_reset(peer);
+
         return;
     }
 
@@ -144,8 +146,10 @@ static void handleConnection(ENetPeer* peer)
 
 static void handleDisconnection(ENetPeer* peer)
 {
-    // Destroy player entity
-    destroyPlayerByID((int)peer->data);
+    NetMessage message;
+    Entity* player;
+    ENetPacket* packet;
+    int id;
 
     // Remove client from peers array
     for (int i = 0; i < MAX_SERVER_PEERS; i++)
@@ -157,6 +161,20 @@ static void handleDisconnection(ENetPeer* peer)
             break;
         }
     }
+    enet_peer_reset(peer);
+
+    id = (int)peer->data;
+
+    // Broadcast PLAYER_LEFT to each player
+    memset(&message, 0, sizeof(NetMessage));
+    message.type = PLAYER_LEFT;
+    message.data.playerLeft.oldPlayer = *(getPlayerByID(id));
+
+    packet = enet_packet_create(&message, sizeof(NetMessage), ENET_PACKET_FLAG_RELIABLE);
+    enet_host_broadcast(serverHost, 0, packet);
+
+    // Destroy player entity
+    destroyPlayerByID(id);
 }
 
 static void handleMessage(ENetPeer* peer, ENetPacket* packet)
