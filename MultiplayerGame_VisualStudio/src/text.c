@@ -11,7 +11,7 @@ void initFonts()
 void drawText(int x, int y, int r, int g, int b, int align, char* format, ...)
 {
 	int i, len, c;
-	SDL_Rect rect;
+	SDL_Rect rect = { 0 };
 	va_list args;
 
 	memset(&drawTextBuffer, '\0', sizeof(drawTextBuffer));
@@ -24,13 +24,18 @@ void drawText(int x, int y, int r, int g, int b, int align, char* format, ...)
 
 	switch (align)
 	{
-	case TEXT_RIGHT:
-		x -= (len * GLYPH_WIDTH);
-		break;
+        case TEXT_RIGHT:
+        {
+            x -= (len * GLYPH_WIDTH);
 
-	case TEXT_CENTER:
-		x -= (len * GLYPH_WIDTH) / 2;
-		break;
+            break;
+        }
+        case TEXT_CENTER:
+        {
+            x -= (len * GLYPH_WIDTH) / 2;
+
+            break;
+        }
 	}
 
 	rect.w = GLYPH_WIDTH;
@@ -61,7 +66,7 @@ void drawText(int x, int y, int r, int g, int b, int align, char* format, ...)
 void drawTextScaled(int x, int y, float size, int r, int g, int b, int align, char* format, ...)
 {
     int i, len, c;
-    SDL_Rect rect;
+    SDL_Rect rect = { 0 };
     va_list args;
 
     memset(&drawTextBuffer, '\0', sizeof(drawTextBuffer));
@@ -77,13 +82,18 @@ void drawTextScaled(int x, int y, float size, int r, int g, int b, int align, ch
 
     switch (align)
     {
-    case TEXT_RIGHT:
-        x -= (len * scaledWidth);
-        break;
+        case TEXT_RIGHT:
+        {
+            x -= (len * scaledWidth);
 
-    case TEXT_CENTER:
-        x -= (len * scaledWidth) / 2;
-        break;
+            break;
+        }
+        case TEXT_CENTER:
+        {
+            x -= (len * scaledWidth) / 2;
+
+            break;
+        }
     }
 
     rect.w = GLYPH_WIDTH;

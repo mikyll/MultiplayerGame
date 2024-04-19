@@ -74,7 +74,6 @@ typedef struct {
 
 typedef struct {
 	Entity player;
-	//ENetPeer peer;
 } PlayerState;
 
 typedef enum {

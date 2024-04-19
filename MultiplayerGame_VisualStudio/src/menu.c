@@ -28,7 +28,7 @@ Button createButton(
 	void (*onOver)(void), void (*onOut)(void),
 	void (*onPress)(void), void (*onRelease)(void))
 {
-	Button button;
+	Button button = { 0 };
 
 	button.x = posX;
 	button.y = posY;
@@ -148,7 +148,7 @@ static void logic(float deltaTime)
 			}
 
 			// Create the host
-			if (createHost() != 0)
+			if (createHost(getTextInput(), PORT) != 0)
 			{
 				disposeHost();
 				return;

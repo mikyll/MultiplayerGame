@@ -15,12 +15,13 @@ extern void showGame();
 
 // Networking
 extern void setHostType(int type);
-extern int createHost();
+extern int createHost(char* ipAddress, int port);
 extern void disposeHost();
 
 // UI
 extern void doTextInput();
 extern void drawTextInput();
+extern char* getTextInput();
 
 // Utils
 extern void secure_strcpy(char* dest, size_t destSize, const char* src);

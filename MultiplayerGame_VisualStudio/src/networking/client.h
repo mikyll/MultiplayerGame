@@ -9,3 +9,6 @@ extern Entity* getLocalPlayer();
 extern void setLocalPlayer(Entity* player);
 extern int spawnPlayerAt(float x, float y);
 extern Entity* getPlayerByID(int id);
+
+// Utils
+extern int isValidIPAddress(const char* ipAddress);

@@ -3,7 +3,7 @@
 static ENetAddress address;
 static int hostType = NET_HOST_NONE;
 
-static int (*netCreate)(void);
+static int (*netCreate)(char* ipAddress);
 static void (*netDispose)(void);
 static void (*netReceive)(void);
 static void (*netSend)(void);
@@ -95,15 +95,15 @@ void setConnectionString(char* ipAddress, int port)
 char* getConnectionString()
 {
     // TODO
-    char buffer[22];
+    char buffer[22] = { 0 };
     //secure_sprintf(buffer, sizeof(buffer), "%s:%d", enet_address_get_host_ip(&address, ), address.port);
     return buffer;
 }
 
-int createHost()
+int createHost(char* ipAddress, int port)
 {
     if (netCreate != NULL)
-        return netCreate();
+        return netCreate(ipAddress, port);
 
     return EXIT_FAILURE;
 }

@@ -1,6 +1,6 @@
 #include "client.h"
 
-int createClient();
+int createClient(char* ipAddress, int port);
 void destroyClient();
 static void handleMessage(ENetPacket* packet);
 void clientBefore();
@@ -13,7 +13,7 @@ static ENetHost* clientHost = NULL;
 static ENetPeer* serverPeer = NULL;
 static int isWaiting = 0;
 
-int createClient()
+int createClient(char* ipAddress, int port)
 {
     ENetEvent event;
 
@@ -32,8 +32,24 @@ int createClient()
         return EXIT_FAILURE;
     }
 
-    enet_address_set_host(&serverAddress, HOSTNAME);
-    serverAddress.port = PORT;
+    if (ipAddress == NULL || strlen(ipAddress) == 0)
+    {
+        enet_address_set_host(&serverAddress, HOSTNAME);
+    }
+    else
+    {
+        if (isValidIPAddress(ipAddress))
+        {
+            printf("Attempting to connect to IP address %s:%d...\n", ipAddress, port);
+            enet_address_set_host(&serverAddress, ipAddress);
+        }
+        else
+        {
+            printf("Invalid IP address\n");
+            return -1;
+        }
+    }
+    serverAddress.port = port;
 
     // Connect to server
     serverPeer = enet_host_connect(clientHost, &serverAddress, 2, 0);
@@ -48,13 +64,13 @@ int createClient()
     while (enet_host_service(clientHost, &event, 5000) > 0 &&
         event.type == ENET_EVENT_TYPE_CONNECT)
     {
-        printf("Connection to %s:%d succeeded.\n", HOSTNAME, PORT);
+        printf("Connection to %s:%d succeeded.\n", ipAddress, port);
 
         return EXIT_SUCCESS;
     }
 
     enet_peer_reset(serverPeer);
-    fprintf(stderr, "Connection to %s:%d failed.\n", HOSTNAME, PORT);
+    fprintf(stderr, "Connection to %s:%d failed.\n", ipAddress, port);
 
     return EXIT_FAILURE;
 }
@@ -64,7 +80,8 @@ void destroyClient()
     if (serverPeer != NULL)
         enet_peer_disconnect_now(serverPeer, 0);
 
-    enet_host_destroy(clientHost);
+    if (clientHost != NULL)
+        enet_host_destroy(clientHost);
 }
 
 static void handleMessage(ENetPacket* packet)
@@ -153,7 +170,7 @@ static void handleMessage(ENetPacket* packet)
 void clientBefore()
 {
     ENetEvent event;
-    ENetPacket* packet;
+    ENetPacket* packet = { 0 };
 
     if (clientHost == NULL)
         return;

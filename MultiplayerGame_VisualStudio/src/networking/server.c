@@ -1,6 +1,6 @@
 #include "server.h"
 
-int createServer();
+int createServer(char* ipAddress, int port);
 void destroyServer();
 static void handleConnection(ENetPeer* peer);
 static void handleDisconnection(ENetPeer* peer);
@@ -15,12 +15,19 @@ static ENetPeer* clientPeers[MAX_SERVER_PEERS]; // Connected clients
 static int numPeers = 0;
 
 
-int createServer()
+int createServer(char* ipAddress, int port)
 {
     int id;
 
-    serverAddress.host = ENET_HOST_ANY;
-    serverAddress.port = PORT;
+    if (ipAddress == NULL || strlen(ipAddress) == 0 || !isValidIPAddress(ipAddress))
+    {
+        serverAddress.host = ENET_HOST_ANY;
+    }
+    else
+    {
+        enet_address_set_host(&serverAddress, ipAddress);
+    }
+    serverAddress.port = port;
 
     serverHost = enet_host_create(
         &serverAddress,     // the address to bind the server host to 
@@ -171,7 +178,7 @@ static void handleMessage(ENetPeer* peer, ENetPacket* packet)
 void serverBefore()
 {
     ENetEvent event;
-    ENetPacket* packet;
+    ENetPacket* packet = { 0 };
 
     if (serverHost == NULL)
     {

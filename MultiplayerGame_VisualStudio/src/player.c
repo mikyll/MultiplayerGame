@@ -280,7 +280,7 @@ void doPlayers(float deltaTime)
 void drawPlayers()
 {
 	Entity* player;
-	SDL_Rect playerRect;
+	SDL_Rect playerRect = { 0 };
 	char buffer[4];
 
 	for (player = game.playersHead.next; player != NULL; player = player->next)

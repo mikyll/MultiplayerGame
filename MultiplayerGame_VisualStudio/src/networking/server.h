@@ -11,6 +11,7 @@ extern void setLocalPlayer(Entity* player);
 extern Entity* getPlayerByID(int id);
 
 // Utils
+extern int isValidIPAddress(const char* ipAddress);
 extern void secure_strcpy(char* dest, size_t destSize, const char* src);
 
 extern Game game;

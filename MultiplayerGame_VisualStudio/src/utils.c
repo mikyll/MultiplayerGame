@@ -1,5 +1,55 @@
 #include "utils.h"
 
+
+int isValidIPAddress(const char* ipAddress);
+int secure_sprintf(char* buffer, size_t bufferSize, const char* format, ...);
+void secure_strcpy(char* dest, size_t destSize, const char* src);
+void secure_strncpy(char* dest, size_t destSize, const char* src, size_t count);
+char* secure_strtok(char* str, const char* delim, char** saveptr);
+
+
+int isValidIPAddress(const char* ipAddress)
+{
+	int dots = 0;
+	int segments = 0;
+	char* segment;
+	char* copy = strdup(ipAddress); // Make a copy of the input string
+	char* saveptr = NULL; // Pointer to maintain the position between calls
+
+	// Tokenize the string by dots
+	segment = secure_strtok(copy, ".", &saveptr);
+	while (segment != NULL)
+	{
+		segments++;
+		// Check if the segment is a valid integer in the range [0, 255]
+		for (int i = 0; i < strlen(segment); i++)
+		{
+			if (!isdigit(segment[i]))
+			{
+				free(copy); // Free the memory allocated for the copy
+				return 0; // Not a valid IP address
+			}
+		}
+		int value = atoi(segment);
+		if (value < 0 || value > 255)
+		{
+			free(copy); // Free the memory allocated for the copy
+			return 0; // Not a valid IP address
+		}
+		segment = secure_strtok(NULL, ".", &saveptr);
+	}
+
+	free(copy); // Free the memory allocated for the copy
+
+	// Ensure there are exactly 4 segments
+	if (segments != 4)
+	{
+		return 0; // Not a valid IP address
+	}
+
+	return 1; // Valid IP address
+}
+
 int secure_sprintf(char* buffer, size_t bufferSize, const char* format, ...)
 {
 	if (buffer == NULL || bufferSize == 0 || format == NULL)
@@ -84,4 +134,49 @@ void secure_strncpy(char* dest, size_t destSize, const char* src, size_t count)
 
 	// Ensure null termination of dest
 	dest[i] = '\0';
+}
+
+char* secure_strtok(char* str, const char* delim, char** saveptr)
+{
+	if (str == NULL && *saveptr == NULL)
+	{
+		return NULL;
+	}
+
+	if (str != NULL)
+	{
+		*saveptr = str;
+	}
+
+	// Skip leading delimiters
+	while (**saveptr && strchr(delim, **saveptr))
+	{
+		(*saveptr)++;
+	}
+
+	if (**saveptr == '\0')
+	{
+		*saveptr = NULL;
+		return NULL;
+	}
+
+	char* token_start = *saveptr;
+
+	// Find the end of the token
+	while (**saveptr && !strchr(delim, **saveptr))
+	{
+		(*saveptr)++;
+	}
+
+	if (**saveptr != '\0')
+	{
+		**saveptr = '\0';
+		(*saveptr)++;
+	}
+	else
+	{
+		*saveptr = NULL;
+	}
+
+	return token_start;
 }
