@@ -397,5 +397,9 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
-# archives
+# Archives
 libs/archives/
+
+# Exclude dependencies .lib
+!libs/lib/x64/
+!libs/lib/x86/
