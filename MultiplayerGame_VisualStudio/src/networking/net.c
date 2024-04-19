@@ -3,7 +3,7 @@
 static ENetAddress address;
 static int hostType = NET_HOST_NONE;
 
-static int (*netCreate)(char* ipAddress);
+static int (*netCreate)(char* ipAddress, int port);
 static void (*netDispose)(void);
 static void (*netReceive)(void);
 static void (*netSend)(void);

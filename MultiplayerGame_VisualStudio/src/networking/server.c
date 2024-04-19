@@ -54,7 +54,7 @@ void destroyServer()
 {
     ENetEvent event;
 
-    for (int i = 0; i < numPeers; i++)
+    for (int i = 0; i < MAX_SERVER_PEERS; i++)
     {
         if (clientPeers[i] != NULL)
         {
@@ -96,7 +96,7 @@ static void handleConnection(ENetPeer* peer)
 
     // The player can be accepted, so we add it in the first available spot
     numPeers++;
-    for (int i = 0; i < numPeers; i++)
+    for (int i = 0; i < MAX_SERVER_PEERS; i++)
     {
         if (clientPeers[i] == NULL)
         {
