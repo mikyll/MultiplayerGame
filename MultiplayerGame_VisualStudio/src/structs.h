@@ -11,7 +11,7 @@ typedef struct {
 } Delegate;
 
 struct Texture {
-	char name[MAX_NAME_LENGTH];
+	char name[MAX_TEXTURE_NAME_LENGTH];
 	SDL_Texture* texture;
 	Texture* next;
 };
@@ -52,7 +52,7 @@ typedef struct {
 
 // Networking
 typedef struct {
-	int localID;
+	int localID; // ID of the new player
 	Entity players[MAX_PLAYERS];
 	int numPlayers;
 } ConnectOK;
@@ -61,6 +61,10 @@ typedef struct {
 	int id;
 	char message[64];
 } ConnectDenied;
+
+typedef struct {
+	Entity newPlayer;
+} PlayerJoined;
 
 typedef struct {
 	int type;
@@ -76,6 +80,7 @@ typedef struct {
 typedef enum {
 	CONNECT_OK,
 	CONNECT_DENIED,
+	PLAYER_JOINED,
 	GAME_STATE,
 	PLAYER_STATE,
 } NetMessageType;
@@ -85,6 +90,7 @@ typedef struct {
 	union {
 		ConnectOK connectOK;
 		ConnectDenied connectDenied;
+		PlayerJoined playerJoined;
 		GameState gameState;
 		PlayerState playerState;
 	} data;

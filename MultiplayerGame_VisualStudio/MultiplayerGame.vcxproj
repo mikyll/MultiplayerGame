@@ -165,6 +165,7 @@
     <ClCompile Include="src\player.c" />
     <ClCompile Include="src\text.c" />
     <ClCompile Include="src\ui\ui.c" />
+    <ClCompile Include="src\utils.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\common.h" />
@@ -182,6 +183,7 @@
     <ClInclude Include="src\structs.h" />
     <ClInclude Include="src\text.h" />
     <ClInclude Include="src\ui\ui.h" />
+    <ClInclude Include="src\utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -57,6 +57,9 @@
     <ClCompile Include="src\networking\net.c">
       <Filter>Source Files\networking</Filter>
     </ClCompile>
+    <ClCompile Include="src\utils.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\defs.h">
@@ -103,6 +106,9 @@
     </ClInclude>
     <ClInclude Include="src\ui\ui.h">
       <Filter>Source Files\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

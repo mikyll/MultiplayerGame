@@ -1,9 +1,17 @@
 #include "client.h"
 
-ENetAddress clientAddress;
-ENetAddress serverAddress;
-ENetHost* clientHost = NULL;
-ENetPeer* serverPeer = NULL;
+int createClient();
+void destroyClient();
+static void handleMessage(ENetPacket* packet);
+void clientBefore();
+void clientAfter();
+
+
+static ENetAddress clientAddress;
+static ENetAddress serverAddress;
+static ENetHost* clientHost = NULL;
+static ENetPeer* serverPeer = NULL;
+static int isWaiting = 0;
 
 int createClient()
 {
@@ -31,6 +39,7 @@ int createClient()
     serverPeer = enet_host_connect(clientHost, &serverAddress, 2, 0);
     if (serverPeer == NULL) {
         printf("No available peers for initiating an ENet connection\n");
+
         return EXIT_FAILURE;
     }
 
@@ -41,22 +50,19 @@ int createClient()
     {
         printf("Connection to %s:%d succeeded.\n", HOSTNAME, PORT);
 
-        // Successfully connected to server
-
         return EXIT_SUCCESS;
     }
 
     enet_peer_reset(serverPeer);
     fprintf(stderr, "Connection to %s:%d failed.\n", HOSTNAME, PORT);
+
     return EXIT_FAILURE;
 }
 
 void destroyClient()
 {
     if (serverPeer != NULL)
-    {
         enet_peer_disconnect_now(serverPeer, 0);
-    }
 
     enet_host_destroy(clientHost);
 }
@@ -64,113 +70,141 @@ void destroyClient()
 static void handleMessage(ENetPacket* packet)
 {
     NetMessage receivedNetMessage;
+    int id;
+    
     memcpy(&receivedNetMessage, packet->data, sizeof(NetMessage));
 
     switch (receivedNetMessage.type)
     {
-    case CONNECT_OK:
-        printf("Connect OK message\n");
-        // Spawn players
-        for (int i = 0; i < receivedNetMessage.data.connectOK.numPlayers; i++)
+        case CONNECT_OK:
         {
-            int id = spawnPlayer(receivedNetMessage.data.connectOK.players[i]);
+            ConnectOK connectOK = receivedNetMessage.data.connectOK;
 
-            // Set local player
-            if (receivedNetMessage.data.connectOK.localID == receivedNetMessage.data.connectOK.players[i].id)
+            // Spawn missing players
+            for (int i = 0; i < connectOK.numPlayers; i++)
             {
-                setLocalPlayer(getPlayerByID(id));
-            }
-        }
+                if (getPlayerByID(connectOK.players[i].id) == NULL)
+                {
+                    id = spawnPlayer(connectOK.players[i]);
 
-        break;
-    case CONNECT_DENIED:
-        // TODO
-        printf("Connect Denied message: %s\n", receivedNetMessage.data.connectDenied.message);
-        
-        break;
-    case GAME_STATE:
-        //printf("Game State message\n");
-        
-        // update players
-        for (int i = 0; i < receivedNetMessage.data.gameState.numPlayers; i++)
+                    // Set local player
+                    if (connectOK.localID == connectOK.players[i].id)
+                    {
+                        setLocalPlayer(getPlayerByID(id));
+                    }
+                }
+            }
+
+            // Test
+            printf("CONNECT_OK: %d\n", connectOK.localID);
+
+            break;
+        }
+        case CONNECT_DENIED:
         {
-            Entity* player = getPlayerByID(receivedNetMessage.data.gameState.players[i].id);
-            if (player != NULL)
-            {
-                player->x = receivedNetMessage.data.gameState.players[i].x;
-                player->y = receivedNetMessage.data.gameState.players[i].y;
-            }
+            ConnectDenied connectDenied = receivedNetMessage.data.connectDenied;
+
+            // TODO
+            printf("Connect Denied message: %s\n", connectDenied.message);
+
+            destroyClient();
+
+            break;
         }
-        break;
-    default:
-        printf("Unknown message\n");
-        break;
+        case PLAYER_JOINED:
+        {
+            PlayerJoined playerJoined = receivedNetMessage.data.playerJoined;
+
+            if (getPlayerByID(playerJoined.newPlayer.id) == NULL)
+            {
+                spawnPlayer(playerJoined.newPlayer);
+            }
+
+            // Test
+            printf("PLAYER_JOINED: %d\n", playerJoined.newPlayer.id);
+
+            break;
+        }
+        case GAME_STATE:
+        {
+            GameState gameState = receivedNetMessage.data.gameState;
+
+            // Update players
+            for (int i = 0; i < gameState.numPlayers; i++)
+            {
+                Entity* player = getPlayerByID(gameState.players[i].id);
+                if (player != NULL)
+                {
+                    player->x = gameState.players[i].x;
+                    player->y = gameState.players[i].y;
+                }
+            }
+
+            break;
+        }
+        default:
+        {
+            printf("Unknown message: %d\n", receivedNetMessage.type);
+            break;
+        }
     }
 }
 
 void clientBefore()
 {
-    // Receive game state
-
     ENetEvent event;
     ENetPacket* packet;
 
     if (clientHost == NULL)
-    {
-        printf("Client is NULL.\n");
         return;
-    }
 
     while (enet_host_service(clientHost, &event, 0) > 0)
     {
         switch (event.type)
         {
         case ENET_EVENT_TYPE_RECEIVE:
-
+        {
             handleMessage(event.packet);
 
-            /*
-            // Old code
-            GameState receivedState;
-            memcpy(&receivedState, event.packet->data, sizeof(GameState));
-
-            // update players
-            for (int i = 0; i < receivedState.numPlayers; i++)
-            {
-                Entity* player = getPlayerByID((int)event.peer->data);
-                if (player != NULL)
-                {
-                    player->x = receivedState.players[i].x;
-                    player->y = receivedState.players[i].y;
-                }
-            }*/
-
-            // Clean up the packet now that we're done using it
             enet_packet_destroy(event.packet);
+
             break;
+        }
         case ENET_EVENT_TYPE_DISCONNECT:
+        {
             destroyClient();
+
             return;
+        }
+        default:
+        {
+            printf("Unhandled event type\n");
+
+            break;
+        }
         }
     }
 }
 
+// sends player update
 void clientAfter()
 {
+    Entity* player;
+    PlayerState playerState;
+    ENetPacket* packet;
+
     if (clientHost == NULL)
         return;
 
-    // Send player position
-    Entity* player = getLocalPlayer();
+    player = getLocalPlayer();
     if (player == NULL)
         return;
 
-    PlayerState playerState;
     memset(&playerState, 0, sizeof(PlayerState));
-    
     playerState.player = *player;
 
-    ENetPacket * packet = enet_packet_create(&playerState, sizeof(PlayerState), ENET_PACKET_FLAG_RELIABLE);
+    // Send local player position
+    packet = enet_packet_create(&playerState, sizeof(PlayerState), ENET_PACKET_FLAG_RELIABLE);
     enet_peer_send(serverPeer, 0, packet);
     enet_host_flush(clientHost);
 }

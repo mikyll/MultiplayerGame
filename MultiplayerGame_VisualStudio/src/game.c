@@ -4,7 +4,7 @@ Game game;
 
 void initGame();
 static void resetGame();
-static void logic();
+static void logic(float deltaTime);
 static void draw();
 
 void initGame()
@@ -28,11 +28,6 @@ void resetGame()
 
 	game.playersTail = &game.playersHead;
 	game.playersCount = 0;
-
-	// Create players
-	/*spawnPlayer((DEFAULT_WINDOW_WIDTH / 2) - PLAYER_SIZE, (DEFAULT_WINDOW_HEIGHT / 2) - PLAYER_SIZE);
-	spawnPlayer(100, 100);
-	spawnPlayer(100, 200);*/
 }
 
 void showGame()
@@ -45,53 +40,41 @@ void showGame()
 static void logic(float deltaTime)
 {
 	// Receive network input
-	// TODO
-	// Networking Receive (Client: receive game state; server: receive peer Inputs)
-	//doNetworkingReceive();
 	doNetworkingBefore();
 
+	// Quit the game
 	if (app.keyboard[SDL_SCANCODE_ESCAPE])
 	{
 		app.keyboard[SDL_SCANCODE_ESCAPE] = 0;
 
 		disposeHost();
 
-		setHostType(NET_HOST_NONE);
-
 		showMenu();
 	}
 
 	doPlayers(deltaTime);
 
-
 	// Send network update
-	// TODO
-	// Networking Send
-	//doNetworkingSend();
 	doNetworkingAfter();
 }
 
 static void draw()
 {
 	Entity* player;
+	char buffer[64];
 	int i;
+	float size = 0.5f;
 
 	drawPlayers();
 
 	drawTextScaled(5, 5, 0.75, 0, 0, 0, TEXT_LEFT, hostTypeToString(getHostType()));
 
-	char buffer[64];
-	sprintf_s(buffer, sizeof(buffer), "Players count: %d", game.playersCount);
+	secure_sprintf(buffer, sizeof(buffer), "Players count: %d", game.playersCount);
 	drawTextScaled(DEFAULT_WINDOW_WIDTH - 5, 50, 0.5, 0, 0, 0, TEXT_RIGHT, buffer);
 
-	
-	i = 0;
-	for (player = game.playersHead.next; player != NULL; player = player->next)
+	for (i = 0, player = game.playersHead.next; player != NULL; player = player->next, i++)
 	{
-		char buffer[64];
-		float size = 0.5f;
-		sprintf_s(buffer, sizeof(buffer), "P%d (%3.f,%3.f)", player->id, player->x, player->y);
+		secure_sprintf(buffer, sizeof(buffer), "P%d (%3.f,%3.f)", player->id, player->x, player->y);
 		drawTextScaled(DEFAULT_WINDOW_WIDTH - 5, 70 + i * GLYPH_HEIGHT * size + 5, size, player->color.r, player->color.g, player->color.b, TEXT_RIGHT, buffer);
-		i++;
 	}
 }

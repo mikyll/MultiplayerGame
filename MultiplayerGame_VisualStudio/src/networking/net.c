@@ -27,35 +27,42 @@ void cleanupEnet()
 
 void setHostType(int type)
 {
-    // Set callbacks for server
-    if (type == NET_HOST_SERVER)
+    // Set host callbacks
+    switch (type)
     {
-        hostType = NET_HOST_SERVER;
+    case NET_HOST_SERVER:
+    {
         netCreate = createServer;
         netDispose = destroyServer;
         netReceive = serverBefore;
         netSend = serverAfter;
-    }
 
-    // Set callbacks for client
-    if (type == NET_HOST_CLIENT)
+        break;
+    }
+    case NET_HOST_CLIENT:
     {
-        hostType = NET_HOST_CLIENT;
         netCreate = createClient;
         netDispose = destroyClient;
         netReceive = clientBefore;
         netSend = clientAfter;
-    }
 
-    // Reset callbacks
-    if (type == NET_HOST_NONE)
+        break;
+    }
+    case NET_HOST_NONE:
     {
-        hostType = NET_HOST_NONE;
         netCreate = NULL;
         netDispose = NULL;
         netReceive = NULL;
         netSend = NULL;
+
+        break;
     }
+    default:
+        printf("Unknown host type: %d\n", type);
+        return;
+    }
+
+    hostType = type;
 }
 
 int getHostType()
@@ -73,18 +80,23 @@ char* hostTypeToString(int type)
         return "Server";
     case NET_HOST_CLIENT:
         return "Client";
+    default:
+        return "Unknown";
     }
 }
 
 void setConnectionString(char* ipAddress, int port)
 {
+    // TODO
     enet_address_set_host_ip(&address, ipAddress);
     address.port = port;
 }
+
 char* getConnectionString()
 {
+    // TODO
     char buffer[22];
-    //sprintf_s(buffer, sizeof(buffer), "%s:%d", enet_address_get_host_ip(&address, ), address.port);
+    //secure_sprintf(buffer, sizeof(buffer), "%s:%d", enet_address_get_host_ip(&address, ), address.port);
     return buffer;
 }
 

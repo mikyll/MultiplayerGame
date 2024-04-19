@@ -1,16 +1,23 @@
 #include "player.h"
 
-Entity* localPlayer = NULL;
-
 int spawnPlayerAt(float x, float y);
 void destroyPlayer(Entity* player);
 void setLocalPlayer(Entity* player);
 Entity* getPlayerByID(int id);
 
+
+static Entity* localPlayer = NULL;
+
+/*
+* Creates a new Player entity, adding it to the players linked list.
+* Returns the player's ID.
+* 
+* Useful to allocate an entity received by the network.
+*/
 int spawnPlayer(Entity p)
 {
 	// Allocate memory for the player entity
-	Entity* player = (Entity*)malloc(sizeof(Entity));
+	Entity* player = (Entity*) malloc(sizeof(Entity));
 	if (player == NULL)
 	{
 		printf("Player creation failed.\n");
@@ -93,6 +100,7 @@ void destroyPlayer(Entity* player)
 		playerPrev = p;
 	}
 }
+
 void destroyPlayerByID(int id)
 {
 	Entity* p, * playerPrev = NULL;
@@ -272,25 +280,27 @@ void doPlayers(float deltaTime)
 void drawPlayers()
 {
 	Entity* player;
+	SDL_Rect playerRect;
+	char buffer[4];
+
 	for (player = game.playersHead.next; player != NULL; player = player->next)
 	{
-		SDL_Rect playerRect;
-		playerRect.x = (int)player->x;
-		playerRect.y = (int)player->y;
-		playerRect.w = (int)player->w;
-		playerRect.h = (int)player->h;
+		playerRect.x = player->x;
+		playerRect.y = player->y;
+		playerRect.w = player->w;
+		playerRect.h = player->h;
 
 		blitRect(playerRect.x, playerRect.y, playerRect.w, playerRect.h, player->color);
 
+		// If it's the local player, draw a square around
 		if (player == localPlayer)
 		{
 			SDL_Color colorBorder = { 255, 0, 0, 255 };
 			blitRectBorder(playerRect.x - 5, playerRect.y -5, playerRect.w + 10, playerRect.h + 10, colorBorder);
 		}
 
-		char buffer[4];
-		sprintf_s(buffer, sizeof(buffer), "P%d", player->id);
+		// Text under player: P + ID
+		secure_sprintf(buffer, sizeof(buffer), "P%d", player->id);
 		drawTextScaled(player->x + (player->w / 2), player->y + 32, 0.6f, 0, 0, 0, TEXT_CENTER, buffer);
-
 	}
 }

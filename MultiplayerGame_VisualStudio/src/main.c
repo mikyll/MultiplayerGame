@@ -6,7 +6,6 @@ static float calculateDeltaTime();
 static void capFrameRate(Uint32 initFrameTime, Uint32 fpsCap);
 static float calculateFPS(float deltaTime);
 
-
 int main()
 {
     Uint32 initFrameTime = 0.0f;

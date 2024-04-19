@@ -1,35 +1,102 @@
 #include "menu.h"
 
-typedef struct {
+// RectangleButton
+typedef struct Button Button;
+struct Button {
 	int x, y;
 	int w, h;
 	SDL_Color c;
-} Button;
+	char text[MAX_BUTTON_TEXT_LENGTH];
+	SDL_Color textC;
+	void (*onOver)(void);
+	void (*onOut)(void);
+	void (*onPress)(void);
+	void (*onRelease)(void);
+	Button* next;
+};
 
 static void initMenu();
-static void logic();
+static void logic(float deltaTime);
 static void draw();
 
 static Button buttonServer;
 static Button buttonClient;
 
+Button createButton(
+	int posX, int posY, int width, int height, SDL_Color color, 
+	char* text,	SDL_Color textColor,
+	void (*onOver)(void), void (*onOut)(void),
+	void (*onPress)(void), void (*onRelease)(void))
+{
+	Button button;
+
+	button.x = posX;
+	button.y = posY;
+	button.w = width;
+	button.h = height;
+	button.c = color;
+	if (text != NULL && strlen(text) > 0)
+	{
+		secure_strcpy(button.text, sizeof(button.text), text);
+		button.textC = textColor;
+	}
+	button.onOver = onOver;
+	button.onOut = onOut;
+	button.onPress = onPress;
+	button.onRelease = onRelease;
+
+	return button;
+}
+
+void drawButton(Button button)
+{
+	blitRect(button.x, button.y, button.w, button.h, button.c);
+	if (button.text != NULL)
+	{
+		drawText(
+			button.x + button.w / 2, 
+			button.y + button.h / 2 - GLYPH_HEIGHT / 2, 
+			button.textC.r, 
+			button.textC.g, 
+			button.textC.b, 
+			TEXT_CENTER, 
+			button.text
+		);
+	}
+}
+
 static void initMenu()
 {
-	// Init button server
-	buttonServer.x = DEFAULT_WINDOW_WIDTH * (1.0f / 4.0f);
-	buttonServer.y = DEFAULT_WINDOW_HEIGHT * (2.0f / 4.0f);
-	buttonServer.w = DEFAULT_WINDOW_WIDTH * (1.0f / 2.0f);
-	buttonServer.h = DEFAULT_WINDOW_HEIGHT * (1.0f / 8.0f);
-	SDL_Color colorServer = { 41, 170, 225 };
-	buttonServer.c = colorServer;
+	SDL_Color colorButtons = { 41, 170, 225, 255 };
+	SDL_Color colorText = { 255, 255, 255 };
 
-	// Init button client
-	buttonClient.x = DEFAULT_WINDOW_WIDTH * (1.0f / 4.0f);
-	buttonClient.y = DEFAULT_WINDOW_HEIGHT * (3.0f / 4.0f);
-	buttonClient.w = DEFAULT_WINDOW_WIDTH * (1.0f / 2.0f);
-	buttonClient.h = DEFAULT_WINDOW_HEIGHT * (1.0f / 8.0f);
-	SDL_Color colorClient = { 41, 170, 225 };
-	buttonClient.c = colorClient;
+	buttonServer = createButton(
+		DEFAULT_WINDOW_WIDTH * (1.0f / 4.0f),
+		DEFAULT_WINDOW_HEIGHT * (2.0f / 4.0f),
+		DEFAULT_WINDOW_WIDTH * (1.0f / 2.0f),
+		DEFAULT_WINDOW_HEIGHT * (1.0f / 8.0f),
+		colorButtons,
+		"Server",
+		colorText,
+		NULL,
+		NULL,
+		NULL,
+		NULL
+	);
+
+	buttonClient = createButton(
+		DEFAULT_WINDOW_WIDTH * (1.0f / 4.0f),
+		DEFAULT_WINDOW_HEIGHT * (3.0f / 4.0f),
+		DEFAULT_WINDOW_WIDTH * (1.0f / 2.0f),
+		DEFAULT_WINDOW_HEIGHT * (1.0f / 8.0f),
+		colorButtons,
+		"Client",
+		colorText,
+		NULL,
+		NULL,
+		NULL,
+		NULL
+	);
 }
 
 void showMenu()
@@ -97,13 +164,8 @@ static void logic(float deltaTime)
 
 void draw()
 {
-	blitRect(buttonServer.x, buttonServer.y, buttonServer.w, buttonServer.h, buttonServer.c);
-	blitRect(buttonClient.x, buttonClient.y, buttonClient.w, buttonClient.h, buttonClient.c);
-
-	float verticalOffsetServer = buttonServer.y + buttonServer.h / 2 + (-GLYPH_HEIGHT / 2);
-	drawText(DEFAULT_WINDOW_WIDTH / 2, verticalOffsetServer, 255, 255, 255, TEXT_CENTER, "Server");
-	float verticalOffsetClient = buttonClient.y + buttonClient.h / 2 + (-GLYPH_HEIGHT / 2);
-	drawText(DEFAULT_WINDOW_WIDTH / 2, verticalOffsetClient, 255, 255, 255, TEXT_CENTER, "Client");
-
+	drawButton(buttonServer);
+	drawButton(buttonClient);
+	
 	drawTextInput();
 }

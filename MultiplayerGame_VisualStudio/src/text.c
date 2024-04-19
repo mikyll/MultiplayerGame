@@ -17,7 +17,7 @@ void drawText(int x, int y, int r, int g, int b, int align, char* format, ...)
 	memset(&drawTextBuffer, '\0', sizeof(drawTextBuffer));
 
 	va_start(args, format);
-	vsprintf_s(drawTextBuffer, sizeof(drawTextBuffer), format, args);
+	secure_sprintf(drawTextBuffer, sizeof(drawTextBuffer), format, args);
 	va_end(args);
 
 	len = strlen(drawTextBuffer);
@@ -67,7 +67,7 @@ void drawTextScaled(int x, int y, float size, int r, int g, int b, int align, ch
     memset(&drawTextBuffer, '\0', sizeof(drawTextBuffer));
 
     va_start(args, format);
-    vsprintf_s(drawTextBuffer, sizeof(drawTextBuffer), format, args);
+    secure_sprintf(drawTextBuffer, sizeof(drawTextBuffer), format, args);
     va_end(args);
 
     len = strlen(drawTextBuffer);

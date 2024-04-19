@@ -24,4 +24,7 @@ extern void disposeHost();
 extern void doNetworkingBefore();
 extern void doNetworkingAfter();
 
+// Utils
+extern int secure_sprintf(char* buffer, size_t bufferSize, const char* format, ...);
+
 extern App app;

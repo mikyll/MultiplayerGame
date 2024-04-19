@@ -74,11 +74,11 @@ void drawTextInput()
 void drawFPS(int fps)
 {
 	char buffer[10];
-	sprintf_s(buffer, sizeof(buffer), "%5d FPS", fps);
+	secure_sprintf(buffer, sizeof(buffer), "%5d FPS", fps);
 	drawTextScaled(DEFAULT_WINDOW_WIDTH - 5, 5, 0.75f, 0, 0, 0, TEXT_RIGHT, buffer);
 }
 
-void logic()
+void logic(float deltaTime)
 {
 	
 }

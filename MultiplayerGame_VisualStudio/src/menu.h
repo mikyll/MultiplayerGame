@@ -22,4 +22,7 @@ extern void disposeHost();
 extern void doTextInput();
 extern void drawTextInput();
 
+// Utils
+extern void secure_strcpy(char* dest, size_t destSize, const char* src);
+
 extern App app;
