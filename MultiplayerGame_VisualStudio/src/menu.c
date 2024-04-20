@@ -147,15 +147,19 @@ static void logic(float deltaTime)
 				//setAddress("localhost");
 			}
 
+			setAfterConnect(showGame);
+			setAfterDisconnect(showMenu);
+
 			// Create the host
-			if (createHost(getTextInput(), PORT) != 0)
+			if (netCreateHost(getTextInput(), PORT) < 0)
 			{
-				disposeHost();
+				// TEST
+				printf("menu.c: Client creation failed\n");
+
+				// Creation failed
+				netDisposeHost();
 				return;
 			}
-
-			// Show game view
-			showGame();
 		}
 	}
 

@@ -20,7 +20,7 @@ extern void drawPlayers();
 extern void setHostType(int type);
 extern int getHostType();
 extern char* hostTypeToString(int type);
-extern void disposeHost();
+extern void netDisposeHost();
 extern void doNetworkingBefore();
 extern void doNetworkingAfter();
 

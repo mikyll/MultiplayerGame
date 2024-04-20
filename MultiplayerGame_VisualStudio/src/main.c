@@ -90,21 +90,26 @@ static void capFrameRate(Uint32 initFrameTime, Uint32 fpsCap)
 
 static float calculateFPS(float deltaTime)
 {
-    static float frameTimes[100] = { 0 };
-    static int frameIndex = 0;
-    static float fps = 0.0f;
+    // Smoothing factor for the EWMA calculation (adjust as needed)
+    const float smoothingFactor = 0.1f;
 
-    frameTimes[frameIndex] = deltaTime;
-    frameIndex = (frameIndex + 1) % 100; // Wrap around to the beginning if we reach the end of the array
+    // Calculate the reciprocal of frame time (FPS) for the current frame
+    float instantFPS = 1.0f / deltaTime;
 
-    float averageFrameTime = 0.0f;
-    for (int i = 0; i < 100; ++i) {
-        averageFrameTime += frameTimes[i];
+    // Initialize static variables to store previous FPS and the first frame flag
+    static float smoothedFPS = 0.0f;
+    static int isFirstFrame = 1;
+
+    // If it's the first frame, set smoothed FPS to the instant FPS
+    if (isFirstFrame) {
+        smoothedFPS = instantFPS;
+        isFirstFrame = 0;
     }
-    averageFrameTime /= 100.0f;
-
-    if (averageFrameTime > 0.0f) {
-        fps = 1.0f / averageFrameTime;
+    else {
+        // Otherwise, update smoothed FPS using EWMA
+        smoothedFPS = smoothingFactor * instantFPS + (1.0f - smoothingFactor) * smoothedFPS;
     }
-    return fps;
+
+    // Return the smoothed FPS
+    return smoothedFPS;
 }

@@ -1,17 +1,34 @@
 #include "client.h"
 
+void setClientOnConnect(void (*onConnect)(void));
+void setClientOnDisconnect(void (*onDisconnect)(void));
 int createClient(char* ipAddress, int port);
 void destroyClient();
-static void handleMessage(ENetPacket* packet);
 void clientBefore();
 void clientAfter();
+static void handleConnection();
+static void handleMessage(ENetPacket* packet);
+static void (*connectCallback)(void);
+static void (*connectFailCallback)(void); // TODO
+static void (*disconnectCallback)(void);
 
 
 static ENetAddress clientAddress;
 static ENetAddress serverAddress;
 static ENetHost* clientHost = NULL;
 static ENetPeer* serverPeer = NULL;
-static int isWaiting = 0;
+static int isWaiting = 0; // TODO
+
+
+void setClientOnConnect(void (*onConnect)(void))
+{
+    connectCallback = onConnect;
+}
+
+void setClientOnDisconnect(void (*onDisconnect)(void))
+{
+    disconnectCallback = onDisconnect;
+}
 
 int createClient(char* ipAddress, int port)
 {
@@ -29,7 +46,7 @@ int createClient(char* ipAddress, int port)
     if (clientHost == NULL)
     {
         printf("An error occurred while trying to create an ENet client host.\n");
-        return EXIT_FAILURE;
+        return -1;
     }
 
     if (ipAddress == NULL || strlen(ipAddress) == 0)
@@ -56,32 +73,43 @@ int createClient(char* ipAddress, int port)
     if (serverPeer == NULL) {
         printf("No available peers for initiating an ENet connection\n");
 
-        return EXIT_FAILURE;
+        return -1;
     }
 
-    // Wait for connection response
+    // Connection attempt
     // TODO fix (it's blocking)
     while (enet_host_service(clientHost, &event, 5000) > 0 &&
         event.type == ENET_EVENT_TYPE_CONNECT)
     {
         printf("Connection to %s:%d succeeded.\n", ipAddress, port);
+        if (connectCallback != NULL)
+            connectCallback();
 
-        return EXIT_SUCCESS;
+        return 0;
     }
 
+    // Waiting for connect
     enet_peer_reset(serverPeer);
     fprintf(stderr, "Connection to %s:%d failed.\n", ipAddress, port);
 
-    return EXIT_FAILURE;
+    return 1;
 }
 
 void destroyClient()
 {
+    if (clientHost == NULL)
+        return;
+
+    printf("Received disconnect from server\n");
+
     if (serverPeer != NULL)
         enet_peer_disconnect_now(serverPeer, 0);
 
-    if (clientHost != NULL)
-        enet_host_destroy(clientHost);
+    enet_host_destroy(clientHost);
+    clientHost = NULL;
+
+    if (disconnectCallback != NULL)
+        disconnectCallback();
 }
 
 static void handleMessage(ENetPacket* packet)
@@ -111,6 +139,9 @@ static void handleMessage(ENetPacket* packet)
                     }
                 }
             }
+
+            if (connectCallback != NULL)
+                connectCallback();
 
             // Test
             printf("CONNECT_OK: %d\n", connectOK.localID);
@@ -193,26 +224,35 @@ void clientBefore()
     {
         switch (event.type)
         {
-        case ENET_EVENT_TYPE_RECEIVE:
-        {
-            handleMessage(event.packet);
+            // NB: it never reaches this because the clientBefore() function
+            // is called from game.c and not menu.c
+            // TODO: refactor the menu/game 
+            /*case ENET_EVENT_TYPE_CONNECT:
+            {
+                handleConnection();
 
-            enet_packet_destroy(event.packet);
+                return;
+            }*/
+            case ENET_EVENT_TYPE_DISCONNECT:
+            {
+                destroyClient();
 
-            break;
-        }
-        case ENET_EVENT_TYPE_DISCONNECT:
-        {
-            destroyClient();
+                return;
+            }
+            case ENET_EVENT_TYPE_RECEIVE:
+            {
+                handleMessage(event.packet);
 
-            return;
-        }
-        default:
-        {
-            printf("Unhandled event type\n");
+                enet_packet_destroy(event.packet);
 
-            break;
-        }
+                break;
+            }
+            default:
+            {
+                printf("Unhandled event type\n");
+
+                break;
+            }
         }
     }
 }

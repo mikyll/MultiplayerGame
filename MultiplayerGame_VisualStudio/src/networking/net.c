@@ -30,39 +30,75 @@ void setHostType(int type)
     // Set host callbacks
     switch (type)
     {
-    case NET_HOST_SERVER:
-    {
-        netCreate = createServer;
-        netDispose = destroyServer;
-        netReceive = serverBefore;
-        netSend = serverAfter;
+        case NET_HOST_SERVER:
+        {
+            netCreate = createServer;
+            netDispose = destroyServer;
+            netReceive = serverBefore;
+            netSend = serverAfter;
 
-        break;
-    }
-    case NET_HOST_CLIENT:
-    {
-        netCreate = createClient;
-        netDispose = destroyClient;
-        netReceive = clientBefore;
-        netSend = clientAfter;
+            break;
+        }
+        case NET_HOST_CLIENT:
+        {
+            netCreate = createClient;
+            netDispose = destroyClient;
+            netReceive = clientBefore;
+            netSend = clientAfter;
 
-        break;
-    }
-    case NET_HOST_NONE:
-    {
-        netCreate = NULL;
-        netDispose = NULL;
-        netReceive = NULL;
-        netSend = NULL;
+            break;
+        }
+        case NET_HOST_NONE:
+        {
+            netCreate = NULL;
+            netDispose = NULL;
+            netReceive = NULL;
+            netSend = NULL;
 
-        break;
-    }
-    default:
-        printf("Unknown host type: %d\n", type);
-        return;
+            break;
+        }
+        default:
+        {
+            printf("Unknown host type: %d\n", type);
+            return;
+        }
     }
 
     hostType = type;
+}
+
+void setAfterConnect(void (*callback)(void))
+{
+    switch (hostType)
+    {
+        case NET_HOST_SERVER:
+        {
+            setServerOnConnect(callback);
+            break;
+        }
+        case NET_HOST_CLIENT:
+        {
+            setClientOnConnect(callback);
+            break;
+        }
+    }
+}
+
+void setAfterDisconnect(void (*callback)(void))
+{
+    switch (hostType)
+    {
+        case NET_HOST_SERVER:
+        {
+            setServerOnDisconnect(callback);
+            break;
+        }
+        case NET_HOST_CLIENT:
+        {
+            setClientOnDisconnect(callback);
+            break;
+        }
+    }
 }
 
 int getHostType()
@@ -100,7 +136,7 @@ char* getConnectionString()
     return buffer;
 }
 
-int createHost(char* ipAddress, int port)
+int netCreateHost(char* ipAddress, int port)
 {
     if (netCreate != NULL)
         return netCreate(ipAddress, port);
@@ -108,10 +144,11 @@ int createHost(char* ipAddress, int port)
     return EXIT_FAILURE;
 }
 
-void disposeHost()
+void netDisposeHost()
 {
     if (netDispose != NULL)
         netDispose();
+
     hostType = NET_HOST_NONE;
 }
 

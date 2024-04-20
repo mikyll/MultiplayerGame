@@ -1,5 +1,6 @@
 #include "player.h"
 
+int findFirstAvailableID();
 int spawnPlayerAt(float x, float y);
 void destroyPlayer(Entity* player);
 void setLocalPlayer(Entity* player);
@@ -7,6 +8,33 @@ Entity* getPlayerByID(int id);
 
 
 static Entity* localPlayer = NULL;
+
+
+int findFirstAvailableID()
+{
+	int IDs[MAX_PLAYERS] = { 0 };
+	Entity* player, * playerPrev;
+
+	playerPrev = &game.playersHead;
+	for (player = game.playersHead.next; player != NULL; player = player->next)
+	{
+		if (IDs[player->id] == 1)
+		{
+			printf("Duplicated ID found: %d\n", player->id);
+			return -1;
+		}
+		IDs[player->id] = 1;
+		playerPrev = player;
+	}
+
+	for (int i = 0; i < MAX_PLAYERS; i++)
+	{
+		if (IDs[i] == 0)
+			return i;
+	}
+
+	return -1;
+}
 
 /*
 * Creates a new Player entity, adding it to the players linked list.
@@ -59,7 +87,7 @@ int spawnPlayerAt(float x, float y)
 
 	// Init player parameters
 	memset(player, 0, sizeof(Entity));
-	player->id = game.playersCount;
+	player->id = findFirstAvailableID();
 	player->w = PLAYER_SIZE;
 	player->h = PLAYER_SIZE;
 	player->x = x;
@@ -110,7 +138,6 @@ void destroyPlayerByID(int id)
 	{
 		if (p->id == id)
 		{
-			printf("Player.c: destroy %d\n", id);
 			if (p == game.playersTail)
 			{
 				game.playersTail = playerPrev;

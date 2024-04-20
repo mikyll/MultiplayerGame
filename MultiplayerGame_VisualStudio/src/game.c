@@ -47,9 +47,7 @@ static void logic(float deltaTime)
 	{
 		app.keyboard[SDL_SCANCODE_ESCAPE] = 0;
 
-		disposeHost();
-
-		showMenu();
+		netDisposeHost();
 	}
 
 	doPlayers(deltaTime);

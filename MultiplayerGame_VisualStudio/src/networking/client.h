@@ -7,7 +7,7 @@
 // Player
 extern Entity* getLocalPlayer();
 extern void setLocalPlayer(Entity* player);
-extern int spawnPlayerAt(float x, float y);
+extern int spawnPlayer(Entity p);
 extern void destroyPlayerByID(int id);
 extern Entity* getPlayerByID(int id);
 
