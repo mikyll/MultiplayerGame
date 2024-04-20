@@ -4,8 +4,8 @@ Game game;
 
 void initGame();
 static void resetGame();
-static void logic(float deltaTime);
-static void draw();
+static void doGame(float deltaTime);
+static void drawGame();
 
 void initGame()
 {
@@ -33,11 +33,11 @@ void resetGame()
 void showGame()
 {
 	// Set game logic & draw functions
-	app.delegate.logic = logic;
-	app.delegate.draw = draw;
+	app.delegate.logic = doGame;
+	app.delegate.draw = drawGame;
 }
 
-static void logic(float deltaTime)
+static void doGame(float deltaTime)
 {
 	// Receive network input
 	doNetworkingBefore();
@@ -56,7 +56,7 @@ static void logic(float deltaTime)
 	doNetworkingAfter();
 }
 
-static void draw()
+static void drawGame()
 {
 	Entity* player;
 	char buffer[64];

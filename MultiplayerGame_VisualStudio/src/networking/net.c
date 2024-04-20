@@ -67,18 +67,18 @@ void setHostType(int type)
     hostType = type;
 }
 
-void setAfterConnect(void (*callback)(void))
+void setAfterConnect(void (*callbackOk)(void), void (*callbackFail)(void))
 {
     switch (hostType)
     {
         case NET_HOST_SERVER:
         {
-            setServerOnConnect(callback);
+            setServerOnConnect(callbackOk);
             break;
         }
         case NET_HOST_CLIENT:
         {
-            setClientOnConnect(callback);
+            setClientOnConnect(callbackOk, callbackFail);
             break;
         }
     }

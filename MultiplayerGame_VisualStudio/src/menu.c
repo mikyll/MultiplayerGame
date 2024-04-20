@@ -16,8 +16,10 @@ struct Button {
 };
 
 static void initMenu();
-static void logic(float deltaTime);
-static void draw();
+static void doMenu(float deltaTime);
+static void doMenuWait(float deltaTime);
+static void drawMenu();
+static void drawMenuWait();
 
 static Button buttonServer;
 static Button buttonClient;
@@ -103,8 +105,8 @@ void showMenu()
 {
 	initMenu();
 
-	app.delegate.logic = logic;
-	app.delegate.draw = draw;
+	app.delegate.logic = doMenu;
+	app.delegate.draw = drawMenu;
 }
 
 static int isMouseOverButton(Mouse mouse, Button button)
@@ -115,7 +117,7 @@ static int isMouseOverButton(Mouse mouse, Button button)
 		mouse.y <= button.y + button.h;
 }
 
-static void logic(float deltaTime)
+static void doMenu(float deltaTime)
 {
 	buttonServer.c.a = !isMouseOverButton(app.mouse, buttonServer) * 55.0f + 200;
 	buttonServer.c.b = !isMouseOverButton(app.mouse, buttonServer) * 30.0f + 225;
@@ -145,9 +147,12 @@ static void logic(float deltaTime)
 
 				// TODO
 				//setAddress("localhost");
+
+				app.delegate.logic = doMenuWait;
+				app.delegate.draw = drawMenuWait;
 			}
 
-			setAfterConnect(showGame);
+			setAfterConnect(showGame, showMenu);
 			setAfterDisconnect(showMenu);
 
 			// Create the host
@@ -158,6 +163,10 @@ static void logic(float deltaTime)
 
 				// Creation failed
 				netDisposeHost();
+
+				app.delegate.logic = doMenu;
+				app.delegate.draw = drawMenu;
+
 				return;
 			}
 		}
@@ -166,10 +175,33 @@ static void logic(float deltaTime)
 	doTextInput();
 }
 
-void draw()
+static void doMenuWait(float deltaTime)
+{
+	buttonServer.c.a = 255;
+	buttonServer.c.b = 255;
+	buttonClient.c.a = 255;
+	buttonClient.c.b = 255;
+	
+	// Receive network input
+	doNetworkingBefore();
+
+	// Send network update
+	doNetworkingAfter();
+}
+
+static void drawMenu()
 {
 	drawButton(buttonServer);
 	drawButton(buttonClient);
 	
+	drawTextInput();
+}
+
+static void drawMenuWait()
+{
+	drawButton(buttonServer);
+	drawButton(buttonClient);
+	drawTextScaled(DEFAULT_WINDOW_WIDTH / 2, DEFAULT_WINDOW_HEIGHT * (7.0f / 8.0f), 0.75, 0, 0, 0, TEXT_CENTER, "Connection attempt...");
+
 	drawTextInput();
 }

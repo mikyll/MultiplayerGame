@@ -16,9 +16,11 @@ extern void showGame();
 // Networking
 extern void setHostType(int type);
 extern int netCreateHost(char* ipAddress, int port);
-extern void setAfterConnect(void (*callbackOk)(void));
+extern void setAfterConnect(void (*callbackOk)(void), void (*callbackFail)(void));
 extern void setAfterDisconnect(void (*callback)(void));
 extern void netDisposeHost();
+extern void doNetworkingBefore();
+extern void doNetworkingAfter();
 
 // UI
 extern void doTextInput();

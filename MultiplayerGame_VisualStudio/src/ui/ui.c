@@ -83,7 +83,7 @@ void drawFPS(int fps)
 	drawTextScaled(DEFAULT_WINDOW_WIDTH - 5, 5, 0.75f, 0, 0, 0, TEXT_RIGHT, buffer);
 }
 
-void logic(float deltaTime)
+void doUI(float deltaTime)
 {
 	
 }

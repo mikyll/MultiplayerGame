@@ -13,7 +13,7 @@ extern void serverBefore();
 extern void serverAfter();
 
 // Client
-extern void setClientOnConnect(void (*onConnect)(void));
+extern void setClientOnConnect(void (*onConnectOk)(void), void (*onConnectFail)(void));
 extern void setClientOnDisconnect(void (*onDisconnect)(void));
 extern int createClient(char* ipAddress, int port);
 extern void destroyClient();

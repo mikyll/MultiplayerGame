@@ -22,8 +22,9 @@ https://github.com/mikyll/MultiplayerGame/assets/56556806/f9213bac-d907-4bee-a7e
 - [x] deltaTime game loop with the possibility to cap to a specific framerate;
 - [x] multiplayer based on a server/client model and UDP reliable packets;
 - [x] server->client disconnection;
-- [ ] non-blocking wait for client connections;
-- [ ] improve UI elements and refactor the related code;
+- [x] non-blocking wait for client connections;
+- [ ] improve UI elements;
+- [ ] refactor;
 
 ## Project Setup
 

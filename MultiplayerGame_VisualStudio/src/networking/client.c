@@ -8,7 +8,7 @@ void clientBefore();
 void clientAfter();
 static void handleConnection();
 static void handleMessage(ENetPacket* packet);
-static void (*connectCallback)(void);
+static void (*connectOkCallback)(void);
 static void (*connectFailCallback)(void); // TODO
 static void (*disconnectCallback)(void);
 
@@ -18,11 +18,13 @@ static ENetAddress serverAddress;
 static ENetHost* clientHost = NULL;
 static ENetPeer* serverPeer = NULL;
 static int isWaiting = 0; // TODO
+static Uint32 startWaitingTime = 0;
 
 
-void setClientOnConnect(void (*onConnect)(void))
+void setClientOnConnect(void (*onConnectOk)(void), void (*onConnectFail)(void))
 {
-    connectCallback = onConnect;
+    connectOkCallback = onConnectOk;
+    connectFailCallback = onConnectFail;
 }
 
 void setClientOnDisconnect(void (*onDisconnect)(void))
@@ -77,13 +79,15 @@ int createClient(char* ipAddress, int port)
     }
 
     // Connection attempt
+    isWaiting = 1;
+    startWaitingTime = SDL_GetTicks();
     // TODO fix (it's blocking)
-    while (enet_host_service(clientHost, &event, 5000) > 0 &&
+    /*while (enet_host_service(clientHost, &event, 5000) > 0 &&
         event.type == ENET_EVENT_TYPE_CONNECT)
     {
         printf("Connection to %s:%d succeeded.\n", ipAddress, port);
-        if (connectCallback != NULL)
-            connectCallback();
+        if (connectOkCallback != NULL)
+            connectOkCallback();
 
         return 0;
     }
@@ -92,15 +96,14 @@ int createClient(char* ipAddress, int port)
     enet_peer_reset(serverPeer);
     fprintf(stderr, "Connection to %s:%d failed.\n", ipAddress, port);
 
-    return 1;
+    return 1;*/
+    return 0;
 }
 
 void destroyClient()
 {
     if (clientHost == NULL)
         return;
-
-    printf("Received disconnect from server\n");
 
     if (serverPeer != NULL)
         enet_peer_disconnect_now(serverPeer, 0);
@@ -110,6 +113,15 @@ void destroyClient()
 
     if (disconnectCallback != NULL)
         disconnectCallback();
+
+    isWaiting = 0;
+    startWaitingTime = 0;
+}
+
+
+static void handleConnection()
+{
+    printf("Received connect event\n");
 }
 
 static void handleMessage(ENetPacket* packet)
@@ -140,11 +152,14 @@ static void handleMessage(ENetPacket* packet)
                 }
             }
 
-            if (connectCallback != NULL)
-                connectCallback();
+            if (connectOkCallback != NULL)
+                connectOkCallback();
 
             // Test
             printf("CONNECT_OK: %d\n", connectOK.localID);
+
+            isWaiting = 0;
+            startWaitingTime = 0;
 
             break;
         }
@@ -156,6 +171,12 @@ static void handleMessage(ENetPacket* packet)
             printf("Connect Denied message: %s\n", connectDenied.message);
 
             destroyClient();
+
+            if (connectFailCallback != NULL)
+                connectFailCallback();
+
+            isWaiting = 0;
+            startWaitingTime = 0;
 
             break;
         }
@@ -220,6 +241,14 @@ void clientBefore()
     if (clientHost == NULL)
         return;
 
+    if (isWaiting == 1 && SDL_GetTicks() - startWaitingTime >= 3000)
+    {
+        printf("Connection attempt failed.\n");
+        connectFailCallback();
+        destroyClient();
+        return;
+    }
+
     while (enet_host_service(clientHost, &event, 0) > 0)
     {
         switch (event.type)
@@ -227,14 +256,18 @@ void clientBefore()
             // NB: it never reaches this because the clientBefore() function
             // is called from game.c and not menu.c
             // TODO: refactor the menu/game 
-            /*case ENET_EVENT_TYPE_CONNECT:
+            case ENET_EVENT_TYPE_CONNECT:
             {
+                printf("EVENT_CONNECT\n");
+
                 handleConnection();
 
                 return;
-            }*/
+            }
             case ENET_EVENT_TYPE_DISCONNECT:
             {
+                printf("EVENT_DISCONNECT\n");
+
                 destroyClient();
 
                 return;
@@ -245,11 +278,13 @@ void clientBefore()
 
                 enet_packet_destroy(event.packet);
 
+                ENetEventType typw;
+
                 break;
             }
             default:
             {
-                printf("Unhandled event type\n");
+                printf("EVENT_UNKNOWN\n");
 
                 break;
             }

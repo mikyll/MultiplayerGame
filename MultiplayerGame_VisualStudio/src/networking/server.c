@@ -1,6 +1,6 @@
 #include "server.h"
 
-void setServerOnConnect(void (*onConnect)(void));
+void setServerOnConnect(void (*onConnectOk)(void));
 void setServerOnDisconnect(void (*onDisconnect)(void));
 int createServer(char* ipAddress, int port);
 void destroyServer();
