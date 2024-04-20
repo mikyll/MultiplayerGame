@@ -85,7 +85,7 @@ Huge thanks to [Parallel Realities](https://www.parallelrealities.co.uk/) and th
 [size-url]: https://github.com/mikyll/MultiplayerGame
 [issues-shield]: https://img.shields.io/github/issues/mikyll/MultiplayerGame
 [issues-url]: https://github.com/mikyll/MultiplayerGame/issues
-[stars-shield]: https://custom-icon-badges.herokuapp.com/github/stars/mikyll/MultiplayerGame?logo=star&logoColor=yellow&style=flat
+[stars-shield]: https://custom-icon-badges.herokuapp.com/github/stars/mikyll/MultiplayerGame?style=flat
 [stars-url]: https://github.com/mikyll/MultiplayerGame/stargazers
 
 [c-shield]: https://img.shields.io/badge/C-%2300599C.svg?logo=c&logoColor=white
