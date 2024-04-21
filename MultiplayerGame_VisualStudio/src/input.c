@@ -31,7 +31,7 @@ static void doMouseButtonDown(SDL_MouseButtonEvent *event)
 	app.mouse.button[event->button] = 1;
 }
 
-void doInput()
+void doInput(void)
 {
 	SDL_Event event;
 	

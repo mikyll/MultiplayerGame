@@ -1,12 +1,12 @@
 #include "main.h"
 
-static void initApp();
-static void cleanupApp();
-static float calculateDeltaTime();
+static void initApp(void);
+static void cleanupApp(void);
+static float calculateDeltaTime(void);
 static void capFrameRate(Uint32 initFrameTime, Uint32 fpsCap);
 static float calculateFPS(float deltaTime);
 
-int main()
+int main(int argc, char** argv)
 {
     Uint32 initFrameTime = 0.0f;
     float deltaTime = 0.0f;
@@ -43,7 +43,7 @@ int main()
 	return 0;
 }
 
-static void initApp()
+static void initApp(void)
 {
     memset(&app, 0, sizeof(App));
     app.textureTail = &app.textureHead;
@@ -57,14 +57,14 @@ static void initApp()
     atexit(cleanupApp);
 }
 
-static void cleanupApp()
+static void cleanupApp(void)
 {
     cleanupSDL();
 
     cleanupEnet();
 }
 
-static float calculateDeltaTime()
+static float calculateDeltaTime(void)
 {
     static Uint32 lastFrameTime = 0.0f;
     float deltaTime;
@@ -101,15 +101,16 @@ static float calculateFPS(float deltaTime)
     static int isFirstFrame = 1;
 
     // If it's the first frame, set smoothed FPS to the instant FPS
-    if (isFirstFrame) {
+    if (isFirstFrame)
+    {
         smoothedFPS = instantFPS;
         isFirstFrame = 0;
     }
-    else {
+    else
+    {
         // Otherwise, update smoothed FPS using EWMA
         smoothedFPS = smoothingFactor * instantFPS + (1.0f - smoothingFactor) * smoothedFPS;
     }
 
-    // Return the smoothed FPS
     return smoothedFPS;
 }

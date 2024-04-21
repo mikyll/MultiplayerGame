@@ -3,7 +3,7 @@
 static SDL_Texture* fontTexture;
 static char drawTextBuffer[MAX_LINE_LENGTH];
 
-void initFonts()
+void initFonts(void)
 {
 	fontTexture = loadTexture("resources/fonts/font.png");
 }
@@ -78,7 +78,6 @@ void drawTextScaled(int x, int y, float size, int r, int g, int b, int align, ch
     len = strlen(drawTextBuffer);
 
     int scaledWidth = (int)(GLYPH_WIDTH * size);
-    int scaledHeight = (int)(GLYPH_HEIGHT * size);
 
     switch (align)
     {

@@ -2,6 +2,6 @@
 
 #include "common.h"
 
-void doInput();
+void doInput(void);
 
 extern App app;

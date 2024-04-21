@@ -1,19 +1,13 @@
 #include "client.h"
 
-void setClientOnConnect(void (*onConnect)(void));
-void setClientOnDisconnect(void (*onDisconnect)(void));
-int createClient(char* ipAddress, int port);
-void destroyClient();
-void clientBefore();
-void clientAfter();
-static void handleConnection();
+
+static void handleConnection(void);
 static void handleMessage(ENetPacket* packet);
 static void (*connectOkCallback)(void);
 static void (*connectFailCallback)(void);
 static void (*disconnectCallback)(void);
 
 
-static ENetAddress clientAddress;
 static ENetAddress serverAddress;
 static ENetHost* clientHost = NULL;
 static ENetPeer* serverPeer = NULL;
@@ -34,8 +28,6 @@ void setClientOnDisconnect(void (*onDisconnect)(void))
 
 int createClient(char* ipAddress, int port)
 {
-    ENetEvent event;
-
     // Create client host
     clientHost = enet_host_create(
         NULL,   // create a client host
@@ -85,7 +77,7 @@ int createClient(char* ipAddress, int port)
     return 0;
 }
 
-void destroyClient()
+void destroyClient(void)
 {
     if (clientHost == NULL)
         return;
@@ -104,7 +96,7 @@ void destroyClient()
 }
 
 
-static void handleConnection()
+static void handleConnection(void)
 {
     printf("Received connect event\n");
 }
@@ -218,10 +210,9 @@ static void handleMessage(ENetPacket* packet)
     }
 }
 
-void clientBefore()
+void clientBefore(void)
 {
     ENetEvent event;
-    ENetPacket* packet = { 0 };
 
     if (clientHost == NULL)
         return;
@@ -260,8 +251,6 @@ void clientBefore()
 
                 enet_packet_destroy(event.packet);
 
-                ENetEventType typw;
-
                 break;
             }
             default:
@@ -275,7 +264,7 @@ void clientBefore()
 }
 
 // sends player update
-void clientAfter()
+void clientAfter(void)
 {
     Entity* player;
     PlayerState playerState;
@@ -296,3 +285,4 @@ void clientAfter()
     enet_peer_send(serverPeer, 0, packet);
     enet_host_flush(clientHost);
 }
+

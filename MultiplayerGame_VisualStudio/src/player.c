@@ -1,21 +1,14 @@
 #include "player.h"
 
-int findFirstAvailableID();
-int spawnPlayerAt(float x, float y);
-void destroyPlayer(Entity* player);
-void setLocalPlayer(Entity* player);
-Entity* getPlayerByID(int id);
-
 
 static Entity* localPlayer = NULL;
 
 
-int findFirstAvailableID()
+int findFirstAvailableID(void)
 {
 	int IDs[MAX_PLAYERS] = { 0 };
-	Entity* player, * playerPrev;
+	Entity* player;
 
-	playerPrev = &game.playersHead;
 	for (player = game.playersHead.next; player != NULL; player = player->next)
 	{
 		if (IDs[player->id] == 1)
@@ -24,7 +17,6 @@ int findFirstAvailableID()
 			return -1;
 		}
 		IDs[player->id] = 1;
-		playerPrev = player;
 	}
 
 	for (int i = 0; i < MAX_PLAYERS; i++)
@@ -49,7 +41,7 @@ int spawnPlayer(Entity p)
 	if (player == NULL)
 	{
 		printf("Player creation failed.\n");
-		return;
+		return -1;
 	}
 
 	// Increase player count
@@ -62,6 +54,7 @@ int spawnPlayer(Entity p)
 	player->h = p.h;
 	player->x = p.x;
 	player->y = p.y;
+	player->health = p.health;
 	player->color = p.color;
 	player->next = NULL;
 
@@ -79,7 +72,7 @@ int spawnPlayerAt(float x, float y)
 	if (player == NULL)
 	{
 		printf("Player creation failed.\n");
-		return;
+		return -1;
 	}
 
 	// Increase player count
@@ -94,6 +87,7 @@ int spawnPlayerAt(float x, float y)
 	player->y = y;
 	player->dx = 0.0f;
 	player->dy = 0.0f;
+	player->health = PLAYER_BASE_HEALTH;
 	SDL_Color color = { rand() % 255, rand() % 255, rand() % 255, 255 };
 	player->color = color;
 	player->next = NULL;
@@ -158,7 +152,7 @@ void setLocalPlayer(Entity* player)
 	localPlayer = player;
 }
 
-Entity* getLocalPlayer()
+Entity* getLocalPlayer(void)
 {
 	return localPlayer;
 }
@@ -300,11 +294,23 @@ void doPlayers(float deltaTime)
 		if (player->y > DEFAULT_WINDOW_HEIGHT - player->h)
 			player->y = DEFAULT_WINDOW_HEIGHT - player->h;
 
+		if (player->health <= 0)
+		{
+			if (player == game.playersTail)
+			{
+				game.playersTail = playerPrev;
+			}
+
+			playerPrev->next = player->next;
+			free(player);
+			player = playerPrev;
+		}
+
 		playerPrev = player;
 	}
 }
 
-void drawPlayers()
+void drawPlayers(void)
 {
 	Entity* player;
 	SDL_Rect playerRect = { 0 };
@@ -331,3 +337,4 @@ void drawPlayers()
 		drawTextScaled(player->x + (player->w / 2), player->y + 32, 0.6f, 0, 0, 0, TEXT_CENTER, buffer);
 	}
 }
+

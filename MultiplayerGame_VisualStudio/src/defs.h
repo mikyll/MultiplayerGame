@@ -34,7 +34,8 @@ enum
 #define MAX_MOUSE_BUTTONS			6
 
 // Player
-#define PLAYER_SIZE					25.0f
+#define PLAYER_SIZE				25.0f
+#define PLAYER_BASE_HEALTH			5
 #define PLAYER_SPEED				200.0f
 #define PLAYER_SPEED_BOOST			2.0f
 
@@ -48,4 +49,4 @@ enum
 	NET_HOST_NONE,
 	NET_HOST_SERVER,
 	NET_HOST_CLIENT,
-};
+};

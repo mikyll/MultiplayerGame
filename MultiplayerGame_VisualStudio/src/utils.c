@@ -1,16 +1,7 @@
 #include "utils.h"
 
-
-int isValidIPAddress(const char* ipAddress);
-int secure_sprintf(char* buffer, size_t bufferSize, const char* format, ...);
-void secure_strcpy(char* dest, size_t destSize, const char* src);
-void secure_strncpy(char* dest, size_t destSize, const char* src, size_t count);
-char* secure_strtok(char* str, const char* delim, char** saveptr);
-
-
 int isValidIPAddress(const char* ipAddress)
 {
-	int dots = 0;
 	int segments = 0;
 	char* segment;
 	char* copy = strdup(ipAddress); // Make a copy of the input string
@@ -179,4 +170,4 @@ char* secure_strtok(char* str, const char* delim, char** saveptr)
 	}
 
 	return token_start;
-}
+}

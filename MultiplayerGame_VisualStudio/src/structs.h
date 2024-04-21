@@ -39,6 +39,7 @@ struct Entity {
 	float w, h;
 	float x, y;
 	float dx, dy;
+	int health;
 	int heading;
 	SDL_Color color;
 	Entity* next;

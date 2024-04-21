@@ -5,33 +5,34 @@
 #include "enet/enet.h"
 
 // Init
-extern void initSDL();
-extern void cleanupSDL();
+extern void initSDL(void);
+extern void cleanupSDL(void);
 
 // Networking
-extern void initEnet();
-extern void cleanupEnet();
+extern void initEnet(void);
+extern void cleanupEnet(void);
 
 // Input
-extern void doInput();
+extern void doInput(void);
 
 // Draw
-extern void prepareScene();
-extern void presentScene();
+extern void prepareScene(void);
+extern void presentScene(void);
 extern void blitRect(int x, int y, int w, int h, SDL_Color c);
 extern void blitRectBorder(int x, int y, int w, int h, SDL_Color c);
 
 // Text
-extern void initFonts();
+extern void initFonts(void);
 
 // Menu
-extern void showMenu();
+extern void showMenu(void);
 
 // Game
-extern void showGame();
+extern void showGame(void);
 extern Game game;
 
 // UI
 extern void drawFPS(int fps);
 
 App app;
+

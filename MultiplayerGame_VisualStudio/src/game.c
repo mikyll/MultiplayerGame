@@ -2,19 +2,18 @@
 
 Game game;
 
-void initGame();
-static void resetGame();
+static void resetGame(void);
 static void doGame(float deltaTime);
-static void drawGame();
+static void drawGame(void);
 
-void initGame()
+void initGame(void)
 {
 	memset(&game, 0, sizeof(Game));
 
 	resetGame();
 }
 
-void resetGame()
+void resetGame(void)
 {
 	Entity* e;
 
@@ -30,7 +29,7 @@ void resetGame()
 	game.playersCount = 0;
 }
 
-void showGame()
+void showGame(void)
 {
 	// Set game logic & draw functions
 	app.delegate.logic = doGame;
@@ -56,7 +55,7 @@ static void doGame(float deltaTime)
 	doNetworkingAfter();
 }
 
-static void drawGame()
+static void drawGame(void)
 {
 	Entity* player;
 	char buffer[64];
@@ -76,3 +75,4 @@ static void drawGame()
 		drawTextScaled(DEFAULT_WINDOW_WIDTH - 5, 70 + i * GLYPH_HEIGHT * size + 5, size, player->color.r, player->color.g, player->color.b, TEXT_RIGHT, buffer);
 	}
 }
+

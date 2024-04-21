@@ -2,7 +2,7 @@
 
 #include "common.h"
 
-void initSDL();
-void cleanupSDL();
+void initSDL(void);
+void cleanupSDL(void);
 
 extern App app;

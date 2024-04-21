@@ -1,11 +1,6 @@
 #include "server.h"
 
-void setServerOnConnect(void (*onConnectOk)(void));
-void setServerOnDisconnect(void (*onDisconnect)(void));
-int createServer(char* ipAddress, int port);
-void destroyServer();
-void serverBefore();
-void serverAfter();
+
 static void handleConnection(ENetPeer* peer);
 static void handleDisconnection(ENetPeer* peer);
 static void handleMessage(ENetPeer* peer, ENetPacket* packet);
@@ -56,6 +51,8 @@ int createServer(char* ipAddress, int port)
         printf("An error occurred while trying to create an ENet server host.\n");
         return -1;
     }
+    
+    numPeers = 0;
 
     // Create player
     id = spawnPlayerAt(50.0f, 50.0f);
@@ -66,10 +63,8 @@ int createServer(char* ipAddress, int port)
     return 0;
 }
 
-void destroyServer()
+void destroyServer(void)
 {
-    ENetEvent event;
-
     if (serverHost == NULL)
         return;
 
@@ -77,18 +72,10 @@ void destroyServer()
     {
         if (clientPeers[i] != NULL)
         {
-            printf("Sent disconnect to P%d\n", (int) clientPeers[i]->data);
+            printf("Sent disconnect to P%d\n", (int)(intptr_t) clientPeers[i]->data);
             enet_peer_disconnect_now(clientPeers[i], 0);
-
-            // CHECK
-            /*while (enet_host_service(serverHost, &event, 0) > 0)
-            {
-                if (event.type == ENET_EVENT_TYPE_DISCONNECT)
-                    continue;
-            }
-
-            enet_peer_reset(clientPeers[i]);*/
-        }
+            
+	 }
     }
 
     enet_host_destroy(serverHost);
@@ -136,7 +123,7 @@ static void handleConnection(ENetPeer* peer)
     id = spawnPlayerAt(50.0f, 50.0f);
 
     // Save the player's ID inside the peer's data field
-    clientPeers[iPeer]->data = id;
+    clientPeers[iPeer]->data = (void*)(intptr_t) id;
 
     // Send CONNECT_OK to the new player
     message.type = CONNECT_OK;
@@ -163,14 +150,13 @@ static void handleConnection(ENetPeer* peer)
 static void handleDisconnection(ENetPeer* peer)
 {
     NetMessage message;
-    Entity* player;
     ENetPacket* packet;
     int id;
 
     // Remove client from peers array
     for (int i = 0; i < MAX_SERVER_PEERS; i++)
     {
-        if ((int)clientPeers[i]->data == (int) peer->data)
+        if ((int)(intptr_t) clientPeers[i]->data == (int)(intptr_t) peer->data)
         {
             clientPeers[i] = NULL;
             numPeers--;
@@ -179,7 +165,7 @@ static void handleDisconnection(ENetPeer* peer)
     }
     enet_peer_reset(peer);
 
-    id = (int)peer->data;
+    id = (int)(intptr_t) peer->data;
 
     // Broadcast PLAYER_LEFT to each player
     memset(&message, 0, sizeof(NetMessage));
@@ -201,15 +187,14 @@ static void handleMessage(ENetPeer* peer, ENetPacket* packet)
     memcpy(&receivedState, packet->data, sizeof(PlayerState));
 
     // Update player's position
-    player = getPlayerByID((int)peer->data);
+    player = getPlayerByID((int)(intptr_t) peer->data);
     player->x = receivedState.player.x;
     player->y = receivedState.player.y;
 }
 
-void serverBefore()
+void serverBefore(void)
 {
     ENetEvent event;
-    ENetPacket* packet = { 0 };
 
     if (serverHost == NULL)
         return;
@@ -234,7 +219,7 @@ void serverBefore()
                 handleDisconnection(event.peer);
 
                 printf("P%d disconnected (%x:%u). Num Peers: %d\n",
-                    (int)event.peer->data,
+                    (int)(intptr_t) event.peer->data,
                     event.peer->address.host,
                     event.peer->address.port,
                     numPeers);
@@ -260,7 +245,7 @@ void serverBefore()
 /*
 * Runs after the game loop.
 */
-void serverAfter()
+void serverAfter(void)
 {
     NetMessage message;
     Entity* player;
@@ -285,3 +270,4 @@ void serverAfter()
     enet_host_broadcast(serverHost, 0, packet);
     enet_host_flush(serverHost);
 }
+

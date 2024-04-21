@@ -8,16 +8,16 @@ static void (*netDispose)(void);
 static void (*netReceive)(void);
 static void (*netSend)(void);
 
-void initEnet()
+void initEnet(void)
 {
     if (enet_initialize() != 0)
     {
         fprintf(stderr, "An error occurred while initializing ENet.\n");
-        return EXIT_FAILURE;
+        return;
     }
 }
 
-void cleanupEnet()
+void cleanupEnet(void)
 {
     if (netDispose != NULL)
         netDispose();
@@ -101,7 +101,7 @@ void setAfterDisconnect(void (*callback)(void))
     }
 }
 
-int getHostType()
+int getHostType(void)
 {
     return hostType;
 }
@@ -128,12 +128,12 @@ void setConnectionString(char* ipAddress, int port)
     address.port = port;
 }
 
-char* getConnectionString()
+char* getConnectionString(void)
 {
     // TODO
-    char buffer[22] = { 0 };
-    //secure_sprintf(buffer, sizeof(buffer), "%s:%d", enet_address_get_host_ip(&address, ), address.port);
-    return buffer;
+    /*char buffer[22] = { 0 };
+    secure_sprintf(buffer, sizeof(buffer), "%s:%d", enet_address_get_host_ip(&address, ), address.port);*/
+    return "";
 }
 
 int netCreateHost(char* ipAddress, int port)
@@ -144,7 +144,7 @@ int netCreateHost(char* ipAddress, int port)
     return EXIT_FAILURE;
 }
 
-void netDisposeHost()
+void netDisposeHost(void)
 {
     if (netDispose != NULL)
         netDispose();
@@ -152,13 +152,13 @@ void netDisposeHost()
     hostType = NET_HOST_NONE;
 }
 
-void doNetworkingBefore()
+void doNetworkingBefore(void)
 {
     if (netReceive != NULL)
         netReceive();
 }
 
-void doNetworkingAfter()
+void doNetworkingAfter(void)
 {
     if (netSend != NULL)
         netSend();

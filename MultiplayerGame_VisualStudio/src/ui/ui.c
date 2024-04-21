@@ -2,10 +2,15 @@
 
 #define IP_MAX_LENGTH	16
 
+
+static void doCharacter(int scanCode);
+
+
 static char ipAddress[IP_MAX_LENGTH] = "";
 static int cursor = 0;
 
-void doCharacter(int scanCode)
+
+static void doCharacter(int scanCode)
 {
 	if (scanCode == SDL_SCANCODE_BACKSPACE && cursor > 0)
 	{
@@ -36,7 +41,7 @@ void doCharacter(int scanCode)
 	}
 }
 
-void doTextInput()
+void doTextInput(void)
 {
 	for (int iScanCode = SDL_SCANCODE_1; iScanCode <= SDL_SCANCODE_PERIOD; iScanCode++)
 	{
@@ -58,12 +63,12 @@ void doTextInput()
 	}
 }
 
-char* getTextInput()
+char* getTextInput(void)
 {
 	return ipAddress;
 }
 
-void drawTextInput()
+void drawTextInput(void)
 {
 	drawTextScaled(DEFAULT_WINDOW_WIDTH / 2 - GLYPH_WIDTH * 0.75f * 12, GLYPH_HEIGHT * 0.75f, 0.75f, 0, 0, 0, TEXT_LEFT, "IP ADDRESS: ");
 	if (cursor == 0)
@@ -88,7 +93,7 @@ void doUI(float deltaTime)
 	
 }
 
-void drawUI()
+void drawUI(void)
 {
 
-}
+}

@@ -1,6 +1,6 @@
 #include "init.h"
 
-void initSDL()
+void initSDL(void)
 {
 	int rendererFlags, windowFlags;
 
@@ -28,7 +28,7 @@ void initSDL()
 	app.renderer = SDL_CreateRenderer(app.window, -1, rendererFlags);
 }
 
-void cleanupSDL()
+void cleanupSDL(void)
 {
 	SDL_DestroyRenderer(app.renderer);
 
@@ -36,3 +36,4 @@ void cleanupSDL()
 
 	SDL_Quit();
 }
+

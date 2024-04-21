@@ -4,6 +4,15 @@
 
 #include "enet/enet.h"
 
+
+void setServerOnConnect(void (*onConnectOk)(void));
+void setServerOnDisconnect(void (*onDisconnect)(void));
+int createServer(char* ipAddress, int port);
+void destroyServer(void);
+void serverBefore(void);
+void serverAfter(void);
+
+
 // Player
 extern void setLocalPlayer(Entity* player);
 extern Entity* getPlayerByID(int id);

@@ -15,11 +15,11 @@ struct Button {
 	Button* next;
 };
 
-static void initMenu();
+static void initMenu(void);
 static void doMenu(float deltaTime);
 static void doMenuWait(float deltaTime);
-static void drawMenu();
-static void drawMenuWait();
+static void drawMenu(void);
+static void drawMenuWait(void);
 
 static Button buttonServer;
 static Button buttonClient;
@@ -53,21 +53,18 @@ Button createButton(
 void drawButton(Button button)
 {
 	blitRect(button.x, button.y, button.w, button.h, button.c);
-	if (button.text != NULL)
-	{
-		drawText(
-			button.x + button.w / 2, 
-			button.y + button.h / 2 - GLYPH_HEIGHT / 2, 
-			button.textC.r, 
-			button.textC.g, 
-			button.textC.b, 
-			TEXT_CENTER, 
-			button.text
-		);
-	}
+	drawText(
+		button.x + button.w / 2, 
+		button.y + button.h / 2 - GLYPH_HEIGHT / 2, 
+		button.textC.r, 
+		button.textC.g, 
+		button.textC.b, 
+		TEXT_CENTER, 
+		button.text
+	);
 }
 
-static void initMenu()
+static void initMenu(void)
 {
 	SDL_Color colorButtons = { 41, 170, 225, 255 };
 	SDL_Color colorText = { 255, 255, 255 };
@@ -101,7 +98,7 @@ static void initMenu()
 	);
 }
 
-void showMenu()
+void showMenu(void)
 {
 	initMenu();
 
@@ -189,7 +186,7 @@ static void doMenuWait(float deltaTime)
 	doNetworkingAfter();
 }
 
-static void drawMenu()
+static void drawMenu(void)
 {
 	drawButton(buttonServer);
 	drawButton(buttonClient);
@@ -197,11 +194,11 @@ static void drawMenu()
 	drawTextInput();
 }
 
-static void drawMenuWait()
+static void drawMenuWait(void)
 {
 	drawButton(buttonServer);
 	drawButton(buttonClient);
 	drawTextScaled(DEFAULT_WINDOW_WIDTH / 2, DEFAULT_WINDOW_HEIGHT * (7.0f / 8.0f), 0.75, 0, 0, 0, TEXT_CENTER, "Connection attempt...");
 
 	drawTextInput();
-}
+}
