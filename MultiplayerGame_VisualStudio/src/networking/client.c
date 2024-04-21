@@ -9,7 +9,7 @@ void clientAfter();
 static void handleConnection();
 static void handleMessage(ENetPacket* packet);
 static void (*connectOkCallback)(void);
-static void (*connectFailCallback)(void); // TODO
+static void (*connectFailCallback)(void);
 static void (*disconnectCallback)(void);
 
 
@@ -17,7 +17,7 @@ static ENetAddress clientAddress;
 static ENetAddress serverAddress;
 static ENetHost* clientHost = NULL;
 static ENetPeer* serverPeer = NULL;
-static int isWaiting = 0; // TODO
+static int isWaiting = 0;
 static Uint32 startWaitingTime = 0;
 
 
@@ -81,22 +81,7 @@ int createClient(char* ipAddress, int port)
     // Connection attempt
     isWaiting = 1;
     startWaitingTime = SDL_GetTicks();
-    // TODO fix (it's blocking)
-    /*while (enet_host_service(clientHost, &event, 5000) > 0 &&
-        event.type == ENET_EVENT_TYPE_CONNECT)
-    {
-        printf("Connection to %s:%d succeeded.\n", ipAddress, port);
-        if (connectOkCallback != NULL)
-            connectOkCallback();
 
-        return 0;
-    }
-
-    // Waiting for connect
-    enet_peer_reset(serverPeer);
-    fprintf(stderr, "Connection to %s:%d failed.\n", ipAddress, port);
-
-    return 1;*/
     return 0;
 }
 
@@ -253,9 +238,6 @@ void clientBefore()
     {
         switch (event.type)
         {
-            // NB: it never reaches this because the clientBefore() function
-            // is called from game.c and not menu.c
-            // TODO: refactor the menu/game 
             case ENET_EVENT_TYPE_CONNECT:
             {
                 printf("EVENT_CONNECT\n");
