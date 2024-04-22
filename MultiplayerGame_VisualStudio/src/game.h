@@ -33,4 +33,4 @@ extern void doNetworkingAfter(void);
 extern int secure_sprintf(char* buffer, size_t bufferSize, const char* format, ...);
 
 extern App app;
-
+extern Game game;

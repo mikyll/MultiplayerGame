@@ -1,10 +1,13 @@
 #include "game.h"
 
-Game game;
 
 static void resetGame(void);
 static void doGame(float deltaTime);
 static void drawGame(void);
+
+
+Game game;
+
 
 void initGame(void)
 {

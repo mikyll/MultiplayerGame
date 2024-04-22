@@ -34,5 +34,5 @@ extern Game game;
 // UI
 extern void drawFPS(int fps);
 
-App app;
+extern App app;
 

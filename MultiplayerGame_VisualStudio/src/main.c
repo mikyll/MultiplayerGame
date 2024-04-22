@@ -1,10 +1,15 @@
 #include "main.h"
 
+
 static void initApp(void);
 static void cleanupApp(void);
 static float calculateDeltaTime(void);
 static void capFrameRate(Uint32 initFrameTime, Uint32 fpsCap);
 static float calculateFPS(float deltaTime);
+
+
+App app;
+
 
 int main(int argc, char** argv)
 {
