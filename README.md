@@ -9,7 +9,7 @@
   [![VS][vs-shield]][vs-url]
 
 # MultiplayerGame
-A super simple multiplayer game made in C, with [SDL2](https://github.com/libsdl-org/SDL) and [ENet](https://github.com/lsalzman/enet).
+A super simple multiplayer "game" made in C, with [SDL2](https://github.com/libsdl-org/SDL) and [ENet](https://github.com/lsalzman/enet).
 
 </div>
 
