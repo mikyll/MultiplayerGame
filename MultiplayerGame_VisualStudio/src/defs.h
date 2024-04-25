@@ -8,7 +8,7 @@
 
 // App
 #define APP_TITLE					"Multiplayer Game"
-#define APP_VERSION					"v0.1-beta"
+#define APP_VERSION					"-"
 #define DEFAULT_WINDOW_WIDTH		640
 #define DEFAULT_WINDOW_HEIGHT		480
 #define CAP_FPS						60
@@ -34,7 +34,7 @@ enum
 #define MAX_MOUSE_BUTTONS			6
 
 // Player
-#define PLAYER_SIZE				25.0f
+#define PLAYER_SIZE					25.0f
 #define PLAYER_BASE_HEALTH			5
 #define PLAYER_SPEED				200.0f
 #define PLAYER_SPEED_BOOST			2.0f
@@ -49,4 +49,5 @@ enum
 	NET_HOST_NONE,
 	NET_HOST_SERVER,
 	NET_HOST_CLIENT,
-};
+};
+

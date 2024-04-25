@@ -30,4 +30,5 @@ extern char* getTextInput(void);
 // Utils
 extern void secure_strcpy(char* dest, size_t destSize, const char* src);
 
-extern App app;
+extern App app;
+

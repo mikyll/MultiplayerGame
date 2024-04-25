@@ -95,7 +95,7 @@ static void capFrameRate(Uint32 initFrameTime, Uint32 fpsCap)
 
 static float calculateFPS(float deltaTime)
 {
-    // Smoothing factor for the EWMA calculation (adjust as needed)
+    // Smoothing factor for the EWMA calculation
     const float smoothingFactor = 0.1f;
 
     // Calculate the reciprocal of frame time (FPS) for the current frame

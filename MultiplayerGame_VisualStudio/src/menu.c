@@ -201,4 +201,5 @@ static void drawMenuWait(void)
 	drawTextScaled(DEFAULT_WINDOW_WIDTH / 2, DEFAULT_WINDOW_HEIGHT * (7.0f / 8.0f), 0.75, 0, 0, 0, TEXT_CENTER, "Connection attempt...");
 
 	drawTextInput();
-}
+}
+

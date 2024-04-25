@@ -30,8 +30,6 @@ typedef struct {
 	int keyboard[SDL_NUM_SCANCODES];
 	Mouse mouse;
 	Texture textureHead, * textureTail;
-	float deltaTime;
-	int fps;
 } App;
 
 struct Entity {

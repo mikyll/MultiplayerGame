@@ -14,4 +14,5 @@ extern void blitRectScaledTexture(SDL_Texture* texture, SDL_Rect* src, int x, in
 extern SDL_Texture* loadTexture(char* filename);
 
 // Utils
-extern int secure_sprintf(char* buffer, size_t bufferSize, const char* format, ...);
+extern int secure_sprintf(char* buffer, size_t bufferSize, const char* format, ...);
+

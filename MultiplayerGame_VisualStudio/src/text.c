@@ -52,7 +52,7 @@ void drawText(int x, int y, int r, int g, int b, int align, char* format, ...)
         {
             c -= 32;
         }
-		if (c >= ' ' && c <= 'Z')
+		if (c >= ' ' && c <= '_')
 		{
 			rect.x = (c - ' ') * GLYPH_WIDTH;
 
@@ -109,7 +109,7 @@ void drawTextScaled(int x, int y, float size, int r, int g, int b, int align, ch
         {
             c -= 32;
         }
-        if (c >= ' ' && c <= 'Z')
+        if (c >= ' ' && c <= '_')
         {
             rect.x = (c - ' ') * GLYPH_WIDTH;
 

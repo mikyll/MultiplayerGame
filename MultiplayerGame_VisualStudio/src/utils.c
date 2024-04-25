@@ -170,4 +170,5 @@ char* secure_strtok(char* str, const char* delim, char** saveptr)
 	}
 
 	return token_start;
-}
+}
+
