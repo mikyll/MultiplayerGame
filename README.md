@@ -9,6 +9,7 @@
   [![VS][vs-shield]][vs-url]
 
 # MultiplayerGame
+
 A super simple multiplayer "game" made in C, with [SDL2](https://github.com/libsdl-org/SDL) and [ENet](https://github.com/lsalzman/enet).
 
 </div>
@@ -66,6 +67,11 @@ The build will generate an executable file named **`MultiplayerGame.exe`** in `M
   make
   ```
 This will generate an executable file named **`multiplayer_game`**.
+
+## Documentation
+
+- [SDL2](https://wiki.libsdl.org/SDL2/FrontPage)
+- [ENet](http://sauerbraten.org/enet/index.html)
 
 ## Aknowledgements
 
