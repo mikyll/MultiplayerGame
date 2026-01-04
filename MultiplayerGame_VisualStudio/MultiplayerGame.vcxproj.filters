@@ -19,6 +19,9 @@
     <Filter Include="Source Files\ui">
       <UniqueIdentifier>{7e6dcc7e-2ab5-4e27-8c20-620d9cc4c0ea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\game">
+      <UniqueIdentifier>{ef15d75f-5997-4d62-9c3c-3c998ca1eb0a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.c">
@@ -33,16 +36,7 @@
     <ClCompile Include="src\draw.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\player.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\game.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\menu.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\text.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\ui\ui.c">
@@ -59,6 +53,21 @@
     </ClCompile>
     <ClCompile Include="src\utils.c">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\button.c">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\game.c">
+      <Filter>Source Files\game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\player.c">
+      <Filter>Source Files\game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\text.c">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\text_input.c">
+      <Filter>Source Files\ui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -83,16 +92,7 @@
     <ClInclude Include="src\draw.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\player.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\game.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\menu.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\text.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="src\networking\client.h">
@@ -109,6 +109,21 @@
     </ClInclude>
     <ClInclude Include="src\utils.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\button.h">
+      <Filter>Source Files\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\game.h">
+      <Filter>Source Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\player.h">
+      <Filter>Source Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\text.h">
+      <Filter>Source Files\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\text_input.h">
+      <Filter>Source Files\ui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

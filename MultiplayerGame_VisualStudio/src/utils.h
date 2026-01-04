@@ -2,7 +2,6 @@
 
 #include "common.h"
 
-
 int isValidIPAddress(const char* ipAddress);
 int secure_sprintf(char* buffer, size_t bufferSize, const char* format, ...);
 void secure_strcpy(char* dest, size_t destSize, const char* src);

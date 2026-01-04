@@ -1,10 +1,10 @@
 #pragma once
 
-#include "common.h"
+#include "../common.h"
 
 
 void initGame(void);
-void showGame(void);
+void startGame(void);
 
 
 // Menu

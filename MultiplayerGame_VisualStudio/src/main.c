@@ -13,109 +13,110 @@ App app;
 
 int main(int argc, char** argv)
 {
-    Uint32 initFrameTime = 0.0f;
-    float deltaTime = 0.0f;
-    float fps = 0.0f;
+  Uint32 initFrameTime = 0.0f;
+  float deltaTime = 0.0f;
+  float fps = 0.0f;
 
-	initApp();
+  initApp();
+  initMenu();
 
-    showMenu();
+  showMenu();
 
-	while (1)
-	{
-        initFrameTime = SDL_GetTicks();
-        deltaTime = calculateDeltaTime();
+  while (1)
+  {
+    initFrameTime = SDL_GetTicks();
+    deltaTime = calculateDeltaTime();
 
-		prepareScene();
+    prepareScene();
 
-        // Input
-		doInput();
+    // Input
+    doInput();
 
-		// Logic
-		app.delegate.logic(deltaTime);
+    // Logic
+    app.delegate.logic(deltaTime);
 
-		// Draw
-		app.delegate.draw();
-        drawFPS(fps);
+    // Draw
+    app.delegate.draw();
+    drawFPS(fps);
 
-		presentScene();
+    presentScene();
 
-        fps = calculateFPS(deltaTime);
+    fps = calculateFPS(deltaTime);
 
-        capFrameRate(initFrameTime, CAP_FPS);
-	}
+    capFrameRate(initFrameTime, CAP_FPS);
+  }
 
-	return 0;
+  return 0;
 }
 
 static void initApp(void)
 {
-    memset(&app, 0, sizeof(App));
-    app.textureTail = &app.textureHead;
+  memset(&app, 0, sizeof(App));
+  app.textureTail = &app.textureHead;
 
-    srand(time(NULL));
+  srand(time(NULL));
 
-    initSDL();
-    initFonts();
-    initEnet();
+  initSDL();
+  initFonts();
+  initEnet();
 
-    atexit(cleanupApp);
+  atexit(cleanupApp);
 }
 
 static void cleanupApp(void)
 {
-    cleanupSDL();
+  cleanupSDL();
 
-    cleanupEnet();
+  cleanupEnet();
 }
 
 static float calculateDeltaTime(void)
 {
-    static Uint32 lastFrameTime = 0.0f;
-    float deltaTime;
+  static Uint32 lastFrameTime = 0.0f;
+  float deltaTime;
 
-    deltaTime = (float)(SDL_GetTicks() - lastFrameTime) / 1000.0f;
-    lastFrameTime = SDL_GetTicks();
+  deltaTime = (float)(SDL_GetTicks() - lastFrameTime) / 1000.0f;
+  lastFrameTime = SDL_GetTicks();
 
-    // Clamp maximum delta time value
-    if (deltaTime > 0.05f)
-        deltaTime = 0.05f;
+  // Clamp maximum delta time value
+  if (deltaTime > 0.05f)
+    deltaTime = 0.05f;
 
-    return deltaTime;
+  return deltaTime;
 }
 
 static void capFrameRate(Uint32 initFrameTime, Uint32 fpsCap)
 {
-    Uint32 frameTime = SDL_GetTicks() - initFrameTime;
-    Uint32 frameDurationMS = 1000.0f / fpsCap;
+  Uint32 frameTime = SDL_GetTicks() - initFrameTime;
+  Uint32 frameDurationMS = 1000.0f / fpsCap;
 
-    if (frameTime < frameDurationMS)
-        SDL_Delay(frameDurationMS - frameTime);
+  if (frameTime < frameDurationMS)
+    SDL_Delay(frameDurationMS - frameTime);
 }
 
 static float calculateFPS(float deltaTime)
 {
-    // Smoothing factor for the EWMA calculation
-    const float smoothingFactor = 0.1f;
+  // Smoothing factor for the EWMA calculation
+  const float smoothingFactor = 0.1f;
 
-    // Calculate the reciprocal of frame time (FPS) for the current frame
-    float instantFPS = 1.0f / deltaTime;
+  // Calculate the reciprocal of frame time (FPS) for the current frame
+  float instantFPS = 1.0f / deltaTime;
 
-    // Initialize static variables to store previous FPS and the first frame flag
-    static float smoothedFPS = 0.0f;
-    static int isFirstFrame = 1;
+  // Initialize static variables to store previous FPS and the first frame flag
+  static float smoothedFPS = 0.0f;
+  static int isFirstFrame = 1;
 
-    // If it's the first frame, set smoothed FPS to the instant FPS
-    if (isFirstFrame)
-    {
-        smoothedFPS = instantFPS;
-        isFirstFrame = 0;
-    }
-    else
-    {
-        // Otherwise, update smoothed FPS using EWMA
-        smoothedFPS = smoothingFactor * instantFPS + (1.0f - smoothingFactor) * smoothedFPS;
-    }
+  // If it's the first frame, set smoothed FPS to the instant FPS
+  if (isFirstFrame)
+  {
+    smoothedFPS = instantFPS;
+    isFirstFrame = 0;
+  }
+  else
+  {
+    // Otherwise, update smoothed FPS using EWMA
+    smoothedFPS = smoothingFactor * instantFPS + (1.0f - smoothingFactor) * smoothedFPS;
+  }
 
-    return smoothedFPS;
+  return smoothedFPS;
 }

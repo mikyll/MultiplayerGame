@@ -25,10 +25,11 @@ extern void blitRectBorder(int x, int y, int w, int h, SDL_Color c);
 extern void initFonts(void);
 
 // Menu
+extern void initMenu(void);
 extern void showMenu(void);
 
 // Game
-extern void showGame(void);
+extern void startGame(void);
 extern Game game;
 
 // UI

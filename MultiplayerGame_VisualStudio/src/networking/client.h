@@ -21,4 +21,5 @@ extern void destroyPlayerByID(int id);
 extern Entity* getPlayerByID(int id);
 
 // Utils
-extern int isValidIPAddress(const char* ipAddress);
+extern int isValidIPAddress(const char* ipAddress);
+

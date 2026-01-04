@@ -164,7 +164,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\draw.c" />
-    <ClCompile Include="src\game.c" />
+    <ClCompile Include="src\game\game.c" />
+    <ClCompile Include="src\game\player.c" />
     <ClCompile Include="src\init.c" />
     <ClCompile Include="src\input.c" />
     <ClCompile Include="src\main.c">
@@ -174,8 +175,9 @@
     <ClCompile Include="src\networking\client.c" />
     <ClCompile Include="src\networking\net.c" />
     <ClCompile Include="src\networking\server.c" />
-    <ClCompile Include="src\player.c" />
-    <ClCompile Include="src\text.c" />
+    <ClCompile Include="src\ui\button.c" />
+    <ClCompile Include="src\ui\text.c" />
+    <ClCompile Include="src\ui\text_input.c" />
     <ClCompile Include="src\ui\ui.c" />
     <ClCompile Include="src\utils.c" />
   </ItemGroup>
@@ -183,7 +185,8 @@
     <ClInclude Include="src\common.h" />
     <ClInclude Include="src\defs.h" />
     <ClInclude Include="src\draw.h" />
-    <ClInclude Include="src\game.h" />
+    <ClInclude Include="src\game\game.h" />
+    <ClInclude Include="src\game\player.h" />
     <ClInclude Include="src\init.h" />
     <ClInclude Include="src\input.h" />
     <ClInclude Include="src\main.h" />
@@ -191,9 +194,10 @@
     <ClInclude Include="src\networking\client.h" />
     <ClInclude Include="src\networking\net.h" />
     <ClInclude Include="src\networking\server.h" />
-    <ClInclude Include="src\player.h" />
     <ClInclude Include="src\structs.h" />
-    <ClInclude Include="src\text.h" />
+    <ClInclude Include="src\ui\button.h" />
+    <ClInclude Include="src\ui\text.h" />
+    <ClInclude Include="src\ui\text_input.h" />
     <ClInclude Include="src\ui\ui.h" />
     <ClInclude Include="src\utils.h" />
   </ItemGroup>
