@@ -1,0 +1,65 @@
+root = true
+
+[*]
+indent_style = space
+indent_size = 2
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+# C/C++ specific settings
+[*.{c,h,cpp,hpp,cc,hxx,cxx}]
+# Basic indentation
+tab_width = 2
+
+# Brace style - Allman/ANSI style (braces on new line)
+cpp_new_line_before_open_brace = allman
+cpp_indent_braces = false
+
+# Pointer alignment - left (int* ptr)
+cpp_style_qualifier_alignment = left
+cpp_space_between_pointer_reference_and_type = false
+
+# Parentheses spacing
+cpp_indent_within_parentheses = none
+cpp_space_within_parameter_list_parentheses = false
+cpp_space_between_parameter_list_parentheses = false
+cpp_space_after_cast = false
+
+# Array brackets spacing
+cpp_space_before_open_square_brackets = false
+cpp_space_between_empty_square_brackets = false
+cpp_space_between_square_brackets = false
+
+# Control statement spacing
+cpp_space_after_keywords_in_control_statements = true
+cpp_space_before_open_brace = false
+
+# Comma spacing
+cpp_space_after_comma_in_parameter_list = true
+cpp_space_before_comma_in_parameter_list = false
+
+# Colon spacing
+cpp_space_before_colon_in_initializer_list = false
+cpp_space_before_colon_in_base_clause = false
+cpp_space_between_colon_and_base = false
+cpp_space_after_colon_in_initializer_list = true
+
+# Operator spacing
+cpp_space_before_assignment_operators = true
+cpp_space_after_assignment_operators = true
+
+# Templates
+cpp_space_within_template_parameter_list_parentheses = false
+cpp_space_between_template_parameter_list_parentheses = false
+
+# Additional C/C++ specific settings
+cpp_indent_case_contents = true
+cpp_indent_multi_line_statements = true
+cpp_indent_access_specifiers = false
+cpp_indent_namespace_contents = true
+cpp_indent_case_contents_when_block = true
+cpp_indent_preserve_within_parentheses = false
+cpp_indent_lambda_braces_when_parameter = false
+cpp_indent_inside_namespace = false
