@@ -2,10 +2,20 @@
 
 int isValidIPAddress(const char* ipAddress)
 {
+  if (ipAddress == NULL)
+  {
+    return -1;
+  }
+
+  int addressLength = strlen(ipAddress);
   int segments = 0;
   char* segment;
   char* copy = strdup(ipAddress); // Make a copy of the input string
   char* saveptr = NULL; // Pointer to maintain the position between calls
+
+  if (addressLength == 0 || addressLength > 15) {
+    return -2;
+  }
 
   // Tokenize the string by dots
   segment = secure_strtok(copy, ".", &saveptr);
@@ -18,14 +28,14 @@ int isValidIPAddress(const char* ipAddress)
       if (!isdigit(segment[i]))
       {
         free(copy); // Free the memory allocated for the copy
-        return 0; // Not a valid IP address
+        return -3; // Not a valid IP address
       }
     }
     int value = atoi(segment);
     if (value < 0 || value > 255)
     {
       free(copy); // Free the memory allocated for the copy
-      return 0; // Not a valid IP address
+      return -4; // Not a valid IP address
     }
     segment = secure_strtok(NULL, ".", &saveptr);
   }
@@ -35,10 +45,10 @@ int isValidIPAddress(const char* ipAddress)
   // Ensure there are exactly 4 segments
   if (segments != 4)
   {
-    return 0; // Not a valid IP address
+    return -5; // Not a valid IP address
   }
 
-  return 1; // Valid IP address
+  return 0; // Valid IP address
 }
 
 int secure_sprintf(char* buffer, size_t bufferSize, const char* format, ...)

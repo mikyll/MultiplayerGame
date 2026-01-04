@@ -47,7 +47,7 @@ int createClient(char* ipAddress, int port)
   }
   else
   {
-    if (!isValidIPAddress(ipAddress))
+    if (isValidIPAddress(ipAddress) != 0)
     {
       SDL_LogInfo(SDL_LOG_CATEGORY_APPLICATION, "Invalid IP address");
 

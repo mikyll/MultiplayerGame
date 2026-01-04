@@ -25,7 +25,7 @@ int createServer(char* ipAddress, int port)
 {
   int id;
 
-  if (ipAddress == NULL || strlen(ipAddress) == 0 || !isValidIPAddress(ipAddress))
+  if (isValidIPAddress(ipAddress) != 0)
   {
     serverAddress.host = ENET_HOST_ANY;
   }
