@@ -70,7 +70,6 @@ typedef struct {
 } PlayerLeft;
 
 typedef struct {
-  int type;
   Entity players[MAX_PLAYERS];
   int numPlayers;
 } GameState;
