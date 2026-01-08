@@ -42,7 +42,7 @@ extern void drawButton(Button button);
 extern void secure_strcpy(char* dest, size_t destSize, const char* src);
 extern int isLight(SDL_Color c);
 extern unsigned int hexFromRGB(int r, int g, int b);
-extern SDL_Color getRandomColor();
+extern SDL_Color getRandomColor(void);
 
 extern App app;
 
