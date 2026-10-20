@@ -9,7 +9,7 @@
 
 #include "SDL2/SDL.h"
 
-#include "utils.h"
+#include "utils/utils.h"
 #include "defs.h"
 #include "structs.h"
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "common.h"
+#include "../common.h"
 
 void initSDL(void);
 void cleanupSDL(void);

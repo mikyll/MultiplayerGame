@@ -3,96 +3,83 @@
   <ItemGroup>
     <Filter Include="Source Files">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx;h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\game">
+      <UniqueIdentifier>{7b5cf275-ae77-41b0-99e7-c4c68e91aba0}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source Files\networking">
       <UniqueIdentifier>{7b7badd6-5157-4860-bad3-bb8a13fbe205}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\system">
+      <UniqueIdentifier>{6e92568c-65f0-49c2-95ba-183a80918ce0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\ui">
       <UniqueIdentifier>{7e6dcc7e-2ab5-4e27-8c20-620d9cc4c0ea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\utils">
+      <UniqueIdentifier>{947d4bab-d315-4418-863a-70e79a176f2e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\game\game.c">
+      <Filter>Source Files\game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\player.c">
+      <Filter>Source Files\game</Filter>
+    </ClCompile>
     <ClCompile Include="src\main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\init.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\input.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\draw.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\player.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\game.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\menu.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\text.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ui\ui.c">
-      <Filter>Source Files\ui</Filter>
-    </ClCompile>
     <ClCompile Include="src\networking\client.c">
-      <Filter>Source Files\networking</Filter>
-    </ClCompile>
-    <ClCompile Include="src\networking\server.c">
       <Filter>Source Files\networking</Filter>
     </ClCompile>
     <ClCompile Include="src\networking\net.c">
       <Filter>Source Files\networking</Filter>
     </ClCompile>
-    <ClCompile Include="src\utils.c">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\networking\server.c">
+      <Filter>Source Files\networking</Filter>
+    </ClCompile>
+    <ClCompile Include="src\system\draw.c">
+      <Filter>Source Files\system</Filter>
+    </ClCompile>
+    <ClCompile Include="src\system\init.c">
+      <Filter>Source Files\system</Filter>
+    </ClCompile>
+    <ClCompile Include="src\system\input.c">
+      <Filter>Source Files\system</Filter>
+    </ClCompile>
+    <ClCompile Include="src\system\text.c">
+      <Filter>Source Files\system</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\menu.c">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\ui.c">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\utils.c">
+      <Filter>Source Files\utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\defs.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\init.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\input.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\main.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\structs.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\common.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\draw.h">
+    <ClInclude Include="src\defs.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\player.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="src\game\game.h">
+      <Filter>Source Files\game</Filter>
     </ClInclude>
-    <ClInclude Include="src\game.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="src\game\player.h">
+      <Filter>Source Files\game</Filter>
     </ClInclude>
-    <ClInclude Include="src\menu.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\text.h">
+    <ClInclude Include="src\main.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="src\networking\client.h">
@@ -104,11 +91,29 @@
     <ClInclude Include="src\networking\server.h">
       <Filter>Source Files\networking</Filter>
     </ClInclude>
+    <ClInclude Include="src\structs.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\system\draw.h">
+      <Filter>Source Files\system</Filter>
+    </ClInclude>
+    <ClInclude Include="src\system\init.h">
+      <Filter>Source Files\system</Filter>
+    </ClInclude>
+    <ClInclude Include="src\system\input.h">
+      <Filter>Source Files\system</Filter>
+    </ClInclude>
+    <ClInclude Include="src\system\text.h">
+      <Filter>Source Files\system</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\menu.h">
+      <Filter>Source Files\ui</Filter>
+    </ClInclude>
     <ClInclude Include="src\ui\ui.h">
       <Filter>Source Files\ui</Filter>
     </ClInclude>
-    <ClInclude Include="src\utils.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="src\utils\utils.h">
+      <Filter>Source Files\utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

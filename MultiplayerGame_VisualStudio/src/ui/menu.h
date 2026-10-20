@@ -1,6 +1,6 @@
 #pragma once
 
-#include "common.h"
+#include "../common.h"
 
 // Draw
 extern void blitRect(int x, int y, int w, int h, SDL_Color c);
