@@ -220,6 +220,7 @@ static void handleMessage(ENetPacket* packet)
                 {
                     player->x = gameState.players[i].x;
                     player->y = gameState.players[i].y;
+                    player->color = gameState.players[i].color;
                 }
             }
 

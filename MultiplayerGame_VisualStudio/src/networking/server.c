@@ -206,6 +206,7 @@ static void handleMessage(ENetPeer* peer, ENetPacket* packet)
 
     player->x = receivedState.player.x;
     player->y = receivedState.player.y;
+    player->color = receivedState.player.color;
 }
 
 void serverBefore(void)
