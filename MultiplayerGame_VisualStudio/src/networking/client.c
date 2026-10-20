@@ -91,7 +91,8 @@ void destroyClient(void)
     enet_host_destroy(clientHost);
     clientHost = NULL;
 
-    if (disconnectCallback != NULL)
+    // Only established connections report a disconnection: failed attempts use connectFailCallback
+    if (!isWaiting && disconnectCallback != NULL)
         disconnectCallback();
 
     isWaiting = 0;
@@ -245,8 +246,11 @@ void clientBefore(void)
     if (isWaiting == 1 && SDL_GetTicks() - startWaitingTime >= 5000)
     {
         printf("Connection attempt failed.\n");
-        connectFailCallback();
         destroyClient();
+
+        if (connectFailCallback != NULL)
+            connectFailCallback();
+
         return;
     }
 
@@ -267,7 +271,13 @@ void clientBefore(void)
             {
                 printf("EVENT_DISCONNECT\n");
 
+                // Disconnected before CONNECT_OK: the connection attempt failed
+                int wasWaiting = isWaiting;
+
                 destroyClient();
+
+                if (wasWaiting && connectFailCallback != NULL)
+                    connectFailCallback();
 
                 return;
             }
