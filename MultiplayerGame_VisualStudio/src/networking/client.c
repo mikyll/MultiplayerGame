@@ -83,7 +83,10 @@ void destroyClient(void)
         return;
 
     if (serverPeer != NULL)
+    {
         enet_peer_disconnect_now(serverPeer, 0);
+        serverPeer = NULL;
+    }
 
     enet_host_destroy(clientHost);
     clientHost = NULL;
