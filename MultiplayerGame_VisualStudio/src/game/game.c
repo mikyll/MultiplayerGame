@@ -30,6 +30,8 @@ void resetGame(void)
 
 	game.playersTail = &game.playersHead;
 	game.playersCount = 0;
+
+	setLocalPlayer(NULL);
 }
 
 void showGame(void)

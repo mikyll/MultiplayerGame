@@ -114,6 +114,8 @@ void destroyPlayer(Entity* player)
 			}
 
 			playerPrev->next = p->next;
+			if (p == localPlayer)
+				localPlayer = NULL;
 			free(p);
 
 			game.playersCount--;
@@ -138,6 +140,8 @@ void destroyPlayerByID(int id)
 			}
 
 			playerPrev->next = p->next;
+			if (p == localPlayer)
+				localPlayer = NULL;
 			free(p);
 
 			game.playersCount--;
@@ -302,6 +306,8 @@ void doPlayers(float deltaTime)
 			}
 
 			playerPrev->next = player->next;
+			if (player == localPlayer)
+				localPlayer = NULL;
 			free(player);
 			player = playerPrev;
 		}
