@@ -108,7 +108,13 @@ static void handleMessage(ENetPacket* packet)
 {
     NetMessage receivedNetMessage;
     int id;
-    
+
+    if (packet->dataLength != sizeof(NetMessage))
+    {
+        printf("Invalid message size: %zu\n", packet->dataLength);
+        return;
+    }
+
     memcpy(&receivedNetMessage, packet->data, sizeof(NetMessage));
 
     switch (receivedNetMessage.type)
@@ -116,6 +122,12 @@ static void handleMessage(ENetPacket* packet)
         case CONNECT_OK:
         {
             ConnectOK connectOK = receivedNetMessage.data.connectOK;
+
+            if (connectOK.numPlayers < 0 || connectOK.numPlayers > MAX_PLAYERS)
+            {
+                printf("Invalid CONNECT_OK players count: %d\n", connectOK.numPlayers);
+                break;
+            }
 
             // Spawn missing players
             for (int i = 0; i < connectOK.numPlayers; i++)
@@ -146,6 +158,7 @@ static void handleMessage(ENetPacket* packet)
         case CONNECT_DENIED:
         {
             ConnectDenied connectDenied = receivedNetMessage.data.connectDenied;
+            connectDenied.message[sizeof(connectDenied.message) - 1] = '\0';
 
             // TODO
             printf("Connect Denied message: %s\n", connectDenied.message);
@@ -191,6 +204,12 @@ static void handleMessage(ENetPacket* packet)
         case GAME_STATE:
         {
             GameState gameState = receivedNetMessage.data.gameState;
+
+            if (gameState.numPlayers < 0 || gameState.numPlayers > MAX_PLAYERS)
+            {
+                printf("Invalid GAME_STATE players count: %d\n", gameState.numPlayers);
+                break;
+            }
 
             // Update players
             for (int i = 0; i < gameState.numPlayers; i++)
