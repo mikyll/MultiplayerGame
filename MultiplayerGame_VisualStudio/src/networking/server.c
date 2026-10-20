@@ -185,10 +185,19 @@ static void handleMessage(ENetPeer* peer, ENetPacket* packet)
     PlayerState receivedState;
     Entity* player;
 
+    if (packet->dataLength != sizeof(PlayerState))
+    {
+        printf("Invalid message size from P%d: %zu\n", (int)(intptr_t) peer->data, packet->dataLength);
+        return;
+    }
+
     memcpy(&receivedState, packet->data, sizeof(PlayerState));
 
     // Update player's position
     player = getPlayerByID((int)(intptr_t) peer->data);
+    if (player == NULL)
+        return;
+
     player->x = receivedState.player.x;
     player->y = receivedState.player.y;
 }
