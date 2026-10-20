@@ -240,6 +240,8 @@ void serverBefore(void)
             {
                 handleMessage(event.peer, event.packet);
 
+                enet_packet_destroy(event.packet);
+
                 break;
             }
             default:
