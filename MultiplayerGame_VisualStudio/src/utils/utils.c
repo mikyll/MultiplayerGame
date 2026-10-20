@@ -43,20 +43,31 @@ int isValidIPAddress(const char* ipAddress)
 
 int secure_sprintf(char* buffer, size_t bufferSize, const char* format, ...)
 {
+	va_list args;
+	int result;
+
+	va_start(args, format);
+	result = secure_vsprintf(buffer, bufferSize, format, args);
+	va_end(args);
+
+	return result;
+}
+
+int secure_vsprintf(char* buffer, size_t bufferSize, const char* format, va_list args)
+{
+	va_list argsCopy;
+	int result;
+
 	if (buffer == NULL || bufferSize == 0 || format == NULL)
 	{
 		// Invalid parameters
 		return -1;
 	}
 
-	va_list args;
-	va_start(args, format);
-
-	// Print to a temporary buffer to determine the required size
-	char tempBuffer[1024]; // Choose a suitable size for the temporary buffer
-	int result = vsnprintf(tempBuffer, sizeof(tempBuffer), format, args);
-
-	va_end(args);
+	// Determine the required size without writing to the output buffer
+	va_copy(argsCopy, args);
+	result = vsnprintf(NULL, 0, format, argsCopy);
+	va_end(argsCopy);
 
 	if (result < 0)
 	{
@@ -70,12 +81,8 @@ int secure_sprintf(char* buffer, size_t bufferSize, const char* format, ...)
 		return -1;
 	}
 
-	// Copy the formatted string to the output buffer
-	va_start(args, format);
-	vsnprintf(buffer, bufferSize, format, args);
-	va_end(args);
-
-	return result;
+	// Write the formatted string to the output buffer
+	return vsnprintf(buffer, bufferSize, format, args);
 }
 
 void secure_strcpy(char* dest, size_t destSize, const char* src)
