@@ -8,6 +8,26 @@ static void (*netDispose)(void);
 static void (*netReceive)(void);
 static void (*netSend)(void);
 
+static void (*afterConnectFail)(void);
+static void (*afterDisconnect)(void);
+
+// Once the host is gone there is no active host anymore: reset the type before notifying
+static void onConnectFail(void)
+{
+    setHostType(NET_HOST_NONE);
+
+    if (afterConnectFail != NULL)
+        afterConnectFail();
+}
+
+static void onDisconnect(void)
+{
+    setHostType(NET_HOST_NONE);
+
+    if (afterDisconnect != NULL)
+        afterDisconnect();
+}
+
 void initEnet(void)
 {
     if (enet_initialize() != 0)
@@ -69,6 +89,8 @@ void setHostType(int type)
 
 void setAfterConnect(void (*callbackOk)(void), void (*callbackFail)(void))
 {
+    afterConnectFail = callbackFail;
+
     switch (hostType)
     {
         case NET_HOST_SERVER:
@@ -78,7 +100,7 @@ void setAfterConnect(void (*callbackOk)(void), void (*callbackFail)(void))
         }
         case NET_HOST_CLIENT:
         {
-            setClientOnConnect(callbackOk, callbackFail);
+            setClientOnConnect(callbackOk, onConnectFail);
             break;
         }
     }
@@ -86,16 +108,18 @@ void setAfterConnect(void (*callbackOk)(void), void (*callbackFail)(void))
 
 void setAfterDisconnect(void (*callback)(void))
 {
+    afterDisconnect = callback;
+
     switch (hostType)
     {
         case NET_HOST_SERVER:
         {
-            setServerOnDisconnect(callback);
+            setServerOnDisconnect(onDisconnect);
             break;
         }
         case NET_HOST_CLIENT:
         {
-            setClientOnDisconnect(callback);
+            setClientOnDisconnect(onDisconnect);
             break;
         }
     }
@@ -149,7 +173,7 @@ void netDisposeHost(void)
     if (netDispose != NULL)
         netDispose();
 
-    hostType = NET_HOST_NONE;
+    setHostType(NET_HOST_NONE);
 }
 
 void doNetworkingBefore(void)
