@@ -239,7 +239,8 @@ void clientBefore(void)
     if (clientHost == NULL)
         return;
 
-    if (isWaiting == 1 && SDL_GetTicks() - startWaitingTime >= 3000)
+    // Long enough to receive CONNECT_DENIED while ENet retries a connect to a full server
+    if (isWaiting == 1 && SDL_GetTicks() - startWaitingTime >= 5000)
     {
         printf("Connection attempt failed.\n");
         connectFailCallback();
