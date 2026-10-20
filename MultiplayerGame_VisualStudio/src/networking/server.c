@@ -74,9 +74,10 @@ void destroyServer(void)
         {
             printf("Sent disconnect to P%d\n", (int)(intptr_t) clientPeers[i]->data);
             enet_peer_disconnect_now(clientPeers[i], 0);
-            
-	 }
+            clientPeers[i] = NULL;
+        }
     }
+    numPeers = 0;
 
     enet_host_destroy(serverHost);
     serverHost = NULL;
