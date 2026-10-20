@@ -11,6 +11,11 @@ int findFirstAvailableID(void)
 
 	for (player = game.playersHead.next; player != NULL; player = player->next)
 	{
+		if (player->id < 0 || player->id >= MAX_PLAYERS)
+		{
+			printf("Invalid ID found: %d\n", player->id);
+			return -1;
+		}
 		if (IDs[player->id] == 1)
 		{
 			printf("Duplicated ID found: %d\n", player->id);
@@ -67,6 +72,13 @@ int spawnPlayer(Entity p)
 
 int spawnPlayerAt(float x, float y)
 {
+	int id = findFirstAvailableID();
+	if (id < 0)
+	{
+		printf("Player creation failed: no available ID.\n");
+		return -1;
+	}
+
 	// Allocate memory for the player entity
 	Entity* player = (Entity*)malloc(sizeof(Entity));
 	if (player == NULL)
@@ -80,7 +92,7 @@ int spawnPlayerAt(float x, float y)
 
 	// Init player parameters
 	memset(player, 0, sizeof(Entity));
-	player->id = findFirstAvailableID();
+	player->id = id;
 	player->w = PLAYER_SIZE;
 	player->h = PLAYER_SIZE;
 	player->x = x;

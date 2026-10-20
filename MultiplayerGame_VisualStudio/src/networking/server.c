@@ -56,6 +56,12 @@ int createServer(char* ipAddress, int port)
 
     // Create player
     id = spawnPlayerAt(50.0f, 50.0f);
+    if (id < 0)
+    {
+        enet_host_destroy(serverHost);
+        serverHost = NULL;
+        return -1;
+    }
     setLocalPlayer(getPlayerByID(id));
 
     connectCallback();
@@ -123,6 +129,14 @@ static void handleConnection(ENetPeer* peer)
 
     // Spawn new player entity
     id = spawnPlayerAt(50.0f, 50.0f);
+    if (id < 0)
+    {
+        // Free the slot: the later disconnect event is ignored for peers not in the array
+        clientPeers[iPeer] = NULL;
+        numPeers--;
+        enet_peer_disconnect(peer, 0);
+        return;
+    }
 
     // Save the player's ID inside the peer's data field
     clientPeers[iPeer]->data = (void*)(intptr_t) id;
