@@ -9,6 +9,13 @@ static void doCharacter(int scanCode);
 static char ipAddress[IP_MAX_LENGTH] = "";
 static int cursor = 0;
 
+// Keys handled by doCharacter: only these are consumed, so the others (e.g. RETURN) stay available
+static const int textInputKeys[] = {
+	SDL_SCANCODE_1, SDL_SCANCODE_2, SDL_SCANCODE_3, SDL_SCANCODE_4, SDL_SCANCODE_5,
+	SDL_SCANCODE_6, SDL_SCANCODE_7, SDL_SCANCODE_8, SDL_SCANCODE_9, SDL_SCANCODE_0,
+	SDL_SCANCODE_PERIOD, SDL_SCANCODE_BACKSPACE
+};
+
 
 static void doCharacter(int scanCode)
 {
@@ -43,15 +50,14 @@ static void doCharacter(int scanCode)
 
 void doTextInput(void)
 {
-	for (int iScanCode = SDL_SCANCODE_1; iScanCode <= SDL_SCANCODE_PERIOD; iScanCode++)
+	for (size_t i = 0; i < sizeof(textInputKeys) / sizeof(textInputKeys[0]); i++)
 	{
-		if (app.keyboard[iScanCode])
+		if (app.keyboard[textInputKeys[i]])
 		{
-			app.keyboard[iScanCode] = 0;
+			app.keyboard[textInputKeys[i]] = 0;
 
-			doCharacter(iScanCode);
+			doCharacter(textInputKeys[i]);
 		}
-		
 	}
 
 	if (app.keyboard[SDL_SCANCODE_RETURN] && cursor >= 8)
