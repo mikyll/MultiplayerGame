@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../common.h"
+#include "../core/common.h"
 
 #include "SDL2/SDL_image.h"
 

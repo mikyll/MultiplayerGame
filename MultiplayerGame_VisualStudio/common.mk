@@ -1,7 +1,7 @@
 OUT = bin
 
-DEPS += src/defs.h
-DEPS += src/structs.h
+DEPS += src/core/defs.h
+DEPS += src/core/structs.h
 
 GAME_SOURCES := $(shell find src -name '*.c' | sort)
 
