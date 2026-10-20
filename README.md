@@ -57,6 +57,19 @@ The build will generate an executable file named **`MultiplayerGame.exe`** in `M
 
 ### Linux
 
+#### Container (recommended)
+
+The only requirement is [Podman](https://podman.io/) or [Docker](https://www.docker.com/) and an X11 (or XWayland) session; toolchain and libraries live in the container image:
+```bash
+./dev.sh build   # compile (builds the image on first use)
+./dev.sh run     # compile and launch the game
+./dev.sh shell   # shell inside the build environment
+./dev.sh clean   # remove build artifacts
+```
+To test multiplayer, run `./dev.sh run` in two terminals: pick **Server** in one and **Client** in the other.
+
+#### Native
+
 1. You must first install sdl2 and enet development libraries:
   ```bash
   sudo apt update
