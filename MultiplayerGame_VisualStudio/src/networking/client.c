@@ -228,7 +228,8 @@ void clientBefore(void)
         return;
     }
 
-    while (enet_host_service(clientHost, &event, 0) > 0)
+    // A handled message may destroy the client host (e.g. CONNECT_DENIED)
+    while (clientHost != NULL && enet_host_service(clientHost, &event, 0) > 0)
     {
         switch (event.type)
         {
