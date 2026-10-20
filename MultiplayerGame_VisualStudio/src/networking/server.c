@@ -156,7 +156,7 @@ static void handleDisconnection(ENetPeer* peer)
     // Remove client from peers array
     for (int i = 0; i < MAX_SERVER_PEERS; i++)
     {
-        if ((int)(intptr_t) clientPeers[i]->data == (int)(intptr_t) peer->data)
+        if (clientPeers[i] == peer)
         {
             clientPeers[i] = NULL;
             numPeers--;
