@@ -403,3 +403,5 @@ libs/archives/
 # Exclude dependencies .lib
 !libs/lib/x64/
 !libs/lib/x86/
+# Linux build output
+multiplayer_game
