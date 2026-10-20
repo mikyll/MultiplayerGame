@@ -40,7 +40,7 @@ int createServer(char* ipAddress, int port)
 
     serverHost = enet_host_create(
         &serverAddress,     // the address to bind the server host to 
-        MAX_SERVER_PEERS,   // allow up to 4 clients and/or outgoing connections
+        MAX_SERVER_PEERS + 1, // one extra slot to accept, then deny, connections when the server is full
         2,                  // allow up to 2 channels to be used, 0 and 1
         0,                  // assume any amount of incoming bandwidth
         0                   // assume any amount of outgoing bandwidth
@@ -104,7 +104,8 @@ static void handleConnection(ENetPeer* peer)
         packet = enet_packet_create(&message, sizeof(NetMessage), ENET_PACKET_FLAG_RELIABLE);
         enet_peer_send(peer, 0, packet);
 
-        enet_peer_reset(peer);
+        // Disconnect once the queued CONNECT_DENIED has been sent
+        enet_peer_disconnect_later(peer, 0);
 
         return;
     }
@@ -152,10 +153,10 @@ static void handleDisconnection(ENetPeer* peer)
 {
     NetMessage message;
     ENetPacket* packet;
-    int id;
+    int i, id;
 
     // Remove client from peers array
-    for (int i = 0; i < MAX_SERVER_PEERS; i++)
+    for (i = 0; i < MAX_SERVER_PEERS; i++)
     {
         if (clientPeers[i] == peer)
         {
@@ -164,6 +165,11 @@ static void handleDisconnection(ENetPeer* peer)
             break;
         }
     }
+
+    // Denied peers were never added to the array and have no player entity
+    if (i == MAX_SERVER_PEERS)
+        return;
+
     enet_peer_reset(peer);
 
     id = (int)(intptr_t) peer->data;
