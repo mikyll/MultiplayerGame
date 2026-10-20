@@ -211,11 +211,12 @@ static void handleMessage(ENetPacket* packet)
                 break;
             }
 
-            // Update players
+            // Update remote players: the local one is driven by input, the server only echoes
+            // back an outdated copy of its position
             for (int i = 0; i < gameState.numPlayers; i++)
             {
                 Entity* player = getPlayerByID(gameState.players[i].id);
-                if (player != NULL)
+                if (player != NULL && player != getLocalPlayer())
                 {
                     player->x = gameState.players[i].x;
                     player->y = gameState.players[i].y;
