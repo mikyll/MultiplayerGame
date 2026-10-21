@@ -33,7 +33,7 @@ void initEnet(void)
     if (enet_initialize() != 0)
     {
         fprintf(stderr, "An error occurred while initializing ENet.\n");
-        return;
+        exit(1);
     }
 }
 

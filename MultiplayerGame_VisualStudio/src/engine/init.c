@@ -23,9 +23,21 @@ void initSDL(void)
 		windowFlags
 	);
 
+	if (app.window == NULL)
+	{
+		printf("Couldn't create window: %s\n", SDL_GetError());
+		exit(1);
+	}
+
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
 
 	app.renderer = SDL_CreateRenderer(app.window, -1, rendererFlags);
+
+	if (app.renderer == NULL)
+	{
+		printf("Couldn't create renderer: %s\n", SDL_GetError());
+		exit(1);
+	}
 }
 
 void cleanupSDL(void)
