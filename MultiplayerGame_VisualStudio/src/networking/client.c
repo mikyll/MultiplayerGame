@@ -1,6 +1,19 @@
 #include "client.h"
 
 
+/*
+* State of a client session: allocated by createClient and freed by destroyClient,
+* so nothing can leak from one session into the next.
+*/
+typedef struct {
+    ENetAddress serverAddress;
+    ENetHost* host;
+    ENetPeer* serverPeer;
+    int isWaiting;              // Connection attempt in progress (CONNECT_OK not received yet)
+    Uint32 startWaitingTime;
+} ClientSession;
+
+
 static void handleConnection(void);
 static void handleMessage(ENetPacket* packet);
 static void (*connectOkCallback)(void);
@@ -8,11 +21,7 @@ static void (*connectFailCallback)(void);
 static void (*disconnectCallback)(void);
 
 
-static ENetAddress serverAddress;
-static ENetHost* clientHost = NULL;
-static ENetPeer* serverPeer = NULL;
-static int isWaiting = 0;
-static Uint32 startWaitingTime = 0;
+static ClientSession* session = NULL;
 
 
 void setClientOnConnect(void (*onConnectOk)(void), void (*onConnectFail)(void))
@@ -26,10 +35,32 @@ void setClientOnDisconnect(void (*onDisconnect)(void))
     disconnectCallback = onDisconnect;
 }
 
+static void freeSession(void)
+{
+    if (session->host != NULL)
+        enet_host_destroy(session->host);
+
+    free(session);
+    session = NULL;
+}
+
 int createClient(char* ipAddress, int port)
 {
+    if (session != NULL)
+    {
+        printf("A client session is already running.\n");
+        return -1;
+    }
+
+    session = calloc(1, sizeof(ClientSession));
+    if (session == NULL)
+    {
+        printf("Couldn't allocate the client session.\n");
+        return -1;
+    }
+
     // Create client host
-    clientHost = enet_host_create(
+    session->host = enet_host_create(
         NULL,   // create a client host
         1,      // only allow 1 outgoing connection
         2,      // allow up 2 channels to be used, 0 and 1
@@ -37,9 +68,10 @@ int createClient(char* ipAddress, int port)
         0       // assume any amount of outgoing bandwidth
     );
 
-    if (clientHost == NULL)
+    if (session->host == NULL)
     {
         printf("An error occurred while trying to create an ENet client host.\n");
+        freeSession();
         return -1;
     }
 
@@ -50,54 +82,52 @@ int createClient(char* ipAddress, int port)
         if (!isValidIPAddress(ipAddress))
         {
             printf("Invalid IP address\n");
+            freeSession();
             return -1;
         }
         host = ipAddress;
     }
 
     printf("Attempting to connect to %s:%d...\n", host, port);
-    if (enet_address_set_host(&serverAddress, host) < 0)
+    if (enet_address_set_host(&session->serverAddress, host) < 0)
     {
         printf("Couldn't resolve host %s\n", host);
+        freeSession();
         return -1;
     }
-    serverAddress.port = port;
+    session->serverAddress.port = port;
 
     // Connect to server
-    serverPeer = enet_host_connect(clientHost, &serverAddress, 2, 0);
-    if (serverPeer == NULL) {
+    session->serverPeer = enet_host_connect(session->host, &session->serverAddress, 2, 0);
+    if (session->serverPeer == NULL) {
         printf("No available peers for initiating an ENet connection\n");
-
+        freeSession();
         return -1;
     }
 
     // Connection attempt
-    isWaiting = 1;
-    startWaitingTime = SDL_GetTicks();
+    session->isWaiting = 1;
+    session->startWaitingTime = SDL_GetTicks();
 
     return 0;
 }
 
 void destroyClient(void)
 {
-    if (clientHost == NULL)
+    int wasConnected;
+
+    if (session == NULL)
         return;
 
-    if (serverPeer != NULL)
-    {
-        enet_peer_disconnect_now(serverPeer, 0);
-        serverPeer = NULL;
-    }
-
-    enet_host_destroy(clientHost);
-    clientHost = NULL;
+    enet_peer_disconnect_now(session->serverPeer, 0);
 
     // Only established connections report a disconnection: failed attempts use connectFailCallback
-    if (!isWaiting && disconnectCallback != NULL)
-        disconnectCallback();
+    wasConnected = !session->isWaiting;
 
-    isWaiting = 0;
-    startWaitingTime = 0;
+    freeSession();
+
+    if (wasConnected && disconnectCallback != NULL)
+        disconnectCallback();
 }
 
 
@@ -146,14 +176,13 @@ static void handleMessage(ENetPacket* packet)
                 }
             }
 
+            session->isWaiting = 0;
+
             if (connectOkCallback != NULL)
                 connectOkCallback();
 
             // Test
             printf("CONNECT_OK: %d\n", connectOK.localID);
-
-            isWaiting = 0;
-            startWaitingTime = 0;
 
             break;
         }
@@ -169,9 +198,6 @@ static void handleMessage(ENetPacket* packet)
 
             if (connectFailCallback != NULL)
                 connectFailCallback();
-
-            isWaiting = 0;
-            startWaitingTime = 0;
 
             break;
         }
@@ -240,11 +266,11 @@ void clientBefore(void)
 {
     ENetEvent event;
 
-    if (clientHost == NULL)
+    if (session == NULL)
         return;
 
     // Long enough to receive CONNECT_DENIED while ENet retries a connect to a full server
-    if (isWaiting == 1 && SDL_GetTicks() - startWaitingTime >= 5000)
+    if (session->isWaiting && SDL_GetTicks() - session->startWaitingTime >= 5000)
     {
         printf("Connection attempt failed.\n");
         destroyClient();
@@ -255,8 +281,8 @@ void clientBefore(void)
         return;
     }
 
-    // A handled message may destroy the client host (e.g. CONNECT_DENIED)
-    while (clientHost != NULL && enet_host_service(clientHost, &event, 0) > 0)
+    // A handled message may destroy the session (e.g. CONNECT_DENIED)
+    while (session != NULL && enet_host_service(session->host, &event, 0) > 0)
     {
         switch (event.type)
         {
@@ -273,7 +299,7 @@ void clientBefore(void)
                 printf("EVENT_DISCONNECT\n");
 
                 // Disconnected before CONNECT_OK: the connection attempt failed
-                int wasWaiting = isWaiting;
+                int wasWaiting = session->isWaiting;
 
                 destroyClient();
 
@@ -307,7 +333,7 @@ void clientAfter(void)
     PlayerState playerState;
     ENetPacket* packet;
 
-    if (clientHost == NULL)
+    if (session == NULL)
         return;
 
     player = getLocalPlayer();
@@ -319,7 +345,7 @@ void clientAfter(void)
 
     // Send local player position
     packet = enet_packet_create(&playerState, sizeof(PlayerState), ENET_PACKET_FLAG_RELIABLE);
-    enet_peer_send(serverPeer, 0, packet);
-    enet_host_flush(clientHost);
+    enet_peer_send(session->serverPeer, 0, packet);
+    enet_host_flush(session->host);
 }
 
