@@ -43,22 +43,23 @@ int createClient(char* ipAddress, int port)
         return -1;
     }
 
-    if (ipAddress == NULL || strlen(ipAddress) == 0)
+    const char* host = HOSTNAME;
+
+    if (ipAddress != NULL && strlen(ipAddress) > 0)
     {
-        enet_address_set_host(&serverAddress, HOSTNAME);
-    }
-    else
-    {
-        if (isValidIPAddress(ipAddress))
-        {
-            printf("Attempting to connect to IP address %s:%d...\n", ipAddress, port);
-            enet_address_set_host(&serverAddress, ipAddress);
-        }
-        else
+        if (!isValidIPAddress(ipAddress))
         {
             printf("Invalid IP address\n");
             return -1;
         }
+        host = ipAddress;
+    }
+
+    printf("Attempting to connect to %s:%d...\n", host, port);
+    if (enet_address_set_host(&serverAddress, host) < 0)
+    {
+        printf("Couldn't resolve host %s\n", host);
+        return -1;
     }
     serverAddress.port = port;
 

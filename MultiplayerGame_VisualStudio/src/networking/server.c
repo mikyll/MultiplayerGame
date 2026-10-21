@@ -32,9 +32,10 @@ int createServer(char* ipAddress, int port)
     {
         serverAddress.host = ENET_HOST_ANY;
     }
-    else
+    else if (enet_address_set_host(&serverAddress, ipAddress) < 0)
     {
-        enet_address_set_host(&serverAddress, ipAddress);
+        printf("Couldn't resolve host %s\n", ipAddress);
+        return -1;
     }
     serverAddress.port = port;
 
