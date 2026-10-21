@@ -4,7 +4,7 @@
 static void initApp(void);
 static void cleanupApp(void);
 static float calculateDeltaTime(void);
-static void capFrameRate(Uint32 initFrameTime, Uint32 fpsCap);
+static void capFrameRate(Uint32 fpsCap);
 static float calculateFPS(float deltaTime);
 
 
@@ -13,7 +13,6 @@ App app;
 
 int main(int argc, char** argv)
 {
-    Uint32 initFrameTime = 0.0f;
     float deltaTime = 0.0f;
     float fps = 0.0f;
 
@@ -23,7 +22,6 @@ int main(int argc, char** argv)
 
 	while (1)
 	{
-        initFrameTime = SDL_GetTicks();
         deltaTime = calculateDeltaTime();
 
 		prepareScene();
@@ -42,7 +40,7 @@ int main(int argc, char** argv)
 
         fps = calculateFPS(deltaTime);
 
-        capFrameRate(initFrameTime, CAP_FPS);
+        capFrameRate(CAP_FPS);
 	}
 
 	return 0;
@@ -71,11 +69,14 @@ static void cleanupApp(void)
 
 static float calculateDeltaTime(void)
 {
-    static Uint32 lastFrameTime = 0.0f;
-    float deltaTime;
+    // High resolution counter: SDL_GetTicks only has millisecond precision
+    static Uint64 lastFrameTime = 0;
+    Uint64 now = SDL_GetPerformanceCounter();
+    float deltaTime = 0.0f;
 
-    deltaTime = (float)(SDL_GetTicks() - lastFrameTime) / 1000.0f;
-    lastFrameTime = SDL_GetTicks();
+    if (lastFrameTime != 0)
+        deltaTime = (float)(now - lastFrameTime) / SDL_GetPerformanceFrequency();
+    lastFrameTime = now;
 
     // Clamp maximum delta time value
     if (deltaTime > 0.05f)
@@ -84,13 +85,24 @@ static float calculateDeltaTime(void)
     return deltaTime;
 }
 
-static void capFrameRate(Uint32 initFrameTime, Uint32 fpsCap)
+static void capFrameRate(Uint32 fpsCap)
 {
-    Uint32 frameTime = SDL_GetTicks() - initFrameTime;
-    Uint32 frameDurationMS = 1000.0f / fpsCap;
+    // Absolute deadline of the current frame: advancing it by the exact frame duration lets
+    // early/late wake-ups compensate each other, so the average matches fpsCap
+    static Uint64 nextFrame = 0;
+    Uint64 frequency = SDL_GetPerformanceFrequency();
+    Uint64 frameDuration = frequency / fpsCap;
+    Uint64 now = SDL_GetPerformanceCounter();
 
-    if (frameTime < frameDurationMS)
-        SDL_Delay(frameDurationMS - frameTime);
+    if (nextFrame == 0)
+        nextFrame = now;
+    nextFrame += frameDuration;
+
+    if (now < nextFrame)
+        SDL_Delay((Uint32)((nextFrame - now) * 1000 / frequency));
+    else if (now - nextFrame > frameDuration)
+        // Too far behind (e.g. window dragged): restart from now instead of rushing frames to catch up
+        nextFrame = now;
 }
 
 static float calculateFPS(float deltaTime)
