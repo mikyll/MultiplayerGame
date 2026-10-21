@@ -1,9 +1,6 @@
 #include "player.h"
 
 
-static Entity* localPlayer = NULL;
-
-
 /*
 * Players live in game.players: the array index is the player's ID,
 * and only slots with active set hold a player.
@@ -84,8 +81,8 @@ void destroyPlayer(Entity* player)
 	if (player == NULL || !player->active)
 		return;
 
-	if (player == localPlayer)
-		localPlayer = NULL;
+	if (player == game.localPlayer)
+		game.localPlayer = NULL;
 
 	player->active = 0;
 	game.playersCount--;
@@ -98,12 +95,12 @@ void destroyPlayerByID(int id)
 
 void setLocalPlayer(Entity* player)
 {
-	localPlayer = player;
+	game.localPlayer = player;
 }
 
 Entity* getLocalPlayer(void)
 {
-	return localPlayer;
+	return game.localPlayer;
 }
 
 Entity* getPlayerByID(int id)
@@ -127,7 +124,7 @@ void doPlayers(float deltaTime)
 		player->dx = 0;
 		player->dy = 0;
 
-		if (player == localPlayer)
+		if (player == game.localPlayer)
 		{
 			if (app.keyboard[SDL_SCANCODE_W])
 				player->dy = -PLAYER_SPEED * deltaTime;
@@ -169,7 +166,7 @@ void doPlayers(float deltaTime)
 			{
 				app.keyboard[SDL_SCANCODE_E] = 0;
 
-				printf("Player (%3.f, %3.f)\n\n", localPlayer->x, localPlayer->y);
+				printf("Player (%3.f, %3.f)\n\n", game.localPlayer->x, game.localPlayer->y);
 			}
 		}
 
@@ -203,7 +200,7 @@ static void drawPlayer(Entity* player)
 	blitRect(playerRect.x, playerRect.y, playerRect.w, playerRect.h, player->color);
 
 	// If it's the local player, draw a square around
-	if (player == localPlayer)
+	if (player == game.localPlayer)
 	{
 		SDL_Color colorBorder = { 255, 0, 0, 255 };
 		blitRectBorder(playerRect.x - 5, playerRect.y -5, playerRect.w + 10, playerRect.h + 10, colorBorder);
@@ -219,10 +216,10 @@ void drawPlayers(void)
 	// Remote players first, so the local one is drawn on top
 	for (int i = 0; i < MAX_PLAYERS; i++)
 	{
-		if (game.players[i].active && &game.players[i] != localPlayer)
+		if (game.players[i].active && &game.players[i] != game.localPlayer)
 			drawPlayer(&game.players[i]);
 	}
 
-	if (localPlayer != NULL)
-		drawPlayer(localPlayer);
+	if (game.localPlayer != NULL)
+		drawPlayer(game.localPlayer);
 }

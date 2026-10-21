@@ -45,6 +45,7 @@ struct Entity {
 
 typedef struct {
 	Entity players[MAX_PLAYERS]; // Indexed by player ID
+	Entity* localPlayer;         // Player controlled by this instance, NULL if none
 	int playersCount;
 	int tick;
 } Game;

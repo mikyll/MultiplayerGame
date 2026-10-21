@@ -1,7 +1,6 @@
 #include "game.h"
 
 
-static void resetGame(void);
 static void doGame(float deltaTime);
 static void drawGame(void);
 
@@ -11,18 +10,8 @@ Game game;
 
 void initGame(void)
 {
+	// All game state, local player included, lives in game: clearing it resets everything
 	memset(&game, 0, sizeof(Game));
-
-	resetGame();
-}
-
-void resetGame(void)
-{
-	// Clear players
-	memset(game.players, 0, sizeof(game.players));
-	game.playersCount = 0;
-
-	setLocalPlayer(NULL);
 }
 
 void showGame(void)
