@@ -24,18 +24,44 @@ https://github.com/mikyll/MultiplayerGame/assets/56556806/f9213bac-d907-4bee-a7e
 - [x] multiplayer based on a server/client model and UDP reliable packets;
 - [x] server->client disconnection;
 - [x] non-blocking wait for client connections;
+- [x] "server full" notification for clients exceeding the player limit;
+- [x] position and color sync between players;
+- [x] Linux build and run in a container;
 - [ ] improve UI elements;
-- [ ] refactor;
+- [ ] refactor: CMake build, session lifecycle, network protocol with explicit serialization;
 
-## Project Setup
+## How to Play
 
-TODO
+1. Start the game and press **Server**: you join the session as player `P0`.
+2. Start other instances and press **Client** to connect (up to 4 players in total, server included).
+   Before pressing **Client**, you can type the server IP address in the field at the top; leave it empty to connect to `localhost`.
+   The server listens on UDP port `8987`.
 
-### SDL2 Libraries
+### Controls
 
-### ENet Library
+| Key | Action |
+|---|---|
+| <kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> | Move |
+| <kbd>Shift</kbd> / <kbd>Ctrl</kbd> (hold) | Move faster / slower |
+| <kbd>Q</kbd> | Change color |
+| <kbd>Esc</kbd> | Leave the session (on the server, it closes the session for everyone) |
+| <kbd>0</kbd>-<kbd>9</kbd> <kbd>.</kbd> <kbd>Backspace</kbd> | Edit the IP address in the menu |
 
-Related issue: https://github.com/lsalzman/enet/issues/80 (Useful for installation)
+## Project Structure
+
+```
+MultiplayerGame_VisualStudio/
+├── src/
+│   ├── main.c        game loop
+│   ├── core/         shared definitions and structures
+│   ├── engine/       SDL setup, input, drawing, text
+│   ├── game/         game and menu scenes, players
+│   ├── ui/           UI widgets (text input, FPS counter)
+│   ├── networking/   ENet host abstraction, client and server
+│   └── utils/        string and validation helpers
+├── resources/        fonts
+└── libs/             SDL2, SDL2_image and ENet headers and x64 libraries (Windows)
+```
 
 ## Build
 
@@ -46,6 +72,9 @@ The project is developed on Visual Studio 2022 (MSVC v14.39.33519), with the fol
 
 ### Windows
 
+Headers and x64 import libraries are already included in `MultiplayerGame_VisualStudio/libs`; only the **x64** configurations are currently supported.
+For ENet installation details, see [lsalzman/enet#80](https://github.com/lsalzman/enet/issues/80).
+
 You can use the Microsoft Build Engine, from within the Visual Studio Command Prompt:
 ```ps
 msbuild MultiplayerGame_VisualStudio/MultiplayerGame.sln
@@ -53,7 +82,7 @@ msbuild MultiplayerGame_VisualStudio/MultiplayerGame.sln
 Or just open the solution and build the project.
 
 The build will generate an executable file named **`MultiplayerGame.exe`** in `MultiplayerGame_VisualStudio/x64/Debug` or `MultiplayerGame_VisualStudio/x64/Release` directories.\
-**NB**: to run the program you need SDL2.dll and SDL2_image.dll.
+**NB**: to run the program you need `SDL2.dll` and `SDL2_image.dll` (from the SDL and SDL_image release packages) next to the executable.
 
 ### Linux
 
@@ -77,18 +106,19 @@ To test multiplayer, run `./dev.sh run` in two terminals: pick **Server** in one
   ```
 2. Then you can just compile using the makefile:
   ```bash
+  cd MultiplayerGame_VisualStudio
   make
   ```
-This will generate an executable file named **`multiplayer_game`**.
+This will generate an executable file named **`multiplayer_game`**; run it from the same directory, so it can find `resources/`.
 
 ## Documentation
 
 - [SDL2](https://wiki.libsdl.org/SDL2/FrontPage)
 - [ENet](http://sauerbraten.org/enet/index.html)
 
-## Aknowledgements
+## Acknowledgements
 
-Huge thanks to [Parallel Realities](https://www.parallelrealities.co.uk/) and their fenomenal SDL2 tutorials. Go check them out on [their website](https://www.parallelrealities.co.uk/tutorials/) and on [Itch.io](https://parallelrealities.itch.io/), the code bundles are extremely cheap and they are insanely well made.
+Huge thanks to [Parallel Realities](https://www.parallelrealities.co.uk/) and their phenomenal SDL2 tutorials. Go check them out on [their website](https://www.parallelrealities.co.uk/tutorials/) and on [Itch.io](https://parallelrealities.itch.io/), the code bundles are extremely cheap and they are insanely well made.
 
 <div align="center">
 
@@ -111,7 +141,7 @@ Huge thanks to [Parallel Realities](https://www.parallelrealities.co.uk/) and th
 [c-shield]: https://img.shields.io/badge/C-%2300599C.svg?logo=c&logoColor=white
 [c-url]: https://www.open-std.org/jtc1/sc22/wg14/
 [vs-shield]: https://img.shields.io/badge/Visual%20Studio-5C2D91.svg?logo=visual-studio&logoColor=white
-[vs-url]: https://code.visualstudio.com/
+[vs-url]: https://visualstudio.microsoft.com/
 
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?logo=linkedin&colorB=0077B5
 [linkedin-url]: https://www.linkedin.com/in/michele-righi/?locale=en_US
