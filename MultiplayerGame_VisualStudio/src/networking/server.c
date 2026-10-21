@@ -1,6 +1,18 @@
 #include "server.h"
 
 
+/*
+* State of a running server: allocated by createServer and freed by destroyServer,
+* so nothing can leak from one session into the next.
+*/
+typedef struct {
+    ENetAddress address;
+    ENetHost* host;
+    ENetPeer* clientPeers[MAX_SERVER_PEERS]; // Connected clients
+    int numPeers;
+} ServerSession;
+
+
 static void handleConnection(ENetPeer* peer);
 static void handleDisconnection(ENetPeer* peer);
 static void handleMessage(ENetPeer* peer, ENetPacket* packet);
@@ -8,10 +20,7 @@ static void (*connectCallback)(void);
 static void (*disconnectCallback)(void);
 
 
-static ENetAddress serverAddress;
-static ENetHost* serverHost = NULL;
-static ENetPeer* clientPeers[MAX_SERVER_PEERS]; // Connected clients
-static int numPeers = 0;
+static ServerSession* session = NULL;
 
 
 void setServerOnConnect(void (*onConnect)(void))
@@ -28,66 +37,82 @@ int createServer(char* ipAddress, int port)
 {
     int id;
 
-    if (ipAddress == NULL || strlen(ipAddress) == 0 || !isValidIPAddress(ipAddress))
+    if (session != NULL)
     {
-        serverAddress.host = ENET_HOST_ANY;
-    }
-    else if (enet_address_set_host(&serverAddress, ipAddress) < 0)
-    {
-        printf("Couldn't resolve host %s\n", ipAddress);
+        printf("A server session is already running.\n");
         return -1;
     }
-    serverAddress.port = port;
 
-    serverHost = enet_host_create(
-        &serverAddress,     // the address to bind the server host to 
+    session = calloc(1, sizeof(ServerSession));
+    if (session == NULL)
+    {
+        printf("Couldn't allocate the server session.\n");
+        return -1;
+    }
+
+    if (ipAddress == NULL || strlen(ipAddress) == 0 || !isValidIPAddress(ipAddress))
+    {
+        session->address.host = ENET_HOST_ANY;
+    }
+    else if (enet_address_set_host(&session->address, ipAddress) < 0)
+    {
+        printf("Couldn't resolve host %s\n", ipAddress);
+        free(session);
+        session = NULL;
+        return -1;
+    }
+    session->address.port = port;
+
+    session->host = enet_host_create(
+        &session->address,  // the address to bind the server host to
         MAX_SERVER_PEERS + 1, // one extra slot to accept, then deny, connections when the server is full
         2,                  // allow up to 2 channels to be used, 0 and 1
         0,                  // assume any amount of incoming bandwidth
         0                   // assume any amount of outgoing bandwidth
     );
 
-    if (serverHost == NULL)
+    if (session->host == NULL)
     {
         printf("An error occurred while trying to create an ENet server host.\n");
+        free(session);
+        session = NULL;
         return -1;
     }
-    
-    numPeers = 0;
 
     // Create player
     id = spawnPlayerAt(50.0f, 50.0f);
     if (id < 0)
     {
-        enet_host_destroy(serverHost);
-        serverHost = NULL;
+        enet_host_destroy(session->host);
+        free(session);
+        session = NULL;
         return -1;
     }
     setLocalPlayer(getPlayerByID(id));
 
-    connectCallback();
+    if (connectCallback != NULL)
+        connectCallback();
 
     return 0;
 }
 
 void destroyServer(void)
 {
-    if (serverHost == NULL)
+    if (session == NULL)
         return;
 
     for (int i = 0; i < MAX_SERVER_PEERS; i++)
     {
-        if (clientPeers[i] != NULL)
+        if (session->clientPeers[i] != NULL)
         {
-            printf("Sent disconnect to P%d\n", (int)(intptr_t) clientPeers[i]->data);
-            enet_peer_disconnect_now(clientPeers[i], 0);
-            clientPeers[i] = NULL;
+            printf("Sent disconnect to P%d\n", (int)(intptr_t) session->clientPeers[i]->data);
+            enet_peer_disconnect_now(session->clientPeers[i], 0);
         }
     }
-    numPeers = 0;
 
-    enet_host_destroy(serverHost);
-    serverHost = NULL;
+    enet_host_destroy(session->host);
+    free(session);
+    session = NULL;
 
     if (disconnectCallback != NULL)
         disconnectCallback();
@@ -103,7 +128,7 @@ static void handleConnection(ENetPeer* peer)
     memset(&message, 0, sizeof(NetMessage));
 
     // Send CONNECT_DENIED if the server is full.
-    if (numPeers >= MAX_SERVER_PEERS)
+    if (session->numPeers >= MAX_SERVER_PEERS)
     {
         message.type = CONNECT_DENIED;
         secure_strcpy(message.data.connectDenied.message, 64, "The server is full.");
@@ -120,10 +145,10 @@ static void handleConnection(ENetPeer* peer)
     // The player can be accepted, so we add it in the first available spot
     for (iPeer = 0; iPeer < MAX_SERVER_PEERS; iPeer++)
     {
-        if (clientPeers[iPeer] == NULL)
+        if (session->clientPeers[iPeer] == NULL)
         {
-            clientPeers[iPeer] = peer;
-            numPeers++;
+            session->clientPeers[iPeer] = peer;
+            session->numPeers++;
             break;
         }
     }
@@ -133,14 +158,14 @@ static void handleConnection(ENetPeer* peer)
     if (id < 0)
     {
         // Free the slot: the later disconnect event is ignored for peers not in the array
-        clientPeers[iPeer] = NULL;
-        numPeers--;
+        session->clientPeers[iPeer] = NULL;
+        session->numPeers--;
         enet_peer_disconnect(peer, 0);
         return;
     }
 
     // Save the player's ID inside the peer's data field
-    clientPeers[iPeer]->data = (void*)(intptr_t) id;
+    session->clientPeers[iPeer]->data = (void*)(intptr_t) id;
 
     // Send CONNECT_OK to the new player
     message.type = CONNECT_OK;
@@ -165,7 +190,7 @@ static void handleConnection(ENetPeer* peer)
     message.data.playerJoined.newPlayer = *(getPlayerByID(id));
 
     packet = enet_packet_create(&message, sizeof(NetMessage), ENET_PACKET_FLAG_RELIABLE);
-    enet_host_broadcast(serverHost, 0, packet);
+    enet_host_broadcast(session->host, 0, packet);
 }
 
 static void handleDisconnection(ENetPeer* peer)
@@ -178,10 +203,10 @@ static void handleDisconnection(ENetPeer* peer)
     // Remove client from peers array
     for (i = 0; i < MAX_SERVER_PEERS; i++)
     {
-        if (clientPeers[i] == peer)
+        if (session->clientPeers[i] == peer)
         {
-            clientPeers[i] = NULL;
-            numPeers--;
+            session->clientPeers[i] = NULL;
+            session->numPeers--;
             break;
         }
     }
@@ -203,7 +228,7 @@ static void handleDisconnection(ENetPeer* peer)
     message.data.playerLeft.oldPlayer = *player;
 
     packet = enet_packet_create(&message, sizeof(NetMessage), ENET_PACKET_FLAG_RELIABLE);
-    enet_host_broadcast(serverHost, 0, packet);
+    enet_host_broadcast(session->host, 0, packet);
 
     // Destroy player entity
     destroyPlayerByID(id);
@@ -236,10 +261,10 @@ void serverBefore(void)
 {
     ENetEvent event;
 
-    if (serverHost == NULL)
+    if (session == NULL)
         return;
 
-    while (enet_host_service(serverHost, &event, 0) > 0)
+    while (enet_host_service(session->host, &event, 0) > 0)
     {
         switch (event.type)
         {
@@ -250,7 +275,7 @@ void serverBefore(void)
                 printf("A new client connected from %x:%u. Num Peers: %d\n",
                     event.peer->address.host,
                     event.peer->address.port,
-                    numPeers);
+                    session->numPeers);
 
                 break;
             }
@@ -262,7 +287,7 @@ void serverBefore(void)
                     (int)(intptr_t) event.peer->data,
                     event.peer->address.host,
                     event.peer->address.port,
-                    numPeers);
+                    session->numPeers);
 
                 break;
             }
@@ -293,7 +318,7 @@ void serverAfter(void)
     Entity* player;
     ENetPacket* packet;
 
-    if (serverHost == NULL || numPeers == 0)
+    if (session == NULL || session->numPeers == 0)
         return;
 
     memset(&message, 0, sizeof(NetMessage));
@@ -311,9 +336,9 @@ void serverAfter(void)
     }
 
     packet = enet_packet_create(&message, sizeof(NetMessage), ENET_PACKET_FLAG_RELIABLE);
-    
+
     // Broadcast the game state to each connected peer
-    enet_host_broadcast(serverHost, 0, packet);
-    enet_host_flush(serverHost);
+    enet_host_broadcast(session->host, 0, packet);
+    enet_host_flush(session->host);
 }
 
