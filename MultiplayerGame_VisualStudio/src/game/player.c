@@ -328,6 +328,7 @@ void doPlayers(float deltaTime)
 			if (player == localPlayer)
 				localPlayer = NULL;
 			free(player);
+			game.playersCount--;
 			player = playerPrev;
 		}
 
