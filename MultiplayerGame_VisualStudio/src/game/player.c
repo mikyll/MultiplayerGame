@@ -4,29 +4,15 @@
 static Entity* localPlayer = NULL;
 
 
+/*
+* Players live in game.players: the array index is the player's ID,
+* and only slots with active set hold a player.
+*/
 int findFirstAvailableID(void)
 {
-	int IDs[MAX_PLAYERS] = { 0 };
-	Entity* player;
-
-	for (player = game.playersHead.next; player != NULL; player = player->next)
-	{
-		if (player->id < 0 || player->id >= MAX_PLAYERS)
-		{
-			printf("Invalid ID found: %d\n", player->id);
-			return -1;
-		}
-		if (IDs[player->id] == 1)
-		{
-			printf("Duplicated ID found: %d\n", player->id);
-			return -1;
-		}
-		IDs[player->id] = 1;
-	}
-
 	for (int i = 0; i < MAX_PLAYERS; i++)
 	{
-		if (IDs[i] == 0)
+		if (!game.players[i].active)
 			return i;
 	}
 
@@ -34,23 +20,18 @@ int findFirstAvailableID(void)
 }
 
 /*
-* Creates a new Player entity, adding it to the players linked list.
-* Returns the player's ID.
-* 
-* Useful to allocate an entity received by the network.
+* Adds a player entity with the given ID (e.g. received by the network).
+* Returns the player's ID, or -1 if the ID is invalid or already taken.
 */
 int spawnPlayer(Entity p)
 {
-	// Allocate memory for the player entity
-	Entity* player = (Entity*) malloc(sizeof(Entity));
-	if (player == NULL)
+	if (p.id < 0 || p.id >= MAX_PLAYERS || game.players[p.id].active)
 	{
-		printf("Player creation failed.\n");
+		printf("Player creation failed: invalid or taken ID %d.\n", p.id);
 		return -1;
 	}
 
-	// Increase player count
-	game.playersCount++;
+	Entity* player = &game.players[p.id];
 
 	// Init player parameters
 	memset(player, 0, sizeof(Entity));
@@ -61,11 +42,9 @@ int spawnPlayer(Entity p)
 	player->y = p.y;
 	player->health = p.health;
 	player->color = p.color;
-	player->next = NULL;
+	player->active = 1;
 
-	// Add player to list
-	game.playersTail->next = player;
-	game.playersTail = player;
+	game.playersCount++;
 
 	return p.id;
 }
@@ -79,16 +58,7 @@ int spawnPlayerAt(float x, float y)
 		return -1;
 	}
 
-	// Allocate memory for the player entity
-	Entity* player = (Entity*)malloc(sizeof(Entity));
-	if (player == NULL)
-	{
-		printf("Player creation failed.\n");
-		return -1;
-	}
-
-	// Increase player count
-	game.playersCount++;
+	Entity* player = &game.players[id];
 
 	// Init player parameters
 	memset(player, 0, sizeof(Entity));
@@ -102,65 +72,28 @@ int spawnPlayerAt(float x, float y)
 	player->health = PLAYER_BASE_HEALTH;
 	SDL_Color color = { rand() % 255, rand() % 255, rand() % 255, 255 };
 	player->color = color;
-	player->next = NULL;
+	player->active = 1;
 
-	// Add player to list
-	game.playersTail->next = player;
-	game.playersTail = player;
+	game.playersCount++;
 
 	return player->id;
 }
 
 void destroyPlayer(Entity* player)
 {
-	Entity* p, * playerPrev = NULL;
+	if (player == NULL || !player->active)
+		return;
 
-	playerPrev = &game.playersHead;
-	for (p = game.playersHead.next; p != NULL; p = p->next)
-	{
-		if (p == player)
-		{
-			if (p == game.playersTail)
-			{
-				game.playersTail = playerPrev;
-			}
+	if (player == localPlayer)
+		localPlayer = NULL;
 
-			playerPrev->next = p->next;
-			if (p == localPlayer)
-				localPlayer = NULL;
-			free(p);
-
-			game.playersCount--;
-			break;
-		}
-		playerPrev = p;
-	}
+	player->active = 0;
+	game.playersCount--;
 }
 
 void destroyPlayerByID(int id)
 {
-	Entity* p, * playerPrev = NULL;
-
-	playerPrev = &game.playersHead;
-	for (p = game.playersHead.next; p != NULL; p = p->next)
-	{
-		if (p->id == id)
-		{
-			if (p == game.playersTail)
-			{
-				game.playersTail = playerPrev;
-			}
-
-			playerPrev->next = p->next;
-			if (p == localPlayer)
-				localPlayer = NULL;
-			free(p);
-
-			game.playersCount--;
-			break;
-		}
-		playerPrev = p;
-	}
+	destroyPlayer(getPlayerByID(id));
 }
 
 void setLocalPlayer(Entity* player)
@@ -175,78 +108,22 @@ Entity* getLocalPlayer(void)
 
 Entity* getPlayerByID(int id)
 {
-	Entity* player;
-	for (player = game.playersHead.next; player != NULL; player = player->next)
-	{
-		if (player->id == id)
-		{
-			return player;
-		}
-	}
-	return NULL;
-}
+	if (id < 0 || id >= MAX_PLAYERS || !game.players[id].active)
+		return NULL;
 
-static int isPlayerLast(Entity* player)
-{
-	Entity* p;
-
-	for (p = game.playersHead.next; p != NULL; p = p->next) 
-	{
-		// If the player's ID matches myID and it's the last node, return 1
-		if (p == player && p->next == NULL)
-		{
-			return 1; // Player is the last node
-		}
-	}
-
-	// Player is not the last node
-	return 0;
-}
-
-static void setPlayerToLast(Entity* player)
-{
-	if (player == NULL || isPlayerLast(player))
-		return;
-
-	Entity* p, * playerPrev = NULL, * playerLast = NULL;
-
-	for (p = game.playersHead.next; p != NULL; playerPrev = p, p = p->next)
-	{
-		if (p == player)
-		{
-			playerLast = p;
-
-			// Remove player from current position in the list
-			if (playerPrev != NULL)
-			{
-				playerPrev->next = p->next;
-			}
-			else
-			{
-				game.playersHead.next = p->next;
-			}
-			break;
-		}
-		playerPrev = p;
-	}
-
-	// Append the player to the end of the list
-	if (playerLast != NULL) {
-		playerLast->next = NULL;
-		game.playersTail->next = playerLast;
-		game.playersTail = playerLast;
-	}
+	return &game.players[id];
 }
 
 void doPlayers(float deltaTime)
 {
-	setPlayerToLast(localPlayer);
+	Entity* player;
 
-	Entity* player, * playerPrev;
-
-	playerPrev = &game.playersHead;
-	for (player = game.playersHead.next; player != NULL; player = player->next)
+	for (int i = 0; i < MAX_PLAYERS; i++)
 	{
+		player = &game.players[i];
+		if (!player->active)
+			continue;
+
 		player->dx = 0;
 		player->dy = 0;
 
@@ -292,15 +169,6 @@ void doPlayers(float deltaTime)
 			{
 				app.keyboard[SDL_SCANCODE_E] = 0;
 
-				Entity* player;
-				for (player = game.playersHead.next; player != NULL; player = player->next)
-				{
-					if (player == localPlayer)
-					{
-						printf("Player (%3.f, %3.f)\n", player->x, player->y);
-						break;
-					}
-				}
 				printf("Player (%3.f, %3.f)\n\n", localPlayer->x, localPlayer->y);
 			}
 		}
@@ -318,49 +186,43 @@ void doPlayers(float deltaTime)
 			player->y = DEFAULT_WINDOW_HEIGHT - player->h;
 
 		if (player->health <= 0)
-		{
-			if (player == game.playersTail)
-			{
-				game.playersTail = playerPrev;
-			}
-
-			playerPrev->next = player->next;
-			if (player == localPlayer)
-				localPlayer = NULL;
-			free(player);
-			game.playersCount--;
-			player = playerPrev;
-		}
-
-		playerPrev = player;
+			destroyPlayer(player);
 	}
+}
+
+static void drawPlayer(Entity* player)
+{
+	SDL_Rect playerRect = { 0 };
+	char buffer[4];
+
+	playerRect.x = player->x;
+	playerRect.y = player->y;
+	playerRect.w = player->w;
+	playerRect.h = player->h;
+
+	blitRect(playerRect.x, playerRect.y, playerRect.w, playerRect.h, player->color);
+
+	// If it's the local player, draw a square around
+	if (player == localPlayer)
+	{
+		SDL_Color colorBorder = { 255, 0, 0, 255 };
+		blitRectBorder(playerRect.x - 5, playerRect.y -5, playerRect.w + 10, playerRect.h + 10, colorBorder);
+	}
+
+	// Text under player: P + ID
+	secure_sprintf(buffer, sizeof(buffer), "P%d", player->id);
+	drawTextScaled(player->x + (player->w / 2), player->y + 32, 0.6f, 0, 0, 0, TEXT_CENTER, buffer);
 }
 
 void drawPlayers(void)
 {
-	Entity* player;
-	SDL_Rect playerRect = { 0 };
-	char buffer[4];
-
-	for (player = game.playersHead.next; player != NULL; player = player->next)
+	// Remote players first, so the local one is drawn on top
+	for (int i = 0; i < MAX_PLAYERS; i++)
 	{
-		playerRect.x = player->x;
-		playerRect.y = player->y;
-		playerRect.w = player->w;
-		playerRect.h = player->h;
-
-		blitRect(playerRect.x, playerRect.y, playerRect.w, playerRect.h, player->color);
-
-		// If it's the local player, draw a square around
-		if (player == localPlayer)
-		{
-			SDL_Color colorBorder = { 255, 0, 0, 255 };
-			blitRectBorder(playerRect.x - 5, playerRect.y -5, playerRect.w + 10, playerRect.h + 10, colorBorder);
-		}
-
-		// Text under player: P + ID
-		secure_sprintf(buffer, sizeof(buffer), "P%d", player->id);
-		drawTextScaled(player->x + (player->w / 2), player->y + 32, 0.6f, 0, 0, 0, TEXT_CENTER, buffer);
+		if (game.players[i].active && &game.players[i] != localPlayer)
+			drawPlayer(&game.players[i]);
 	}
-}
 
+	if (localPlayer != NULL)
+		drawPlayer(localPlayer);
+}

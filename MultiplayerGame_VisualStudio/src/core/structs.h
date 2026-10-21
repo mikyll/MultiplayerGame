@@ -40,11 +40,11 @@ struct Entity {
 	int health;
 	int heading;
 	SDL_Color color;
-	Entity* next;
+	int active;
 };
 
 typedef struct {
-	Entity playersHead, * playersTail;
+	Entity players[MAX_PLAYERS]; // Indexed by player ID
 	int playersCount;
 	int tick;
 } Game;

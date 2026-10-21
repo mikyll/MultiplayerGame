@@ -146,8 +146,12 @@ static void handleConnection(ENetPeer* peer)
     message.type = CONNECT_OK;
     message.data.connectOK.localID = id;
 
-    for (player = game.playersHead.next; player != NULL; player = player->next)
+    for (int i = 0; i < MAX_PLAYERS; i++)
     {
+        player = &game.players[i];
+        if (!player->active)
+            continue;
+
         message.data.connectOK.players[message.data.connectOK.numPlayers] = *player;
         message.data.connectOK.numPlayers++;
     }
@@ -295,9 +299,13 @@ void serverAfter(void)
     memset(&message, 0, sizeof(NetMessage));
     message.type = GAME_STATE;
 
-    // Loops over players list
-    for (player = game.playersHead.next; player != NULL; player = player->next)
+    // Loops over active players
+    for (int i = 0; i < MAX_PLAYERS; i++)
     {
+        player = &game.players[i];
+        if (!player->active)
+            continue;
+
         message.data.gameState.players[message.data.gameState.numPlayers] = *player;
         message.data.gameState.numPlayers++;
     }

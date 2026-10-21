@@ -18,17 +18,8 @@ void initGame(void)
 
 void resetGame(void)
 {
-	Entity* e;
-
-	// Clear players linked list
-	while (game.playersHead.next)
-	{
-		e = game.playersHead.next;
-		game.playersHead.next = e->next;
-		free(e);
-	}
-
-	game.playersTail = &game.playersHead;
+	// Clear players
+	memset(game.players, 0, sizeof(game.players));
 	game.playersCount = 0;
 
 	setLocalPlayer(NULL);
@@ -64,7 +55,7 @@ static void drawGame(void)
 {
 	Entity* player;
 	char buffer[64];
-	int i;
+	int row = 0;
 	float size = 0.5f;
 
 	drawPlayers();
@@ -74,10 +65,15 @@ static void drawGame(void)
 	secure_sprintf(buffer, sizeof(buffer), "Players count: %d", game.playersCount);
 	drawTextScaled(DEFAULT_WINDOW_WIDTH - 5, 50, 0.5, 0, 0, 0, TEXT_RIGHT, buffer);
 
-	for (i = 0, player = game.playersHead.next; player != NULL; player = player->next, i++)
+	for (int i = 0; i < MAX_PLAYERS; i++)
 	{
+		player = &game.players[i];
+		if (!player->active)
+			continue;
+
 		secure_sprintf(buffer, sizeof(buffer), "P%d (%3.f,%3.f)", player->id, player->x, player->y);
-		drawTextScaled(DEFAULT_WINDOW_WIDTH - 5, 70 + i * GLYPH_HEIGHT * size + 5, size, player->color.r, player->color.g, player->color.b, TEXT_RIGHT, buffer);
+		drawTextScaled(DEFAULT_WINDOW_WIDTH - 5, 70 + row * GLYPH_HEIGHT * size + 5, size, player->color.r, player->color.g, player->color.b, TEXT_RIGHT, buffer);
+		row++;
 	}
 }
 
