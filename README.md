@@ -28,7 +28,9 @@ https://github.com/mikyll/MultiplayerGame/assets/56556806/f9213bac-d907-4bee-a7e
 - [x] position and color sync between players;
 - [x] Linux build and run in a container;
 - [ ] improve UI elements;
-- [ ] refactor: CMake build, session lifecycle, network protocol with explicit serialization;
+- [x] CMake build for Windows and Linux;
+- [x] refactor: fixed-size players array, client/server session lifecycle;
+- [ ] refactor: network protocol with explicit serialization;
 
 ## How to Play
 
@@ -51,37 +53,44 @@ https://github.com/mikyll/MultiplayerGame/assets/56556806/f9213bac-d907-4bee-a7e
 
 ```
 MultiplayerGame/
+├── CMakeLists.txt    build definition (Windows and Linux)
 ├── src/
 │   ├── main.c        game loop
 │   ├── core/         shared definitions and structures
 │   ├── engine/       SDL setup, input, drawing, text
 │   ├── game/         game and menu scenes, players
 │   ├── ui/           UI widgets (text input, FPS counter)
-│   ├── networking/   ENet host abstraction, client and server
+│   ├── networking/   ENet host abstraction, client and server sessions
 │   └── utils/        string and validation helpers
-├── resources/        fonts
-└── libs/             SDL2, SDL2_image and ENet headers and x64 libraries (Windows)
+├── resources/        fonts (copied next to the executable at build time)
+├── libs/             SDL2, SDL2_image and ENet headers and x64/x86 libraries (Windows)
+├── Dockerfile        Linux build environment
+└── dev.sh            Linux build/run helper
 ```
 
 ## Build
 
-The project is developed on Visual Studio 2022 (MSVC v14.39.33519), with the following dependencies:
+The project is built with [CMake](https://cmake.org/) (3.16 or newer) and depends on:
 - [SDL v2.30.2](https://github.com/libsdl-org/SDL/releases/tag/release-2.30.2);
 - [SDL_image v2.8.2](https://github.com/libsdl-org/SDL_image/releases/tag/release-2.8.2);
 - [ENet v1.3.17](https://github.com/lsalzman/enet/releases/tag/v1.3.17).
 
+The build generates an executable named **`multiplayer_game`** and copies `resources/` next to it.
+Pass `-DMG_WERROR=ON` to treat compiler warnings as errors.
+
 ### Windows
 
-Headers and x64 import libraries are already included in `libs`; only the **x64** configurations are currently supported.
+Headers and import libraries (x64 and x86) are already included in `libs`.
 For ENet installation details, see [lsalzman/enet#80](https://github.com/lsalzman/enet/issues/80).
 
-You can use the Microsoft Build Engine, from within the Visual Studio Command Prompt:
-```ps
-msbuild MultiplayerGame.sln
-```
-Or just open the solution and build the project.
+With Visual Studio 2022, open the repository folder (**File > Open > Folder**): Visual Studio detects `CMakeLists.txt` and lets you build and run the game directly.
 
-The build will generate an executable file named **`MultiplayerGame.exe`** in `x64/Debug` or `x64/Release` directories.\
+Alternatively, generate a solution from the command line:
+```ps
+cmake -S . -B build -G "Visual Studio 17 2022" -A x64   # or -A Win32
+cmake --build build --config Release
+```
+The executable is generated in `build/Release` (or `build/Debug`).\
 **NB**: to run the program you need `SDL2.dll` and `SDL2_image.dll` (from the SDL and SDL_image release packages) next to the executable.
 
 ### Linux
@@ -90,7 +99,7 @@ The build will generate an executable file named **`MultiplayerGame.exe`** in `x
 
 The only requirement is [Podman](https://podman.io/) or [Docker](https://www.docker.com/) and an X11 (or XWayland) session; toolchain and libraries live in the container image:
 ```bash
-./dev.sh build   # compile (builds the image on first use)
+./dev.sh build   # compile into build/ (builds the image on first use)
 ./dev.sh run     # compile and launch the game
 ./dev.sh shell   # shell inside the build environment
 ./dev.sh clean   # remove build artifacts
@@ -99,16 +108,17 @@ To test multiplayer, run `./dev.sh run` in two terminals: pick **Server** in one
 
 #### Native
 
-1. You must first install sdl2 and enet development libraries:
+1. Install the build tools and the SDL2 and ENet development libraries:
   ```bash
   sudo apt update
-  sudo apt install libsdl2-dev libsdl2-image-dev libenet-dev
+  sudo apt install build-essential cmake pkg-config libsdl2-dev libsdl2-image-dev libenet-dev
   ```
-2. Then you can just compile using the makefile:
+2. Configure, build and run:
   ```bash
-  make
+  cmake -S . -B build
+  cmake --build build
+  cd build && ./multiplayer_game
   ```
-This will generate an executable file named **`multiplayer_game`**; run it from the same directory, so it can find `resources/`.
 
 ## Documentation
 
