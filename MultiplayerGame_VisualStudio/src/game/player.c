@@ -250,7 +250,7 @@ void doPlayers(float deltaTime)
 		player->dx = 0;
 		player->dy = 0;
 
-		if (player->id == localPlayer->id)
+		if (player == localPlayer)
 		{
 			if (app.keyboard[SDL_SCANCODE_W])
 				player->dy = -PLAYER_SPEED * deltaTime;
