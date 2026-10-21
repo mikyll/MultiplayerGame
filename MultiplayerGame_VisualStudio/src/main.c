@@ -98,12 +98,16 @@ static float calculateFPS(float deltaTime)
     // Smoothing factor for the EWMA calculation
     const float smoothingFactor = 0.1f;
 
-    // Calculate the reciprocal of frame time (FPS) for the current frame
-    float instantFPS = 1.0f / deltaTime;
-
     // Initialize static variables to store previous FPS and the first frame flag
     static float smoothedFPS = 0.0f;
     static int isFirstFrame = 1;
+
+    // A zero frame time would yield an infinite FPS that the average never recovers from
+    if (deltaTime <= 0.0f)
+        return smoothedFPS;
+
+    // Calculate the reciprocal of frame time (FPS) for the current frame
+    float instantFPS = 1.0f / deltaTime;
 
     // If it's the first frame, set smoothed FPS to the instant FPS
     if (isFirstFrame)

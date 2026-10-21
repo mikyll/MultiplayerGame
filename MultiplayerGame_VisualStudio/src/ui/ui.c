@@ -89,7 +89,8 @@ void drawTextInput(void)
 
 void drawFPS(int fps)
 {
-	char buffer[10];
+	// Large enough for any int, initialized in case formatting fails
+	char buffer[16] = "";
 	secure_sprintf(buffer, sizeof(buffer), "%5d FPS", fps);
 	drawTextScaled(DEFAULT_WINDOW_WIDTH - 5, 5, 0.75f, 0, 0, 0, TEXT_RIGHT, buffer);
 }
