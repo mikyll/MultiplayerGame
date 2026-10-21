@@ -15,5 +15,7 @@ RUN apt-get update \
 
 # No sound card inside the container: without this SDL_Init(SDL_INIT_EVERYTHING) fails
 ENV SDL_AUDIODRIVER=dummy
+# Keep runtime caches (e.g. Mesa shaders) out of the mounted source tree
+ENV XDG_CACHE_HOME=/tmp/.cache
 
 WORKDIR /src
