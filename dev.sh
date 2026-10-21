@@ -58,11 +58,13 @@ container() {
         "$IMAGE" "$@"
 }
 
+BUILD="cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DMG_WERROR=ON && cmake --build build --parallel"
+
 case "${1:-}" in
     image) image ;;
-    build) container make ;;
-    run)   container bash -c "make && ./multiplayer_game" ;;
+    build) container bash -c "$BUILD" ;;
+    run)   container bash -c "$BUILD && cd build && ./multiplayer_game" ;;
     shell) container bash ;;
-    clean) container make clean ;;
+    clean) rm -rf "$ROOT/build" ;;
     *)     sed -n '4,10p' "$0" | sed 's/^# \{0,1\}//'; exit 1 ;;
 esac

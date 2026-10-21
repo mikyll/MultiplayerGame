@@ -405,3 +405,6 @@ libs/archives/
 !libs/lib/x86/
 # Linux build output
 multiplayer_game
+
+# CMake build directory
+build/

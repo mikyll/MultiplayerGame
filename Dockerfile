@@ -5,6 +5,8 @@ FROM docker.io/library/ubuntu:24.04
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         build-essential \
+        cmake \
+        pkg-config \
         libsdl2-dev \
         libsdl2-image-dev \
         libenet-dev \
