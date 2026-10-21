@@ -12,8 +12,6 @@ void setAfterConnect(void (*callbackOk)(void), void (*callbackFail)(void));
 void setAfterDisconnect(void (*callback)(void));
 int getHostType(void);
 char* hostTypeToString(int type);
-void setConnectionString(char* ipAddress, int port);
-char* getConnectionString(void);
 int netCreateHost(char* ipAddress, int port);
 void netDisposeHost(void);
 void doNetworkingBefore(void);

@@ -1,15 +1,13 @@
 PROG = multiplayer_game
 CC = gcc
 
-DATA_DIR ?= /opt/$(PROG)
-
 NPROCS = $(shell grep -c 'processor' /proc/cpuinfo)
 MAKEFLAGS += -j$(NPROCS)
 
 include common.mk
 
 CXXFLAGS += `sdl2-config --cflags`
-CXXFLAGS += -DVERSION=$(VERSION) -DREVISION=$(REVISION) -DDATA_DIR=\"$(DATA_DIR)\"
+CXXFLAGS += -DVERSION=$(VERSION) -DREVISION=$(REVISION)
 CXXFLAGS += -Wall -Wempty-body -Werror -Wstrict-prototypes -Werror=maybe-uninitialized -Warray-bounds
 CXXFLAGS += -g -lefence
 

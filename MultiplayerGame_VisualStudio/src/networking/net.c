@@ -1,6 +1,5 @@
 #include "net.h"
 
-static ENetAddress address;
 static int hostType = NET_HOST_NONE;
 
 static int (*netCreate)(char* ipAddress, int port);
@@ -143,21 +142,6 @@ char* hostTypeToString(int type)
     default:
         return "Unknown";
     }
-}
-
-void setConnectionString(char* ipAddress, int port)
-{
-    // TODO
-    enet_address_set_host_ip(&address, ipAddress);
-    address.port = port;
-}
-
-char* getConnectionString(void)
-{
-    // TODO
-    /*char buffer[22] = { 0 };
-    secure_sprintf(buffer, sizeof(buffer), "%s:%d", enet_address_get_host_ip(&address, ), address.port);*/
-    return "";
 }
 
 int netCreateHost(char* ipAddress, int port)
