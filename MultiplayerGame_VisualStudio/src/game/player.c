@@ -261,6 +261,13 @@ void doPlayers(float deltaTime)
 			if (app.keyboard[SDL_SCANCODE_D])
 				player->dx = PLAYER_SPEED * deltaTime;
 
+			// Diagonal movement: keep the same speed as along a single axis
+			if (player->dx != 0 && player->dy != 0)
+			{
+				player->dx *= 0.70710678f; // 1 / sqrt(2)
+				player->dy *= 0.70710678f;
+			}
+
 			if (app.keyboard[SDL_SCANCODE_Q])
 			{
 				app.keyboard[SDL_SCANCODE_Q] = 0;
