@@ -167,6 +167,7 @@ static void handleDisconnection(ENetPeer* peer)
 {
     NetMessage message;
     ENetPacket* packet;
+    Entity* player;
     int i, id;
 
     // Remove client from peers array
@@ -184,14 +185,17 @@ static void handleDisconnection(ENetPeer* peer)
     if (i == MAX_SERVER_PEERS)
         return;
 
-    enet_peer_reset(peer);
-
+    // No enet_peer_reset: ENet already resets the peer before returning the disconnect event
     id = (int)(intptr_t) peer->data;
+
+    player = getPlayerByID(id);
+    if (player == NULL)
+        return;
 
     // Broadcast PLAYER_LEFT to each player
     memset(&message, 0, sizeof(NetMessage));
     message.type = PLAYER_LEFT;
-    message.data.playerLeft.oldPlayer = *(getPlayerByID(id));
+    message.data.playerLeft.oldPlayer = *player;
 
     packet = enet_packet_create(&message, sizeof(NetMessage), ENET_PACKET_FLAG_RELIABLE);
     enet_host_broadcast(serverHost, 0, packet);
