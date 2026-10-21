@@ -14,4 +14,4 @@ RUN apt-get update \
 # No sound card inside the container: without this SDL_Init(SDL_INIT_EVERYTHING) fails
 ENV SDL_AUDIODRIVER=dummy
 
-WORKDIR /src/MultiplayerGame_VisualStudio
+WORKDIR /src

@@ -50,7 +50,7 @@ https://github.com/mikyll/MultiplayerGame/assets/56556806/f9213bac-d907-4bee-a7e
 ## Project Structure
 
 ```
-MultiplayerGame_VisualStudio/
+MultiplayerGame/
 ├── src/
 │   ├── main.c        game loop
 │   ├── core/         shared definitions and structures
@@ -72,16 +72,16 @@ The project is developed on Visual Studio 2022 (MSVC v14.39.33519), with the fol
 
 ### Windows
 
-Headers and x64 import libraries are already included in `MultiplayerGame_VisualStudio/libs`; only the **x64** configurations are currently supported.
+Headers and x64 import libraries are already included in `libs`; only the **x64** configurations are currently supported.
 For ENet installation details, see [lsalzman/enet#80](https://github.com/lsalzman/enet/issues/80).
 
 You can use the Microsoft Build Engine, from within the Visual Studio Command Prompt:
 ```ps
-msbuild MultiplayerGame_VisualStudio/MultiplayerGame.sln
+msbuild MultiplayerGame.sln
 ```
 Or just open the solution and build the project.
 
-The build will generate an executable file named **`MultiplayerGame.exe`** in `MultiplayerGame_VisualStudio/x64/Debug` or `MultiplayerGame_VisualStudio/x64/Release` directories.\
+The build will generate an executable file named **`MultiplayerGame.exe`** in `x64/Debug` or `x64/Release` directories.\
 **NB**: to run the program you need `SDL2.dll` and `SDL2_image.dll` (from the SDL and SDL_image release packages) next to the executable.
 
 ### Linux
@@ -106,7 +106,6 @@ To test multiplayer, run `./dev.sh run` in two terminals: pick **Server** in one
   ```
 2. Then you can just compile using the makefile:
   ```bash
-  cd MultiplayerGame_VisualStudio
   make
   ```
 This will generate an executable file named **`multiplayer_game`**; run it from the same directory, so it can find `resources/`.
