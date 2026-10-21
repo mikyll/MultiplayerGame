@@ -41,7 +41,7 @@ enum
 
 // Net
 #define MAX_PLAYERS					4
-#define MAX_SERVER_PEERS			MAX_PLAYERS - 1
+#define MAX_SERVER_PEERS			(MAX_PLAYERS - 1)
 #define HOSTNAME					"localhost"
 #define PORT						8987
 enum
