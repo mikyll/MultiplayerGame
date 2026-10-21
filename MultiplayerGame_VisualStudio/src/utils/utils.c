@@ -2,43 +2,37 @@
 
 int isValidIPAddress(const char* ipAddress)
 {
-	int segments = 0;
-	char* segment;
-	char* copy = strdup(ipAddress); // Make a copy of the input string
-	char* saveptr = NULL; // Pointer to maintain the position between calls
+	const char* c = ipAddress;
 
-	// Tokenize the string by dots
-	segment = secure_strtok(copy, ".", &saveptr);
-	while (segment != NULL)
+	if (ipAddress == NULL)
+		return 0;
+
+	// Expect exactly 4 segments of 1-3 digits in [0, 255], separated by single dots
+	for (int segment = 0; segment < 4; segment++)
 	{
-		segments++;
-		// Check if the segment is a valid integer in the range [0, 255]
-		for (int i = 0; i < strlen(segment); i++)
+		int digits = 0, value = 0;
+
+		if (segment > 0)
 		{
-			if (!isdigit(segment[i]))
-			{
-				free(copy); // Free the memory allocated for the copy
-				return 0; // Not a valid IP address
-			}
+			if (*c != '.')
+				return 0;
+			c++;
 		}
-		int value = atoi(segment);
-		if (value < 0 || value > 255)
+
+		while (digits < 3 && isdigit((unsigned char)*c))
 		{
-			free(copy); // Free the memory allocated for the copy
-			return 0; // Not a valid IP address
+			value = value * 10 + (*c - '0');
+			digits++;
+			c++;
 		}
-		segment = secure_strtok(NULL, ".", &saveptr);
+
+		// Empty segment (e.g. "1..2.3.4") or value out of range
+		if (digits == 0 || value > 255)
+			return 0;
 	}
 
-	free(copy); // Free the memory allocated for the copy
-
-	// Ensure there are exactly 4 segments
-	if (segments != 4)
-	{
-		return 0; // Not a valid IP address
-	}
-
-	return 1; // Valid IP address
+	// Nothing may follow the last segment (e.g. "1.2.3.4." or "1.2.3.4567")
+	return *c == '\0';
 }
 
 int secure_sprintf(char* buffer, size_t bufferSize, const char* format, ...)
