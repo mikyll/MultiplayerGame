@@ -1,5 +1,6 @@
 # CMake build directories (Visual Studio "Open Folder" builds into out/)
 build/
+build-*/
 out/
 
 # Visual Studio

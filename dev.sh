@@ -6,6 +6,7 @@
 #   build   compile the game (builds the image first if missing)
 #   run     compile and launch one game instance (run it in two terminals to play server + client)
 #   shell   open a shell inside the container
+#   test    build with sanitizers and run the tests
 #   clean   remove build artifacts
 set -euo pipefail
 
@@ -59,12 +60,14 @@ container() {
 }
 
 BUILD="cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DMG_WERROR=ON && cmake --build build --parallel"
+TEST="cmake -S . -B build-test -DCMAKE_BUILD_TYPE=Debug -DMG_WERROR=ON -DMG_SANITIZE=ON && cmake --build build-test --parallel && ctest --test-dir build-test --output-on-failure"
 
 case "${1:-}" in
     image) image ;;
     build) container bash -c "$BUILD" ;;
     run)   container bash -c "$BUILD && cd build && ./multiplayer_game" ;;
+    test)  container bash -c "$TEST" ;;
     shell) container bash ;;
-    clean) rm -rf "$ROOT/build" ;;
+    clean) rm -rf "$ROOT/build" "$ROOT/build-test" ;;
     *)     sed -n '4,10p' "$0" | sed 's/^# \{0,1\}//'; exit 1 ;;
 esac
