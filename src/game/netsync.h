@@ -18,10 +18,10 @@ extern Entity* getLocalPlayer(void);
 // Networking
 extern int getHostType(void);
 extern void setServerHandlers(const ServerHandlers* serverHandlers);
-extern void serverSend(int client, const void* data, size_t size);
-extern void serverBroadcast(const void* data, size_t size);
+extern void serverSend(int client, const NetMessage* message);
+extern void serverBroadcast(const NetMessage* message);
 extern int serverClientsCount(void);
 extern void setClientHandlers(const ClientHandlers* clientHandlers);
-extern void clientSend(const void* data, size_t size);
+extern void clientSend(const NetMessage* message);
 
 extern Game game;

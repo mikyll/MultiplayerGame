@@ -11,7 +11,7 @@ void setClientHandlers(const ClientHandlers* clientHandlers);
 int createClient(char* ipAddress, int port);
 void destroyClient(void);
 void clientBefore(void);
-void clientSend(const void* data, size_t size);
+void clientSend(const NetMessage* message);
 void clientAfter(void);
 
 

@@ -3,14 +3,14 @@
 /*
 * Game side of the network protocol: turns connection events and received messages
 * into game state changes, and game state into messages. The networking layer only
-* transports the data.
+* transports the data, and validates it while deserializing.
 */
 
 
 static int onServerStart(void);
 static int onClientJoin(int client);
 static void onClientLeave(int client);
-static void onClientData(int client, const void* data, size_t size);
+static void onClientMessage(int client, const NetMessage* message);
 static void sendServerState(void);
 static int onServerMessage(const NetMessage* message);
 static void sendClientState(void);
@@ -21,7 +21,7 @@ static int clientPlayers[MAX_SERVER_PEERS]; // Player ID of each connected clien
 
 void initNetworkSync(void)
 {
-    ServerHandlers serverHandlers = { onServerStart, onClientJoin, onClientLeave, onClientData };
+    ServerHandlers serverHandlers = { onServerStart, onClientJoin, onClientLeave, onClientMessage };
     ClientHandlers clientHandlers = { onServerMessage };
 
     for (int i = 0; i < MAX_SERVER_PEERS; i++)
@@ -42,6 +42,49 @@ void sendGameUpdate(void)
         sendClientState();
 }
 
+static NetPlayer toNetPlayer(const Entity* player)
+{
+    NetPlayer netPlayer;
+
+    memset(&netPlayer, 0, sizeof(NetPlayer));
+    netPlayer.id = player->id;
+    netPlayer.x = player->x;
+    netPlayer.y = player->y;
+    netPlayer.color = player->color;
+    netPlayer.health = player->health;
+
+    return netPlayer;
+}
+
+static Entity fromNetPlayer(const NetPlayer* netPlayer)
+{
+    Entity player;
+
+    memset(&player, 0, sizeof(Entity));
+    player.id = netPlayer->id;
+    player.w = PLAYER_SIZE;
+    player.h = PLAYER_SIZE;
+    player.x = netPlayer->x;
+    player.y = netPlayer->y;
+    player.color = netPlayer->color;
+    player.health = netPlayer->health;
+
+    return player;
+}
+
+static int collectPlayers(NetPlayer* players)
+{
+    int numPlayers = 0;
+
+    for (int i = 0; i < MAX_PLAYERS; i++)
+    {
+        if (game.players[i].active)
+            players[numPlayers++] = toNetPlayer(&game.players[i]);
+    }
+
+    return numPlayers;
+}
+
 
 // Server
 
@@ -60,7 +103,6 @@ static int onServerStart(void)
 static int onClientJoin(int client)
 {
     NetMessage message;
-    Entity* player;
     int id;
 
     // Spawn new player entity
@@ -74,25 +116,16 @@ static int onClientJoin(int client)
     memset(&message, 0, sizeof(NetMessage));
     message.type = CONNECT_OK;
     message.data.connectOK.localID = id;
+    message.data.connectOK.numPlayers = collectPlayers(message.data.connectOK.players);
 
-    for (int i = 0; i < MAX_PLAYERS; i++)
-    {
-        player = &game.players[i];
-        if (!player->active)
-            continue;
-
-        message.data.connectOK.players[message.data.connectOK.numPlayers] = *player;
-        message.data.connectOK.numPlayers++;
-    }
-
-    serverSend(client, &message, sizeof(NetMessage));
+    serverSend(client, &message);
 
     // Broadcast PLAYER_JOINED to each player
     memset(&message, 0, sizeof(NetMessage));
     message.type = PLAYER_JOINED;
-    message.data.playerJoined.newPlayer = *(getPlayerByID(id));
+    message.data.playerJoined.newPlayer = toNetPlayer(getPlayerByID(id));
 
-    serverBroadcast(&message, sizeof(NetMessage));
+    serverBroadcast(&message);
 
     return 0;
 }
@@ -100,73 +133,60 @@ static int onClientJoin(int client)
 static void onClientLeave(int client)
 {
     NetMessage message;
-    Entity* player;
     int id = clientPlayers[client];
 
     clientPlayers[client] = -1;
 
-    player = getPlayerByID(id);
-    if (player == NULL)
+    if (getPlayerByID(id) == NULL)
         return;
 
     // Broadcast PLAYER_LEFT to each player
     memset(&message, 0, sizeof(NetMessage));
     message.type = PLAYER_LEFT;
-    message.data.playerLeft.oldPlayer = *player;
+    message.data.playerLeft.id = id;
 
-    serverBroadcast(&message, sizeof(NetMessage));
+    serverBroadcast(&message);
 
     // Destroy player entity
     destroyPlayerByID(id);
 }
 
-static void onClientData(int client, const void* data, size_t size)
+static void onClientMessage(int client, const NetMessage* message)
 {
-    PlayerState receivedState;
+    const NetPlayer* state;
     Entity* player;
 
-    if (size != sizeof(PlayerState))
+    // Clients only send their own state
+    if (message->type != PLAYER_STATE)
     {
-        printf("Invalid message size from client %d: %zu\n", client, size);
+        printf("Unexpected message of type %d from client %d\n", message->type, client);
         return;
     }
 
-    memcpy(&receivedState, data, sizeof(PlayerState));
-
-    // Update player's position
+    // Update player's position (the id in the message is ignored: the sender is known)
     player = getPlayerByID(clientPlayers[client]);
     if (player == NULL)
         return;
 
-    player->x = receivedState.player.x;
-    player->y = receivedState.player.y;
-    player->color = receivedState.player.color;
+    state = &message->data.playerState.player;
+    player->x = state->x;
+    player->y = state->y;
+    player->color = state->color;
 }
 
 static void sendServerState(void)
 {
     NetMessage message;
-    Entity* player;
 
     if (serverClientsCount() == 0)
         return;
 
     memset(&message, 0, sizeof(NetMessage));
     message.type = GAME_STATE;
-
-    // Loops over active players
-    for (int i = 0; i < MAX_PLAYERS; i++)
-    {
-        player = &game.players[i];
-        if (!player->active)
-            continue;
-
-        message.data.gameState.players[message.data.gameState.numPlayers] = *player;
-        message.data.gameState.numPlayers++;
-    }
+    message.data.gameState.numPlayers = collectPlayers(message.data.gameState.players);
 
     // Broadcast the game state to each connected peer
-    serverBroadcast(&message, sizeof(NetMessage));
+    serverBroadcast(&message);
 }
 
 
@@ -174,6 +194,7 @@ static void sendServerState(void)
 
 static int onServerMessage(const NetMessage* message)
 {
+    Entity* player;
     int id;
 
     switch (message->type)
@@ -182,18 +203,12 @@ static int onServerMessage(const NetMessage* message)
         {
             const ConnectOK* connectOK = &message->data.connectOK;
 
-            if (connectOK->numPlayers < 0 || connectOK->numPlayers > MAX_PLAYERS)
-            {
-                printf("Invalid CONNECT_OK players count: %d\n", connectOK->numPlayers);
-                return -1;
-            }
-
             // Spawn missing players
             for (int i = 0; i < connectOK->numPlayers; i++)
             {
                 if (getPlayerByID(connectOK->players[i].id) == NULL)
                 {
-                    id = spawnPlayer(connectOK->players[i]);
+                    id = spawnPlayer(fromNetPlayer(&connectOK->players[i]));
 
                     // Set local player
                     if (connectOK->localID == connectOK->players[i].id)
@@ -210,29 +225,29 @@ static int onServerMessage(const NetMessage* message)
         }
         case PLAYER_JOINED:
         {
-            const PlayerJoined* playerJoined = &message->data.playerJoined;
+            const NetPlayer* newPlayer = &message->data.playerJoined.newPlayer;
 
-            if (getPlayerByID(playerJoined->newPlayer.id) == NULL)
+            if (getPlayerByID(newPlayer->id) == NULL)
             {
-                spawnPlayer(playerJoined->newPlayer);
+                spawnPlayer(fromNetPlayer(newPlayer));
             }
 
             // Test
-            printf("PLAYER_JOINED: %d\n", playerJoined->newPlayer.id);
+            printf("PLAYER_JOINED: %d\n", newPlayer->id);
 
             return 0;
         }
         case PLAYER_LEFT:
         {
-            const PlayerLeft* playerLeft = &message->data.playerLeft;
+            id = message->data.playerLeft.id;
 
-            if (getPlayerByID(playerLeft->oldPlayer.id) != NULL)
+            if (getPlayerByID(id) != NULL)
             {
-                destroyPlayerByID(playerLeft->oldPlayer.id);
+                destroyPlayerByID(id);
             }
 
             // Test
-            printf("PLAYER_LEFT: %d\n", playerLeft->oldPlayer.id);
+            printf("PLAYER_LEFT: %d\n", id);
 
             return 0;
         }
@@ -240,17 +255,11 @@ static int onServerMessage(const NetMessage* message)
         {
             const GameState* gameState = &message->data.gameState;
 
-            if (gameState->numPlayers < 0 || gameState->numPlayers > MAX_PLAYERS)
-            {
-                printf("Invalid GAME_STATE players count: %d\n", gameState->numPlayers);
-                return -1;
-            }
-
             // Update remote players: the local one is driven by input, the server only echoes
             // back an outdated copy of its position
             for (int i = 0; i < gameState->numPlayers; i++)
             {
-                Entity* player = getPlayerByID(gameState->players[i].id);
+                player = getPlayerByID(gameState->players[i].id);
                 if (player != NULL && player != getLocalPlayer())
                 {
                     player->x = gameState->players[i].x;
@@ -263,7 +272,7 @@ static int onServerMessage(const NetMessage* message)
         }
         default:
         {
-            printf("Unknown message: %d\n", message->type);
+            printf("Unexpected message of type %d from the server\n", message->type);
             return -1;
         }
     }
@@ -271,16 +280,17 @@ static int onServerMessage(const NetMessage* message)
 
 static void sendClientState(void)
 {
-    PlayerState playerState;
+    NetMessage message;
     Entity* player = getLocalPlayer();
 
     // Nothing to send until CONNECT_OK assigns the local player
     if (player == NULL)
         return;
 
-    memset(&playerState, 0, sizeof(PlayerState));
-    playerState.player = *player;
+    memset(&message, 0, sizeof(NetMessage));
+    message.type = PLAYER_STATE;
+    message.data.playerState.player = toNetPlayer(player);
 
     // Send local player position
-    clientSend(&playerState, sizeof(PlayerState));
+    clientSend(&message);
 }

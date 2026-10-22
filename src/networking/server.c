@@ -1,4 +1,5 @@
 #include "server.h"
+#include "protocol.h"
 
 
 /*
@@ -16,6 +17,7 @@ typedef struct {
 static void handleConnection(ENetPeer* peer);
 static void handleDisconnection(ENetPeer* peer);
 static int findClient(ENetPeer* peer);
+static ENetPacket* createPacket(const NetMessage* message);
 static void (*connectCallback)(void);
 static void (*disconnectCallback)(void);
 
@@ -119,31 +121,47 @@ void destroyServer(void)
         disconnectCallback();
 }
 
-void serverSend(int client, const void* data, size_t size)
+void serverSend(int client, const NetMessage* message)
 {
     ENetPacket* packet;
 
     if (session == NULL || client < 0 || client >= MAX_SERVER_PEERS || session->clientPeers[client] == NULL)
         return;
 
-    packet = enet_packet_create(data, size, ENET_PACKET_FLAG_RELIABLE);
-    enet_peer_send(session->clientPeers[client], 0, packet);
+    packet = createPacket(message);
+    if (packet != NULL)
+        enet_peer_send(session->clientPeers[client], 0, packet);
 }
 
-void serverBroadcast(const void* data, size_t size)
+void serverBroadcast(const NetMessage* message)
 {
     ENetPacket* packet;
 
     if (session == NULL)
         return;
 
-    packet = enet_packet_create(data, size, ENET_PACKET_FLAG_RELIABLE);
-    enet_host_broadcast(session->host, 0, packet);
+    packet = createPacket(message);
+    if (packet != NULL)
+        enet_host_broadcast(session->host, 0, packet);
 }
 
 int serverClientsCount(void)
 {
     return session != NULL ? session->numPeers : 0;
+}
+
+static ENetPacket* createPacket(const NetMessage* message)
+{
+    Uint8 buffer[NET_MAX_MESSAGE_SIZE];
+    size_t size = writeMessage(message, buffer, sizeof(buffer));
+
+    if (size == 0)
+    {
+        printf("Couldn't serialize message of type %d\n", message->type);
+        return NULL;
+    }
+
+    return enet_packet_create(buffer, size, ENET_PACKET_FLAG_RELIABLE);
 }
 
 static int findClient(ENetPeer* peer)
@@ -168,10 +186,11 @@ static void handleConnection(ENetPeer* peer)
     {
         memset(&message, 0, sizeof(NetMessage));
         message.type = CONNECT_DENIED;
-        secure_strcpy(message.data.connectDenied.message, 64, "The server is full.");
+        message.data.connectDenied.reason = DENY_SERVER_FULL;
 
-        packet = enet_packet_create(&message, sizeof(NetMessage), ENET_PACKET_FLAG_RELIABLE);
-        enet_peer_send(peer, 0, packet);
+        packet = createPacket(&message);
+        if (packet != NULL)
+            enet_peer_send(peer, 0, packet);
 
         // Disconnect once the queued CONNECT_DENIED has been sent
         enet_peer_disconnect_later(peer, 0);
@@ -218,6 +237,7 @@ static void handleDisconnection(ENetPeer* peer)
 void serverBefore(void)
 {
     ENetEvent event;
+    NetMessage message;
     int client;
 
     if (session == NULL)
@@ -252,8 +272,13 @@ void serverBefore(void)
             case ENET_EVENT_TYPE_RECEIVE:
             {
                 client = findClient(event.peer);
-                if (client >= 0 && handlers.onClientData != NULL)
-                    handlers.onClientData(client, event.packet->data, event.packet->dataLength);
+                if (client >= 0)
+                {
+                    if (readMessage(event.packet->data, event.packet->dataLength, &message) < 0)
+                        printf("Invalid message from client %d (%zu bytes)\n", client, event.packet->dataLength);
+                    else if (handlers.onClientMessage != NULL)
+                        handlers.onClientMessage(client, &message);
+                }
 
                 enet_packet_destroy(event.packet);
 

@@ -51,33 +51,50 @@ typedef struct {
 } Game;
 
 // Networking
+
+/*
+* Messages exchanged between server and clients. They are serialized field by field
+* (see networking/protocol.c), so their in-memory layout never reaches the network.
+*/
+
+// Player fields sent over the network
+typedef struct {
+	int id;
+	float x, y;
+	SDL_Color color; // Alpha is not sent
+	int health;
+} NetPlayer;
+
+typedef enum {
+	DENY_SERVER_FULL,
+	DENY_VERSION_MISMATCH,
+} DenyReason;
+
 typedef struct {
 	int localID; // ID of the new player
-	Entity players[MAX_PLAYERS];
+	NetPlayer players[MAX_PLAYERS];
 	int numPlayers;
 } ConnectOK;
 
 typedef struct {
-	int id;
-	char message[64];
+	DenyReason reason;
 } ConnectDenied;
 
 typedef struct {
-	Entity newPlayer;
+	NetPlayer newPlayer;
 } PlayerJoined;
 
 typedef struct {
-	Entity oldPlayer;
+	int id;
 } PlayerLeft;
 
 typedef struct {
-	int type;
-	Entity players[MAX_PLAYERS];
+	NetPlayer players[MAX_PLAYERS];
 	int numPlayers;
 } GameState;
 
 typedef struct {
-	Entity player;
+	NetPlayer player; // The server ignores the id: it knows who sent the message
 } PlayerState;
 
 typedef enum {
@@ -88,17 +105,6 @@ typedef enum {
 	GAME_STATE,
 	PLAYER_STATE,
 } NetMessageType;
-
-/*
-* Game-side handlers of server events: the server only manages connections,
-* the game decides what they mean. A client is identified by its slot in [0, MAX_SERVER_PEERS).
-*/
-typedef struct {
-	int (*onStart)(void);                                               // 0 to start, -1 to abort
-	int (*onClientJoin)(int client);                                    // 0 to accept, -1 to refuse
-	void (*onClientLeave)(int client);
-	void (*onClientData)(int client, const void* data, size_t size);
-} ServerHandlers;
 
 typedef struct {
 	NetMessageType type;
@@ -111,6 +117,17 @@ typedef struct {
 		PlayerState playerState;
 	} data;
 } NetMessage;
+
+/*
+* Game-side handlers of server events: the server only manages connections,
+* the game decides what they mean. A client is identified by its slot in [0, MAX_SERVER_PEERS).
+*/
+typedef struct {
+	int (*onStart)(void);                                               // 0 to start, -1 to abort
+	int (*onClientJoin)(int client);                                    // 0 to accept, -1 to refuse
+	void (*onClientLeave)(int client);
+	void (*onClientMessage)(int client, const NetMessage* message);
+} ServerHandlers;
 
 /*
 * Game-side handler of client events: the client only manages the connection to the server,

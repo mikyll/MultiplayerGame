@@ -4,3 +4,8 @@ add_executable(test_players test_players.c "${CMAKE_SOURCE_DIR}/src/game/player.
 target_include_directories(test_players PRIVATE "${CMAKE_SOURCE_DIR}/src")
 target_link_libraries(test_players PRIVATE mg_common)
 add_test(NAME players COMMAND test_players)
+
+add_executable(test_protocol test_protocol.c "${CMAKE_SOURCE_DIR}/src/networking/protocol.c")
+target_include_directories(test_protocol PRIVATE "${CMAKE_SOURCE_DIR}/src")
+target_link_libraries(test_protocol PRIVATE mg_common)
+add_test(NAME protocol COMMAND test_protocol)

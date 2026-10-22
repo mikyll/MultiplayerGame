@@ -1,4 +1,5 @@
 #include "client.h"
+#include "protocol.h"
 
 
 /*
@@ -146,22 +147,24 @@ static void handleMessage(ENetPacket* packet)
 {
     NetMessage receivedNetMessage;
 
-    if (packet->dataLength != sizeof(NetMessage))
+    if (readMessage(packet->data, packet->dataLength, &receivedNetMessage) < 0)
     {
-        printf("Invalid message size: %zu\n", packet->dataLength);
+        printf("Invalid message from the server (%zu bytes)\n", packet->dataLength);
         return;
     }
-
-    memcpy(&receivedNetMessage, packet->data, sizeof(NetMessage));
 
     // The server refused the connection: part of the handshake, handled here
     if (receivedNetMessage.type == CONNECT_DENIED)
     {
-        ConnectDenied connectDenied = receivedNetMessage.data.connectDenied;
-        connectDenied.message[sizeof(connectDenied.message) - 1] = '\0';
-
-        // TODO
-        printf("Connect Denied message: %s\n", connectDenied.message);
+        switch (receivedNetMessage.data.connectDenied.reason)
+        {
+            case DENY_SERVER_FULL:
+                printf("Connection denied: the server is full.\n");
+                break;
+            case DENY_VERSION_MISMATCH:
+                printf("Connection denied: the server runs a different version.\n");
+                break;
+        }
 
         destroyClient();
 
@@ -249,14 +252,23 @@ void clientBefore(void)
     }
 }
 
-void clientSend(const void* data, size_t size)
+void clientSend(const NetMessage* message)
 {
+    Uint8 buffer[NET_MAX_MESSAGE_SIZE];
     ENetPacket* packet;
+    size_t size;
 
     if (session == NULL)
         return;
 
-    packet = enet_packet_create(data, size, ENET_PACKET_FLAG_RELIABLE);
+    size = writeMessage(message, buffer, sizeof(buffer));
+    if (size == 0)
+    {
+        printf("Couldn't serialize message of type %d\n", message->type);
+        return;
+    }
+
+    packet = enet_packet_create(buffer, size, ENET_PACKET_FLAG_RELIABLE);
     enet_peer_send(session->serverPeer, 0, packet);
 }
 
