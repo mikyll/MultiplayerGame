@@ -206,12 +206,24 @@ static void testWriteErrors(void)
     CHECK(writeMessage(&message, buffer, NET_PLAYER_SIZE + 1) == NET_PLAYER_SIZE + 1);
 }
 
+static void testStateMessages(void)
+{
+    // Only frequent state updates may travel unreliable
+    CHECK(isStateMessage(GAME_STATE));
+    CHECK(isStateMessage(PLAYER_STATE));
+    CHECK(!isStateMessage(CONNECT_OK));
+    CHECK(!isStateMessage(CONNECT_DENIED));
+    CHECK(!isStateMessage(PLAYER_JOINED));
+    CHECK(!isStateMessage(PLAYER_LEFT));
+}
+
 int main(void)
 {
     testRoundTrips();
     testWireFormat();
     testMalformed();
     testWriteErrors();
+    testStateMessages();
 
     return TEST_RESULT;
 }

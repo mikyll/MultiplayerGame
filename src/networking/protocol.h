@@ -12,6 +12,13 @@
 // Largest serialized message: GAME_STATE with every player
 #define NET_MAX_MESSAGE_SIZE	(2 + MAX_PLAYERS * NET_PLAYER_SIZE)
 
+// ENet channels: state updates are sent often and superseded by the next one, so they travel
+// unreliable (lost or late packets are dropped); everything else is reliable
+#define NET_CHANNEL_RELIABLE	0
+#define NET_CHANNEL_STATE		1
+#define NET_CHANNELS			2
 
+
+int isStateMessage(NetMessageType type);
 size_t writeMessage(const NetMessage* message, Uint8* buffer, size_t capacity);
 int readMessage(const Uint8* buffer, size_t size, NetMessage* message);

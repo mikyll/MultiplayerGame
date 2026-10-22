@@ -152,6 +152,14 @@ static int readPlayers(Reader* reader, NetPlayer* players)
 }
 
 /*
+* State updates (GAME_STATE, PLAYER_STATE) are superseded by the next one: they don't need reliability.
+*/
+int isStateMessage(NetMessageType type)
+{
+    return type == GAME_STATE || type == PLAYER_STATE;
+}
+
+/*
 * Serializes message into buffer.
 * Returns the number of bytes written, or 0 if the message is invalid or doesn't fit.
 */

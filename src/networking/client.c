@@ -70,7 +70,7 @@ int createClient(char* ipAddress, int port)
     session->host = enet_host_create(
         NULL,   // create a client host
         1,      // only allow 1 outgoing connection
-        2,      // allow up 2 channels to be used, 0 and 1
+        NET_CHANNELS, // reliable and state channels
         0,      // assume any amount of incoming bandwidth
         0       // assume any amount of outgoing bandwidth
     );
@@ -105,7 +105,7 @@ int createClient(char* ipAddress, int port)
     session->serverAddress.port = port;
 
     // Connect to server, announcing the protocol version
-    session->serverPeer = enet_host_connect(session->host, &session->serverAddress, 2, PROTOCOL_VERSION);
+    session->serverPeer = enet_host_connect(session->host, &session->serverAddress, NET_CHANNELS, PROTOCOL_VERSION);
     if (session->serverPeer == NULL) {
         printf("No available peers for initiating an ENet connection\n");
         freeSession();
@@ -268,8 +268,17 @@ void clientSend(const NetMessage* message)
         return;
     }
 
-    packet = enet_packet_create(buffer, size, ENET_PACKET_FLAG_RELIABLE);
-    enet_peer_send(session->serverPeer, 0, packet);
+    // State updates travel unreliable: a lost one is superseded by the next
+    if (isStateMessage(message->type))
+    {
+        packet = enet_packet_create(buffer, size, 0);
+        enet_peer_send(session->serverPeer, NET_CHANNEL_STATE, packet);
+    }
+    else
+    {
+        packet = enet_packet_create(buffer, size, ENET_PACKET_FLAG_RELIABLE);
+        enet_peer_send(session->serverPeer, NET_CHANNEL_RELIABLE, packet);
+    }
 }
 
 /*

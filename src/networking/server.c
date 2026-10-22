@@ -18,7 +18,7 @@ static void handleConnection(ENetPeer* peer, enet_uint32 protocolVersion);
 static void denyConnection(ENetPeer* peer, DenyReason reason);
 static void handleDisconnection(ENetPeer* peer);
 static int findClient(ENetPeer* peer);
-static ENetPacket* createPacket(const NetMessage* message);
+static ENetPacket* createPacket(const NetMessage* message, enet_uint8* channel);
 static void (*connectCallback)(void);
 static void (*disconnectCallback)(void);
 
@@ -73,7 +73,7 @@ int createServer(char* ipAddress, int port)
     session->host = enet_host_create(
         &session->address,  // the address to bind the server host to
         MAX_SERVER_PEERS + 1, // one extra slot to accept, then deny, connections when the server is full
-        2,                  // allow up to 2 channels to be used, 0 and 1
+        NET_CHANNELS,       // reliable and state channels
         0,                  // assume any amount of incoming bandwidth
         0                   // assume any amount of outgoing bandwidth
     );
@@ -125,25 +125,27 @@ void destroyServer(void)
 void serverSend(int client, const NetMessage* message)
 {
     ENetPacket* packet;
+    enet_uint8 channel;
 
     if (session == NULL || client < 0 || client >= MAX_SERVER_PEERS || session->clientPeers[client] == NULL)
         return;
 
-    packet = createPacket(message);
+    packet = createPacket(message, &channel);
     if (packet != NULL)
-        enet_peer_send(session->clientPeers[client], 0, packet);
+        enet_peer_send(session->clientPeers[client], channel, packet);
 }
 
 void serverBroadcast(const NetMessage* message)
 {
     ENetPacket* packet;
+    enet_uint8 channel;
 
     if (session == NULL)
         return;
 
-    packet = createPacket(message);
+    packet = createPacket(message, &channel);
     if (packet != NULL)
-        enet_host_broadcast(session->host, 0, packet);
+        enet_host_broadcast(session->host, channel, packet);
 }
 
 int serverClientsCount(void)
@@ -151,7 +153,7 @@ int serverClientsCount(void)
     return session != NULL ? session->numPeers : 0;
 }
 
-static ENetPacket* createPacket(const NetMessage* message)
+static ENetPacket* createPacket(const NetMessage* message, enet_uint8* channel)
 {
     Uint8 buffer[NET_MAX_MESSAGE_SIZE];
     size_t size = writeMessage(message, buffer, sizeof(buffer));
@@ -162,6 +164,13 @@ static ENetPacket* createPacket(const NetMessage* message)
         return NULL;
     }
 
+    if (isStateMessage(message->type))
+    {
+        *channel = NET_CHANNEL_STATE;
+        return enet_packet_create(buffer, size, 0);
+    }
+
+    *channel = NET_CHANNEL_RELIABLE;
     return enet_packet_create(buffer, size, ENET_PACKET_FLAG_RELIABLE);
 }
 
@@ -180,14 +189,15 @@ static void denyConnection(ENetPeer* peer, DenyReason reason)
 {
     NetMessage message;
     ENetPacket* packet;
+    enet_uint8 channel;
 
     memset(&message, 0, sizeof(NetMessage));
     message.type = CONNECT_DENIED;
     message.data.connectDenied.reason = reason;
 
-    packet = createPacket(&message);
+    packet = createPacket(&message, &channel);
     if (packet != NULL)
-        enet_peer_send(peer, 0, packet);
+        enet_peer_send(peer, channel, packet);
 
     // Disconnect once the queued CONNECT_DENIED has been sent
     enet_peer_disconnect_later(peer, 0);
