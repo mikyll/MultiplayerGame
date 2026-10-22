@@ -89,6 +89,17 @@ typedef enum {
 	PLAYER_STATE,
 } NetMessageType;
 
+/*
+* Game-side handlers of server events: the server only manages connections,
+* the game decides what they mean. A client is identified by its slot in [0, MAX_SERVER_PEERS).
+*/
+typedef struct {
+	int (*onStart)(void);                                               // 0 to start, -1 to abort
+	int (*onClientJoin)(int client);                                    // 0 to accept, -1 to refuse
+	void (*onClientLeave)(int client);
+	void (*onClientData)(int client, const void* data, size_t size);
+} ServerHandlers;
+
 typedef struct {
 	NetMessageType type;
 	union {

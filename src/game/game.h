@@ -21,6 +21,10 @@ extern void setLocalPlayer(Entity* player);
 extern void doPlayers(float deltaTime);
 extern void drawPlayers(void);
 
+// Network sync
+extern void initNetworkSync(void);
+extern void sendGameUpdate(void);
+
 // Networking
 extern void setHostType(int type);
 extern int getHostType(void);

@@ -12,6 +12,8 @@ void initGame(void)
 {
 	// All game state, local player included, lives in game: clearing it resets everything
 	memset(&game, 0, sizeof(Game));
+
+	initNetworkSync();
 }
 
 void showGame(void)
@@ -37,6 +39,7 @@ static void doGame(float deltaTime)
 	doPlayers(deltaTime);
 
 	// Send network update
+	sendGameUpdate();
 	doNetworkingAfter();
 }
 
