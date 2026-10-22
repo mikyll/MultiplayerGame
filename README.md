@@ -135,6 +135,13 @@ The tests are built with the game (disable them with `-DMG_BUILD_TESTS=OFF`) and
 ctest --test-dir build --output-on-failure  # after a native build
 ```
 
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md). It is generated from the git history (tags and Conventional Commits), regenerate it with:
+```bash
+python3 scripts/changelog.py
+```
+
 ## Documentation
 
 - [SDL2](https://wiki.libsdl.org/SDL2/FrontPage)
