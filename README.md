@@ -58,9 +58,9 @@ MultiplayerGame/
 │   ├── main.c        game loop
 │   ├── core/         shared definitions and structures
 │   ├── engine/       SDL setup, input, drawing, text
-│   ├── game/         game and menu scenes, players
+│   ├── game/         game and menu scenes, players, network protocol (netsync)
 │   ├── ui/           UI widgets (text input, FPS counter)
-│   ├── networking/   ENet host abstraction, client and server sessions
+│   ├── networking/   ENet transport: client and server sessions, no game logic
 │   └── utils/        string and validation helpers
 ├── resources/        fonts (copied next to the executable at build time)
 ├── libs/             SDL2, SDL2_image and ENet headers and x64/x86 libraries (Windows)
