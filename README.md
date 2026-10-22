@@ -30,14 +30,16 @@ https://github.com/mikyll/MultiplayerGame/assets/56556806/f9213bac-d907-4bee-a7e
 - [ ] improve UI elements;
 - [x] CMake build for Windows and Linux;
 - [x] refactor: fixed-size players array, client/server session lifecycle;
-- [ ] refactor: network protocol with explicit serialization;
+- [x] network protocol with explicit serialization, version check and unreliable state updates;
+- [x] unit and end-to-end network tests;
+- [ ] server-authoritative movement (client-side prediction and reconciliation);
 
 ## How to Play
 
 1. Start the game and press **Server**: you join the session as player `P0`.
 2. Start other instances and press **Client** to connect (up to 4 players in total, server included).
    Before pressing **Client**, you can type the server IP address in the field at the top; leave it empty to connect to `localhost`.
-   The server listens on UDP port `8987`.
+   The server listens on UDP port `8987`. Server and clients must run the same version: other versions are refused.
 
 ### Controls
 
@@ -63,6 +65,7 @@ MultiplayerGame/
 │   ├── networking/   ENet transport: client and server sessions, no game logic
 │   └── utils/        string and validation helpers
 ├── resources/        fonts (copied next to the executable at build time)
+├── tests/            unit tests and end-to-end network test (CTest)
 ├── libs/             SDL2, SDL2_image and ENet headers and x64/x86 libraries (Windows)
 ├── Dockerfile        Linux build environment
 └── dev.sh            Linux build/run helper
@@ -119,6 +122,18 @@ To test multiplayer, run `./dev.sh run` in two terminals: pick **Server** in one
   cmake --build build
   cd build && ./multiplayer_game
   ```
+
+## Tests
+
+The tests are built with the game (disable them with `-DMG_BUILD_TESTS=OFF`) and run with CTest:
+- `players`: player management (IDs, movement, removal, drawing order);
+- `protocol`: message serialization (round trips, wire format, malformed input);
+- `network` (Linux only): a headless server, headless clients and raw ENet connections on localhost, covering joins, full server, version mismatch, timeouts and state updates. It uses UDP port `18987` (override with `MG_TEST_PORT`).
+
+```bash
+./dev.sh test                            # in the container, with AddressSanitizer and UBSan
+ctest --test-dir build --output-on-failure  # after a native build
+```
 
 ## Documentation
 
