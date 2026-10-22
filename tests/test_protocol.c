@@ -47,16 +47,27 @@ static void testRoundTrips(void)
 {
     NetMessage message, decoded;
 
-    // GAME_STATE with every player: the largest message
+    // GAME_STATE with every player
     memset(&message, 0, sizeof(NetMessage));
     message.type = GAME_STATE;
     message.data.gameState.numPlayers = MAX_PLAYERS;
     for (int i = 0; i < MAX_PLAYERS; i++)
         message.data.gameState.players[i] = makePlayer(i, 12.5f * i, -3.25f + i);
-    CHECK(roundTrip(&message, &decoded) == NET_MAX_MESSAGE_SIZE);
+    CHECK(roundTrip(&message, &decoded) == 2 + MAX_PLAYERS * NET_PLAYER_SIZE);
     CHECK(decoded.data.gameState.numPlayers == MAX_PLAYERS);
     for (int i = 0; i < MAX_PLAYERS; i++)
         CHECK(samePlayer(&decoded.data.gameState.players[i], &message.data.gameState.players[i]));
+
+    // CONNECT_OK with every player: the largest message, it must fit NET_MAX_MESSAGE_SIZE
+    memset(&message, 0, sizeof(NetMessage));
+    message.type = CONNECT_OK;
+    message.data.connectOK.localID = MAX_PLAYERS - 1;
+    message.data.connectOK.numPlayers = MAX_PLAYERS;
+    for (int i = 0; i < MAX_PLAYERS; i++)
+        message.data.connectOK.players[i] = makePlayer(i, 50, 50);
+    CHECK(roundTrip(&message, &decoded) == 3 + MAX_PLAYERS * NET_PLAYER_SIZE);
+    CHECK(3 + MAX_PLAYERS * NET_PLAYER_SIZE <= NET_MAX_MESSAGE_SIZE);
+    CHECK(decoded.data.connectOK.numPlayers == MAX_PLAYERS);
 
     // CONNECT_OK
     memset(&message, 0, sizeof(NetMessage));

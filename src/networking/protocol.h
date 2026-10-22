@@ -9,8 +9,8 @@
 
 // Serialized NetPlayer: id (1) + x, y (4 + 4) + r, g, b (3) + health (1)
 #define NET_PLAYER_SIZE			13
-// Largest serialized message: GAME_STATE with every player
-#define NET_MAX_MESSAGE_SIZE	(2 + MAX_PLAYERS * NET_PLAYER_SIZE)
+// Largest serialized message: CONNECT_OK with every player (type, localID, numPlayers, players)
+#define NET_MAX_MESSAGE_SIZE	(3 + MAX_PLAYERS * NET_PLAYER_SIZE)
 
 // ENet channels: state updates are sent often and superseded by the next one, so they travel
 // unreliable (lost or late packets are dropped); everything else is reliable
