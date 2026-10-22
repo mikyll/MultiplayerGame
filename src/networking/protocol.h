@@ -3,6 +3,10 @@
 #include "../core/common.h"
 
 
+// Sent by clients when connecting: the server refuses other versions.
+// Bump it on every incompatible change of the messages (0 is used by clients older than versioning).
+#define PROTOCOL_VERSION		1
+
 // Serialized NetPlayer: id (1) + x, y (4 + 4) + r, g, b (3) + health (1)
 #define NET_PLAYER_SIZE			13
 // Largest serialized message: GAME_STATE with every player

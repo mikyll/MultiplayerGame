@@ -14,7 +14,8 @@ typedef struct {
 } ServerSession;
 
 
-static void handleConnection(ENetPeer* peer);
+static void handleConnection(ENetPeer* peer, enet_uint32 protocolVersion);
+static void denyConnection(ENetPeer* peer, DenyReason reason);
 static void handleDisconnection(ENetPeer* peer);
 static int findClient(ENetPeer* peer);
 static ENetPacket* createPacket(const NetMessage* message);
@@ -175,26 +176,39 @@ static int findClient(ENetPeer* peer)
     return -1;
 }
 
-static void handleConnection(ENetPeer* peer)
+static void denyConnection(ENetPeer* peer, DenyReason reason)
 {
     NetMessage message;
     ENetPacket* packet;
+
+    memset(&message, 0, sizeof(NetMessage));
+    message.type = CONNECT_DENIED;
+    message.data.connectDenied.reason = reason;
+
+    packet = createPacket(&message);
+    if (packet != NULL)
+        enet_peer_send(peer, 0, packet);
+
+    // Disconnect once the queued CONNECT_DENIED has been sent
+    enet_peer_disconnect_later(peer, 0);
+}
+
+static void handleConnection(ENetPeer* peer, enet_uint32 protocolVersion)
+{
     int client;
+
+    // Messages of other versions can't be understood
+    if (protocolVersion != PROTOCOL_VERSION)
+    {
+        printf("Denied a client with protocol version %u (expected %d)\n", protocolVersion, PROTOCOL_VERSION);
+        denyConnection(peer, DENY_VERSION_MISMATCH);
+        return;
+    }
 
     // Send CONNECT_DENIED if the server is full.
     if (session->numPeers >= MAX_SERVER_PEERS)
     {
-        memset(&message, 0, sizeof(NetMessage));
-        message.type = CONNECT_DENIED;
-        message.data.connectDenied.reason = DENY_SERVER_FULL;
-
-        packet = createPacket(&message);
-        if (packet != NULL)
-            enet_peer_send(peer, 0, packet);
-
-        // Disconnect once the queued CONNECT_DENIED has been sent
-        enet_peer_disconnect_later(peer, 0);
-
+        denyConnection(peer, DENY_SERVER_FULL);
         return;
     }
 
@@ -249,7 +263,7 @@ void serverBefore(void)
         {
             case ENET_EVENT_TYPE_CONNECT:
             {
-                handleConnection(event.peer);
+                handleConnection(event.peer, event.data);
 
                 printf("A new client connected from %x:%u. Num Peers: %d\n",
                     event.peer->address.host,

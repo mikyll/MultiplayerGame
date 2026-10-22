@@ -104,8 +104,8 @@ int createClient(char* ipAddress, int port)
     }
     session->serverAddress.port = port;
 
-    // Connect to server
-    session->serverPeer = enet_host_connect(session->host, &session->serverAddress, 2, 0);
+    // Connect to server, announcing the protocol version
+    session->serverPeer = enet_host_connect(session->host, &session->serverAddress, 2, PROTOCOL_VERSION);
     if (session->serverPeer == NULL) {
         printf("No available peers for initiating an ENet connection\n");
         freeSession();
