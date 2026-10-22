@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(MultiplayerGame VERSION 0.6.0 LANGUAGES C)
+project(MultiplayerGame VERSION 0.7.0 LANGUAGES C)
 
 option(MG_WERROR "Treat compiler warnings as errors" OFF)
 option(MG_SANITIZE "Build with AddressSanitizer and UndefinedBehaviorSanitizer (GCC/Clang)" OFF)
