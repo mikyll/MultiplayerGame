@@ -34,5 +34,3 @@ extern void destroyClient(void);
 extern void clientBefore(void);
 extern void clientAfter(void);
 
-
-extern Game game;

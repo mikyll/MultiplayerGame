@@ -111,3 +111,11 @@ typedef struct {
 		PlayerState playerState;
 	} data;
 } NetMessage;
+
+/*
+* Game-side handler of client events: the client only manages the connection to the server,
+* the game applies the messages it receives.
+*/
+typedef struct {
+	int (*onMessage)(const NetMessage* message);                        // 0 if handled, -1 if invalid
+} ClientHandlers;

@@ -12,6 +12,8 @@ static int onClientJoin(int client);
 static void onClientLeave(int client);
 static void onClientData(int client, const void* data, size_t size);
 static void sendServerState(void);
+static int onServerMessage(const NetMessage* message);
+static void sendClientState(void);
 
 
 static int clientPlayers[MAX_SERVER_PEERS]; // Player ID of each connected client, by client slot
@@ -20,11 +22,13 @@ static int clientPlayers[MAX_SERVER_PEERS]; // Player ID of each connected clien
 void initNetworkSync(void)
 {
     ServerHandlers serverHandlers = { onServerStart, onClientJoin, onClientLeave, onClientData };
+    ClientHandlers clientHandlers = { onServerMessage };
 
     for (int i = 0; i < MAX_SERVER_PEERS; i++)
         clientPlayers[i] = -1;
 
     setServerHandlers(&serverHandlers);
+    setClientHandlers(&clientHandlers);
 }
 
 /*
@@ -34,6 +38,8 @@ void sendGameUpdate(void)
 {
     if (getHostType() == NET_HOST_SERVER)
         sendServerState();
+    else if (getHostType() == NET_HOST_CLIENT)
+        sendClientState();
 }
 
 
@@ -161,4 +167,120 @@ static void sendServerState(void)
 
     // Broadcast the game state to each connected peer
     serverBroadcast(&message, sizeof(NetMessage));
+}
+
+
+// Client
+
+static int onServerMessage(const NetMessage* message)
+{
+    int id;
+
+    switch (message->type)
+    {
+        case CONNECT_OK:
+        {
+            const ConnectOK* connectOK = &message->data.connectOK;
+
+            if (connectOK->numPlayers < 0 || connectOK->numPlayers > MAX_PLAYERS)
+            {
+                printf("Invalid CONNECT_OK players count: %d\n", connectOK->numPlayers);
+                return -1;
+            }
+
+            // Spawn missing players
+            for (int i = 0; i < connectOK->numPlayers; i++)
+            {
+                if (getPlayerByID(connectOK->players[i].id) == NULL)
+                {
+                    id = spawnPlayer(connectOK->players[i]);
+
+                    // Set local player
+                    if (connectOK->localID == connectOK->players[i].id)
+                    {
+                        setLocalPlayer(getPlayerByID(id));
+                    }
+                }
+            }
+
+            // Test
+            printf("CONNECT_OK: %d\n", connectOK->localID);
+
+            return 0;
+        }
+        case PLAYER_JOINED:
+        {
+            const PlayerJoined* playerJoined = &message->data.playerJoined;
+
+            if (getPlayerByID(playerJoined->newPlayer.id) == NULL)
+            {
+                spawnPlayer(playerJoined->newPlayer);
+            }
+
+            // Test
+            printf("PLAYER_JOINED: %d\n", playerJoined->newPlayer.id);
+
+            return 0;
+        }
+        case PLAYER_LEFT:
+        {
+            const PlayerLeft* playerLeft = &message->data.playerLeft;
+
+            if (getPlayerByID(playerLeft->oldPlayer.id) != NULL)
+            {
+                destroyPlayerByID(playerLeft->oldPlayer.id);
+            }
+
+            // Test
+            printf("PLAYER_LEFT: %d\n", playerLeft->oldPlayer.id);
+
+            return 0;
+        }
+        case GAME_STATE:
+        {
+            const GameState* gameState = &message->data.gameState;
+
+            if (gameState->numPlayers < 0 || gameState->numPlayers > MAX_PLAYERS)
+            {
+                printf("Invalid GAME_STATE players count: %d\n", gameState->numPlayers);
+                return -1;
+            }
+
+            // Update remote players: the local one is driven by input, the server only echoes
+            // back an outdated copy of its position
+            for (int i = 0; i < gameState->numPlayers; i++)
+            {
+                Entity* player = getPlayerByID(gameState->players[i].id);
+                if (player != NULL && player != getLocalPlayer())
+                {
+                    player->x = gameState->players[i].x;
+                    player->y = gameState->players[i].y;
+                    player->color = gameState->players[i].color;
+                }
+            }
+
+            return 0;
+        }
+        default:
+        {
+            printf("Unknown message: %d\n", message->type);
+            return -1;
+        }
+    }
+}
+
+static void sendClientState(void)
+{
+    PlayerState playerState;
+    Entity* player = getLocalPlayer();
+
+    // Nothing to send until CONNECT_OK assigns the local player
+    if (player == NULL)
+        return;
+
+    memset(&playerState, 0, sizeof(PlayerState));
+    playerState.player = *player;
+
+    // Send local player position
+    clientSend(&playerState, sizeof(PlayerState));
 }

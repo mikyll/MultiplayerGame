@@ -22,6 +22,7 @@ static void (*disconnectCallback)(void);
 
 
 static ClientSession* session = NULL;
+static ClientHandlers handlers;
 
 
 void setClientOnConnect(void (*onConnectOk)(void), void (*onConnectFail)(void))
@@ -33,6 +34,11 @@ void setClientOnConnect(void (*onConnectOk)(void), void (*onConnectFail)(void))
 void setClientOnDisconnect(void (*onDisconnect)(void))
 {
     disconnectCallback = onDisconnect;
+}
+
+void setClientHandlers(const ClientHandlers* clientHandlers)
+{
+    handlers = *clientHandlers;
 }
 
 static void freeSession(void)
@@ -139,7 +145,6 @@ static void handleConnection(void)
 static void handleMessage(ENetPacket* packet)
 {
     NetMessage receivedNetMessage;
-    int id;
 
     if (packet->dataLength != sizeof(NetMessage))
     {
@@ -149,116 +154,34 @@ static void handleMessage(ENetPacket* packet)
 
     memcpy(&receivedNetMessage, packet->data, sizeof(NetMessage));
 
-    switch (receivedNetMessage.type)
+    // The server refused the connection: part of the handshake, handled here
+    if (receivedNetMessage.type == CONNECT_DENIED)
     {
-        case CONNECT_OK:
-        {
-            ConnectOK connectOK = receivedNetMessage.data.connectOK;
+        ConnectDenied connectDenied = receivedNetMessage.data.connectDenied;
+        connectDenied.message[sizeof(connectDenied.message) - 1] = '\0';
 
-            if (connectOK.numPlayers < 0 || connectOK.numPlayers > MAX_PLAYERS)
-            {
-                printf("Invalid CONNECT_OK players count: %d\n", connectOK.numPlayers);
-                break;
-            }
+        // TODO
+        printf("Connect Denied message: %s\n", connectDenied.message);
 
-            // Spawn missing players
-            for (int i = 0; i < connectOK.numPlayers; i++)
-            {
-                if (getPlayerByID(connectOK.players[i].id) == NULL)
-                {
-                    id = spawnPlayer(connectOK.players[i]);
+        destroyClient();
 
-                    // Set local player
-                    if (connectOK.localID == connectOK.players[i].id)
-                    {
-                        setLocalPlayer(getPlayerByID(id));
-                    }
-                }
-            }
+        if (connectFailCallback != NULL)
+            connectFailCallback();
 
-            session->isWaiting = 0;
+        return;
+    }
 
-            if (connectOkCallback != NULL)
-                connectOkCallback();
+    // Any other message is up to the game
+    if (handlers.onMessage == NULL || handlers.onMessage(&receivedNetMessage) < 0)
+        return;
 
-            // Test
-            printf("CONNECT_OK: %d\n", connectOK.localID);
+    // A valid CONNECT_OK completes the connection attempt
+    if (receivedNetMessage.type == CONNECT_OK && session->isWaiting)
+    {
+        session->isWaiting = 0;
 
-            break;
-        }
-        case CONNECT_DENIED:
-        {
-            ConnectDenied connectDenied = receivedNetMessage.data.connectDenied;
-            connectDenied.message[sizeof(connectDenied.message) - 1] = '\0';
-
-            // TODO
-            printf("Connect Denied message: %s\n", connectDenied.message);
-
-            destroyClient();
-
-            if (connectFailCallback != NULL)
-                connectFailCallback();
-
-            break;
-        }
-        case PLAYER_JOINED:
-        {
-            PlayerJoined playerJoined = receivedNetMessage.data.playerJoined;
-
-            if (getPlayerByID(playerJoined.newPlayer.id) == NULL)
-            {
-                spawnPlayer(playerJoined.newPlayer);
-            }
-
-            // Test
-            printf("PLAYER_JOINED: %d\n", playerJoined.newPlayer.id);
-
-            break;
-        }
-        case PLAYER_LEFT:
-        {
-            PlayerLeft playerLeft= receivedNetMessage.data.playerLeft;
-
-            if (getPlayerByID(playerLeft.oldPlayer.id) != NULL)
-            {
-                destroyPlayerByID(playerLeft.oldPlayer.id);
-            }
-
-            // Test
-            printf("PLAYER_LEFT: %d\n", playerLeft.oldPlayer.id);
-
-            break;
-        }
-        case GAME_STATE:
-        {
-            GameState gameState = receivedNetMessage.data.gameState;
-
-            if (gameState.numPlayers < 0 || gameState.numPlayers > MAX_PLAYERS)
-            {
-                printf("Invalid GAME_STATE players count: %d\n", gameState.numPlayers);
-                break;
-            }
-
-            // Update remote players: the local one is driven by input, the server only echoes
-            // back an outdated copy of its position
-            for (int i = 0; i < gameState.numPlayers; i++)
-            {
-                Entity* player = getPlayerByID(gameState.players[i].id);
-                if (player != NULL && player != getLocalPlayer())
-                {
-                    player->x = gameState.players[i].x;
-                    player->y = gameState.players[i].y;
-                    player->color = gameState.players[i].color;
-                }
-            }
-
-            break;
-        }
-        default:
-        {
-            printf("Unknown message: %d\n", receivedNetMessage.type);
-            break;
-        }
+        if (connectOkCallback != NULL)
+            connectOkCallback();
     }
 }
 
@@ -326,26 +249,24 @@ void clientBefore(void)
     }
 }
 
-// sends player update
-void clientAfter(void)
+void clientSend(const void* data, size_t size)
 {
-    Entity* player;
-    PlayerState playerState;
     ENetPacket* packet;
 
     if (session == NULL)
         return;
 
-    player = getLocalPlayer();
-    if (player == NULL)
-        return;
-
-    memset(&playerState, 0, sizeof(PlayerState));
-    playerState.player = *player;
-
-    // Send local player position
-    packet = enet_packet_create(&playerState, sizeof(PlayerState), ENET_PACKET_FLAG_RELIABLE);
+    packet = enet_packet_create(data, size, ENET_PACKET_FLAG_RELIABLE);
     enet_peer_send(session->serverPeer, 0, packet);
-    enet_host_flush(session->host);
 }
 
+/*
+* Runs after the game loop: sends the queued packets.
+*/
+void clientAfter(void)
+{
+    if (session == NULL)
+        return;
+
+    enet_host_flush(session->host);
+}
